@@ -17,5 +17,8 @@ public class AppBTree {
 
         Object dfsed_non_recursive[] = iBTree.dfs_non_recursive(tree);
         System.out.println(Arrays.toString(dfsed_non_recursive));
+
+        int h = iBTree.height(tree);
+        System.out.println("tree has height: " + h);
     }
 }

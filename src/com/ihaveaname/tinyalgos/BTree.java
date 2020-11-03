@@ -105,4 +105,10 @@ public class BTree<V> {
 
         return (V[]) result.toArray();
     }
+
+    public int height(BTreeNode<V> tree) {
+        if (tree == null) return 0;
+
+        return Math.max(height(tree.leftTree), height(tree.rightTree)) + 1;
+    }
 }
