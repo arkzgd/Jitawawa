@@ -1,33 +1,32 @@
 package com.ihaveaname.tinyalgos;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Random;
-import java.util.function.Supplier;
 
 public class Numbers {
     public static <V extends Comparable<V>> V findMax(V[] values) {
         if (values.length == 0) return null;
         if (values.length == 1) return values[0];
         V m = values[0];
-        for (int i=0;i<values.length;i++) {
+        for (int i = 0; i < values.length; i++) {
             if (values[i].compareTo(m) > 0) m = values[i];
         }
 
         return m;
     }
 
-    public static void main(String[] args) throws Throwable {
-        Integer[] values = new Integer[100];
-        Random rand = new Random();
+    public static <V extends Comparable<V>> V findMax_binary(V[] values) {
+        if (values.length == 0) return null;
+        if (values.length == 1) return values[0];
 
-        for (int i=0;i<100;i++) {
-            values[i] = rand.nextInt(100) + 1;
-        }
+        int left = 0;
+        int right = values.length;
+        int mid = (right - left) >>> 1;
+        return max(
+                findMax_binary(Arrays.copyOfRange(values, left, mid)),
+                findMax_binary(Arrays.copyOfRange(values, mid, right)));
+    }
 
-        Integer v = Arrays.stream(values).max(Comparator.comparingInt(Integer::intValue)).orElseThrow(
-                (Supplier<Throwable>) () -> new IllegalArgumentException("No max element found."));
-        int i = (int) findMax(values);
-        System.out.println("findMax() -> " + i + " equals " + v);
+    private static <V extends Comparable<V>> V max(V left, V right) {
+        return left.compareTo(right) > 0 ? left : right;
     }
 }
