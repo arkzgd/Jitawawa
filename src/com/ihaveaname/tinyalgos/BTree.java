@@ -29,7 +29,7 @@ public class BTree<V> {
             if (nodes.length == 1)
                 return (V[]) result.toArray();
             int len = (nodes.length - 1) >> 1;
-            return Arrays.copyOfRange(nodes, 1, len+1);
+            return Arrays.copyOfRange(nodes, 1, len + 1);
         }
     }
 
@@ -42,7 +42,7 @@ public class BTree<V> {
             if (nodes.length == 1)
                 return (V[]) result.toArray();
             int len = (nodes.length - 1) >> 1;
-            return Arrays.copyOfRange(nodes, len+1, nodes.length);
+            return Arrays.copyOfRange(nodes, len + 1, nodes.length);
         }
     }
 
@@ -135,10 +135,10 @@ public class BTree<V> {
         while (!stack.empty()) {
             Pair current = stack.pop();
             if (current.node != null) {
-                stack.push(new Pair(current.level+1, current.node.leftTree));
-                stack.push(new Pair(current.level+1, current.node.rightTree));
-                if (current.level+1 > waterMark && current.node.leftTree != null && current.node.rightTree != null)
-                    waterMark ++;
+                stack.push(new Pair(current.level + 1, current.node.leftTree));
+                stack.push(new Pair(current.level + 1, current.node.rightTree));
+                if (current.level + 1 > waterMark && current.node.leftTree != null && current.node.rightTree != null)
+                    waterMark++;
             }
         }
 

@@ -13,10 +13,10 @@ public class Cyclic {
 
     public List<Integer> gen_two_n_1(int n) {
         List<Integer> result = new ArrayList<>();
-        for (int i=0;i<n;i++)
+        for (int i = 0; i < n; i++)
             result.add(i);
 
-        for (int i=n-2;i>0;i--)
+        for (int i = n - 2; i > 0; i--)
             result.add(i);
 
         return result;

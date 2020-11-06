@@ -54,8 +54,7 @@ public class MyLRUCache<K, V> {
             adjustLRU(n);
 
             return n.value;
-        }
-        else
+        } else
             return null;
     }
 
@@ -63,7 +62,7 @@ public class MyLRUCache<K, V> {
         List<V> result = new ArrayList<>();
         Iterator<Node<K, V>> i = values.iterator();
 
-        for (;i.hasNext();) {
+        for (; i.hasNext(); ) {
             result.add(i.next().value);
         }
 

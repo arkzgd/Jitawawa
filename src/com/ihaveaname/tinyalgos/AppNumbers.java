@@ -12,7 +12,7 @@ public class AppNumbers {
         Integer[] values = new Integer[99];
         Random rand = new Random();
 
-        for (int i=0;i<99;i++) {
+        for (int i = 0; i < 99; i++) {
             values[i] = rand.nextInt(99) + 1;
         }
 
