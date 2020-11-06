@@ -5,8 +5,7 @@ import java.util.Comparator;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import static com.ihaveaname.tinyalgos.Numbers.findMax;
-import static com.ihaveaname.tinyalgos.Numbers.findMax_binary;
+import static com.ihaveaname.tinyalgos.Numbers.*;
 
 public class AppNumbers {
     public static void main(String[] args) throws Throwable {
@@ -24,5 +23,14 @@ public class AppNumbers {
 
         Integer j = findMax_binary(values);
         System.out.println("findMax_binary() -> " + j + " equals " + v);
+
+        v = Arrays.stream(values).min(Comparator.comparingInt(Integer::intValue)).orElseThrow(
+                (Supplier<Throwable>) () -> new IllegalArgumentException("No min element found."));
+
+        i = findMin(values);
+        System.out.println("findMin() -> " + i + " equals " + v);
+
+        j = findMin_binary(values);
+        System.out.println("findMin_binary() -> " + j + " equals " + v);
     }
 }
