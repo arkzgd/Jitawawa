@@ -1,4 +1,4 @@
-package com.ihaveaname.tinyalgos;
+package com.ihaveaname.java.tinyalgos;
 
 public class Pair<U, V> {
     private U u;

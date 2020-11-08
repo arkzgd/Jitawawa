@@ -1,4 +1,4 @@
-package com.ihaveaname.cglib;
+package com.ihaveaname.java.cglib;
 
 class Test {
     public String test(String message) {

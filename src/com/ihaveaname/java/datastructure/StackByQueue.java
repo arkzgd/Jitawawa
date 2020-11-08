@@ -1,51 +1,36 @@
-package com.ihaveaname.datastructure;
+package com.ihaveaname.java.datastructure;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class WeirdStack<V> implements Stack<V> {
-    private Queue<V> queueA = new LinkedList<>();
-    private Queue<V> queueB = new LinkedList<>();
-    private Queue<V> current = queueA;
-    private Queue<V> next = queueB;
-
-    private void switchCurrent() {
-        if (current == queueA) {
-            current = queueB;
-            next = queueA;
-        } else {
-            current = queueA;
-            next = queueB;
-        }
-    }
+public class StackByQueue<V> implements Stack<V> {
+    private Queue<V> queue = new LinkedList<>();
 
     @Override
     public void push(V v) {
-        next.offer(v);
-        while (!current.isEmpty()) {
-            next.offer(current.poll());
+        queue.offer(v);
+        while (queue.peek() != v) {
+            queue.offer(queue.poll());
         }
-
-        switchCurrent();
     }
 
     @Override
     public V pop() {
-        return current.poll();
+        return queue.poll();
     }
 
     @Override
     public V peek() {
-        return current.peek();
+        return queue.peek();
     }
 
     @Override
     public boolean empty() {
-        return current.isEmpty();
+        return queue.isEmpty();
     }
 
     public static void main(String[] args) {
-        Stack<Integer> wstack = new WeirdStack<>();
+        Stack<Integer> wstack = new StackByQueue<>();
 
         System.out.println("Push something...");
         wstack.push(3);

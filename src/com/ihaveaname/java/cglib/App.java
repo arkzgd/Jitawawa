@@ -1,4 +1,4 @@
-package com.ihaveaname.cglib;
+package com.ihaveaname.java.cglib;
 
 public class App {
     public static void main(String[] args) {

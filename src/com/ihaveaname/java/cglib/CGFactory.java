@@ -1,4 +1,4 @@
-package com.ihaveaname.cglib;
+package com.ihaveaname.java.cglib;
 
 
 import net.sf.cglib.proxy.Enhancer;

@@ -1,11 +1,11 @@
-package com.ihaveaname.tinyalgos;
+package com.ihaveaname.java.tinyalgos;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import static com.ihaveaname.tinyalgos.Numbers.*;
+import static com.ihaveaname.java.tinyalgos.Numbers.*;
 
 public class AppNumbers {
     public static void main(String[] args) throws Throwable {

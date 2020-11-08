@@ -1,4 +1,4 @@
-package com.ihaveaname.questiongen;
+package com.ihaveaname.java.questiongen;
 
 import java.util.Random;
 

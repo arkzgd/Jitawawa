@@ -1,4 +1,4 @@
-package com.ihaveaname.playground;
+package com.ihaveaname.java.playground;
 
 public class PlayFinally {
     static int mayThrowException1() {

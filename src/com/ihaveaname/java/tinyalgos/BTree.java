@@ -1,4 +1,4 @@
-package com.ihaveaname.tinyalgos;
+package com.ihaveaname.java.tinyalgos;
 
 import java.util.*;
 
