@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class PlayCondition_CooperativeThreads {
-  private boolean flipper = false;
+  private int counter = 0;
 
   final Lock lock = new ReentrantLock();
   final Condition cond = lock.newCondition();
@@ -16,10 +16,10 @@ public class PlayCondition_CooperativeThreads {
             while (true) {
               lock.lock();
               try {
-                while (flipper == true) cond.await();
-                flipper = true;
+                while (counter % 2 != 0) cond.await();
+                System.out.println(Thread.currentThread().getName() + ": " + counter);
+                counter++;
                 Thread.sleep(1000);
-                System.out.println(Thread.currentThread().getName() + ": " + "Finish one piece");
                 cond.signal();
               } catch (InterruptedException ex) {
                 ex.printStackTrace();
@@ -36,10 +36,10 @@ public class PlayCondition_CooperativeThreads {
             while (true) {
               lock.lock();
               try {
-                while (flipper == false) cond.await();
-                flipper = false;
+                while (counter % 2 == 0) cond.await();
+                System.out.println(Thread.currentThread().getName() + ": " + counter);
+                counter++;
                 Thread.sleep(1000);
-                System.out.println(Thread.currentThread().getName() + ": " + "Finish one piece");
                 cond.signal();
               } catch (InterruptedException ex) {
                 ex.printStackTrace();
