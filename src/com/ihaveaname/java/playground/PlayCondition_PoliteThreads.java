@@ -12,14 +12,15 @@ public class PlayCondition_PoliteThreads {
       new Thread(
           () -> {
             lock.lock();
-            System.out.println("Gonna call await()");
+            System.out.println(Thread.currentThread().getName() + ": " + "Gonna call await()");
             try {
               cond.await();
+              System.out.println("Out of await.");
             } catch (InterruptedException e) {
               e.printStackTrace();
+            } finally{
+              lock.unlock();
             }
-            System.out.println("Out of await.");
-            lock.unlock();
           },
           "Worker-1");
 
@@ -27,14 +28,15 @@ public class PlayCondition_PoliteThreads {
       new Thread(
           () -> {
             lock.lock();
-            System.out.println("Gonna call await()");
+            System.out.println(Thread.currentThread().getName() + ": " + "Gonna call await()");
             try {
               cond.await();
+              System.out.println("Out of await.");
             } catch (InterruptedException e) {
               e.printStackTrace();
+            } finally{
+              lock.unlock();
             }
-            System.out.println("Out of await.");
-            lock.unlock();
           },
           "Worker-2");
 
@@ -44,7 +46,7 @@ public class PlayCondition_PoliteThreads {
     ply.thread1.start();
     ply.thread2.start();
 
-    int i = 10;
+    int i = 5;
     while (i > 0) {
       Thread.sleep(1000);
       System.out.println("-------------------");
