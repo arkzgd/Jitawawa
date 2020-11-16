@@ -1,4 +1,4 @@
-package com.ihaveaname.scala
+package com.ihaveaname.scala.closure
 
 object Closure {
   private val message = "Hello Clojure"
