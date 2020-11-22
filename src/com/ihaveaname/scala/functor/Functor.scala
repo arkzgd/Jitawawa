@@ -1,4 +1,4 @@
-package com.ihaveaname.scala.closure
+package com.ihaveaname.scala.functor
 
 object Functor {
   def identity[V] = (x: V) => x
