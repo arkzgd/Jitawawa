@@ -7,8 +7,12 @@ public class PlayKekeEatsBanana {
 
     while (low < high) {
       int mid = low + ((high - low) >> 1);
-      if (canEatup(piles, mid, hours)) low = mid + 1;
-      else high = mid;
+      if (canEatup(piles, mid, hours)) high = mid;
+      else
+        low =
+            mid
+                + 1; // the key is to have low = mid + 1, otherwise, it will be loop forever because
+                     // mid will always be low if high = low + 1
     }
 
     return low;
@@ -29,11 +33,14 @@ public class PlayKekeEatsBanana {
 
     for (int p : piles) sum += Math.ceil(p * 1.0f / speed);
 
-    return sum > hours;
+    return sum <= hours;
   }
 
   public static void main(String[] args) {
     int[] piles = new int[] {30, 11, 23, 4, 20};
     System.out.println("Result: " + eat(piles, 5));
+    System.out.println("Result: " + eat(piles, 6));
+    System.out.println("Result: " + eat(piles, 7));
+    System.out.println("Result: " + eat(piles, 4)); // This actually has no satisfying answer
   }
 }
