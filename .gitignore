@@ -34,3 +34,4 @@
 /lib/scala-reflect-2.11.4-sources.jar
 /.scalafmt.conf
 /.idea/compiler.xml
+/lib/
