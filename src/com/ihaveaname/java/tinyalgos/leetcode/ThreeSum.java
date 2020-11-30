@@ -4,60 +4,60 @@ import java.util.*;
 
 public class ThreeSum {
   public static List<List<Integer>> solution(Integer[] input, Integer target) {
-    Map<Integer, List<List<Integer>>> sumMap = partialSumMap(input);
     List<List<Integer>> result = new ArrayList<>();
 
     int length = input.length;
-    for (int i = 0; i < length; i++) {
-      int t = target - input[i];
-      if (sumMap.containsKey(t)) {
-        List<List<Integer>> l = sumMap.get(t);
-        for (int k = 0; k < l.size(); k++) {
-          if (!l.get(k).contains(input[i])) {
-            List<Integer> ll = new ArrayList<>(3);
-            ll.add(input[i]);
-            ll.addAll(l.get(k));
-            result.add(ll);
-          }
-        }
+    int fixed = 0;
+    int left = fixed + 1;
+    int right = length - 1;
+
+    while (fixed <= length - 2 && input[fixed] < target) {
+      Integer s = sum(input, fixed, left, right);
+      if (s == target) {
+        List<Integer> l = new ArrayList<>(3);
+        l.add(input[fixed]);
+        l.add(input[left]);
+        l.add(input[right]);
+        result.add(l);
+
+        while (left < length - 1 && input[left] == input[left + 1]) left++;
+        left++;
+        while (input[right] == input[right - 1]) right--;
+        right--;
+      } else if (s < target) {
+        while (input[left] == input[left + 1]) left++;
+        left++;
+      } else if (s > target) {
+        while (input[right] == input[right - 1]) right--;
+        right--;
+      }
+
+      if (left >= right) {
+        while (fixed < length - 2 && input[fixed] == input[fixed + 1]) fixed++;
+        fixed++;
+        left = fixed + 1;
+        right = length - 1;
       }
     }
 
     return result;
   }
 
-  private static Map<Integer, List<List<Integer>>> partialSumMap(Integer[] input) {
-    Map<Integer, List<List<Integer>>> result = new HashMap<>();
-    int length = input.length;
+  private static Integer sum(Integer[] input, int fixed, int left, int right) {
+    return input[fixed] + input[left] + input[right];
+  }
 
-    for (int i = 0; i < length - 1; i++) {
-      for (int j = i + 1; j < length; j++) {
-        Integer k = input[i] + input[j];
-        List<Integer> l = new ArrayList<>(2);
-        l.add(input[i]);
-        l.add(input[j]);
-        if (result.containsKey(k)) {
-          List el = result.get(k);
-          el.add(l);
-          result.put(k, el);
-        } else {
-          List<List<Integer>> el = new ArrayList<>();
-          el.add(l);
-          result.put(k, el);
-        }
-      }
-    }
+  private static Integer[] sort(Integer[] input) {
+    Arrays.sort(input, Integer::compareTo);
 
-    return result;
+    return input;
   }
 
   public static void main(String[] args) {
     Integer[] array = {-1, 0, 1, 2, -1, -4};
 
-    List<List<Integer>> result = solution(array, 0);
-    System.out.println(result);
-
-    result = solution(array, -1);
-    System.out.println(result);
+    for (int i = 4; i > -5; i--) {
+      System.out.println(i + "-> " + solution(sort(array), i));
+    }
   }
 }
