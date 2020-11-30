@@ -2,6 +2,9 @@ package com.ihaveaname.java.tinyalgos.leetcode;
 
 import java.util.*;
 
+import static com.ihaveaname.java.tinyalgos.leetcode.Utils.sort;
+import static com.ihaveaname.java.tinyalgos.leetcode.Utils.sum;
+
 public class ThreeSum {
   public static List<List<Integer>> solution(Integer[] input, Integer target) {
     List<List<Integer>> result = new ArrayList<>();
@@ -25,7 +28,7 @@ public class ThreeSum {
         while (input[right] == input[right - 1]) right--;
         right--;
       } else if (s < target) {
-        while (input[left] == input[left + 1]) left++;
+        while (left < length - 1 && input[left] == input[left + 1]) left++;
         left++;
       } else if (s > target) {
         while (input[right] == input[right - 1]) right--;
@@ -43,18 +46,8 @@ public class ThreeSum {
     return result;
   }
 
-  private static Integer sum(Integer[] input, int fixed, int left, int right) {
-    return input[fixed] + input[left] + input[right];
-  }
-
-  private static Integer[] sort(Integer[] input) {
-    Arrays.sort(input, Integer::compareTo);
-
-    return input;
-  }
-
   public static void main(String[] args) {
-    Integer[] array = {-1, 0, 1, 2, -1, -4};
+    Integer[] array = {-1, 0, 1, 2, -1, -4, -9, 9, 8, -2, 3, 6};
 
     for (int i = 4; i > -5; i--) {
       System.out.println(i + "-> " + solution(sort(array), i));
