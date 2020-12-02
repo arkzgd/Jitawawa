@@ -35,12 +35,17 @@ public class Sorting {
 
     int length = array.length;
     int gap = length;
-    boolean swapped = false;
+    boolean sorted = false;
 
-    while (gap != 1 || swapped) {
-      swapped = false;
+    while (sorted == false) {
+      if (gap == 1) {
+        sorted = true;
+      }
       for (int i = 0; i < length - gap; i++) {
-        if (comparator.compare(array[i], array[i + gap]) > 0) swapped = swap(array, i, i + gap);
+        if (comparator.compare(array[i], array[i + gap]) > 0)  {
+          swap(array, i, i + gap);
+          sorted =  false;
+        }
       }
       gap = nextGap(gap);
     }
