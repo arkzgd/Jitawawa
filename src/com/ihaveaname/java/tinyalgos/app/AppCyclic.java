@@ -1,4 +1,6 @@
-package com.ihaveaname.java.tinyalgos;
+package com.ihaveaname.java.tinyalgos.app;
+
+import com.ihaveaname.java.tinyalgos.Cyclic;
 
 public class AppCyclic {
     public static void main(String[] args) {

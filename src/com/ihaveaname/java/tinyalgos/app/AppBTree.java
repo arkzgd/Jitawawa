@@ -1,4 +1,6 @@
-package com.ihaveaname.java.tinyalgos;
+package com.ihaveaname.java.tinyalgos.app;
+
+import com.ihaveaname.java.tinyalgos.BTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;

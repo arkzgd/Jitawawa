@@ -1,4 +1,4 @@
-package com.ihaveaname.java.tinyalgos;
+package com.ihaveaname.java.tinyalgos.app;
 
 import java.util.Arrays;
 import java.util.Comparator;

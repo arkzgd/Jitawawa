@@ -1,4 +1,4 @@
-package com.ihaveaname.java.tinyalgos.leetcode;
+package com.ihaveaname.java.leetcode;
 
 import java.util.Arrays;
 

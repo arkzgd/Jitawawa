@@ -1,10 +1,10 @@
-package com.ihaveaname.java.tinyalgos.leetcode;
+package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ihaveaname.java.tinyalgos.leetcode.Utils.sort;
+import static com.ihaveaname.java.leetcode.Utils.sort;
 
 public class FourSum {
   public static List<List<Integer>> solution(Integer[] input, Integer target) {

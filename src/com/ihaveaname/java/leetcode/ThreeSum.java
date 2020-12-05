@@ -1,9 +1,9 @@
-package com.ihaveaname.java.tinyalgos.leetcode;
+package com.ihaveaname.java.leetcode;
 
 import java.util.*;
 
-import static com.ihaveaname.java.tinyalgos.leetcode.Utils.sort;
-import static com.ihaveaname.java.tinyalgos.leetcode.Utils.sum;
+import static com.ihaveaname.java.leetcode.Utils.sort;
+import static com.ihaveaname.java.leetcode.Utils.sum;
 
 public class ThreeSum {
   public static List<List<Integer>> solution(Integer[] input, Integer target) {
