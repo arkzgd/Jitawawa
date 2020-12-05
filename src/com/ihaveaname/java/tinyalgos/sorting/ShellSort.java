@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ihaveaname.java.tinyalgos.sorting.InsertSort.insertSort;
 import static com.ihaveaname.java.tinyalgos.sorting.Util.nextGap;
 
 public class ShellSort {
@@ -15,9 +14,9 @@ public class ShellSort {
     T[] array = (T[]) input.toArray();
 
     for(int gap = length; gap > 1; gap = nextGap(gap)) {
-      array = insertSort(array, gap, comparator);
+      array = InsertSort.insertSort_with_gap(array, gap, comparator);
     }
-    array = insertSort(array, 1, comparator);
+    array = InsertSort.insertSort_with_gap(array, 1, comparator);
 
     result.addAll(Arrays.asList(array));
     return result;

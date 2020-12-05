@@ -26,7 +26,7 @@ public class AppSorting {
     sorted = combSort(input, Integer::compareTo);
     validate(input, sorted, Integer::compareTo);
 
-    sorted = insertSort(input, 1, Integer::compareTo);
+    sorted = insertSort(input, Integer::compareTo);
     validate(input, sorted, Integer::compareTo);
 
     sorted = shellSort(input, Integer::compareTo);
@@ -40,7 +40,7 @@ public class AppSorting {
     sorted = combSort(input, Integer::compareTo);
     validate(input, sorted, Integer::compareTo);
 
-    sorted = insertSort(input, 1, Integer::compareTo);
+    sorted = insertSort(input, Integer::compareTo);
     validate(input, sorted, Integer::compareTo);
 
     sorted = shellSort(input, Integer::compareTo);
@@ -54,7 +54,7 @@ public class AppSorting {
     sorted = combSort(input, String::compareTo);
     validate(input, sorted, String::compareTo);
 
-    sorted = insertSort(input, 1, String::compareTo);
+    sorted = insertSort(input, String::compareTo);
     validate(input, sorted, String::compareTo);
 
     sorted = shellSort(input, String::compareTo);
