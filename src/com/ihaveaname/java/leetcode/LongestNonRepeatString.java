@@ -13,12 +13,13 @@ public class LongestNonRepeatString {
     int right = 0;
 
     for (; right < length; right++) {
-      if (location[input.charAt(right) - 'a'] == -1) {
-        location[input.charAt(right) - 'a'] = right;
+      int loc = input.charAt(right) - 'a';
+      if (location[loc] == -1) {
+        location[loc] = right;
         result = Math.max(result, right - left + 1);
       } else {
-        left = Math.max(left, location[input.charAt(right) - 'a']) + 1;
-        location[input.charAt(right) - 'a'] = right;
+        left = Math.max(left, location[loc]) + 1;
+        location[loc] = right;
       }
     }
 
