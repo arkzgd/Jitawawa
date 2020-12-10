@@ -1,12 +1,10 @@
 package com.ihaveaname.java.datastructure;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class BinaryHeap<T> implements Heap<T> {
 
+  int capacity;
   private Comparator<T> comparator;
 
   public BinaryHeap(Comparator<T> comparator) {
@@ -23,7 +21,12 @@ public class BinaryHeap<T> implements Heap<T> {
   }
 
   @Override
-  public void insert(T v) {}
+  public void insert(T v) {
+    if (currentSize() == capacity) enlargeArray(currentSize() * 2);
+
+    array[currentSize()] = v;
+    persolateUp(currentSize() - 1);
+  }
 
   @Override
   public T findMin() {
@@ -60,18 +63,19 @@ public class BinaryHeap<T> implements Heap<T> {
   private T[] array;
 
   private void initialize(int capacity, Comparator<T> comparator) {
+    this.capacity = capacity;
     this.comparator = comparator;
     List<T> storage = new ArrayList<>(capacity);
+    for (int i = 0; i < capacity; i++) storage.add(null);
     array = (T[]) storage.toArray();
-    Arrays.fill(array, null);
   }
 
   private void persolateDown(int hole) {
     int size = currentSize();
     T v = array[size - 1];
     int current = hole;
-    int lchild = hole * 2;
-    int rchild = hole * 2 + 1;
+    int lchild = hole * 2 + 1;
+    int rchild = hole * 2 + 2;
     while (true) {
       if (lchild >= size) {
         return;
@@ -98,16 +102,41 @@ public class BinaryHeap<T> implements Heap<T> {
     }
   }
 
-  private void persolateUp(int hole) {}
+  private int calcParent(int current) {
+    if (current % 2 == 0) return (current - 1) / 2;
+    else return current / 2;
+  }
 
-  private void buildHeap(T[] items, Comparator<T> comparator) {}
+  private void persolateUp(int hole) {
+    if (hole == 0) return;
+
+    T v = array[hole];
+    int current = hole;
+    int parent;
+
+    do {
+      parent = calcParent(current);
+      if (comparator.compare(v, array[parent]) < 0) {
+        array[current] = array[parent];
+        current = parent;
+      }
+      else break;
+    } while (parent > 0);
+
+    array[current] = v;
+  }
+
+  private void buildHeap(T[] items, Comparator<T> comparator) {
+    for (T e : items) insert(e);
+  }
 
   private void enlargeArray(int newCapacity) {
     List<T> newStorage = new ArrayList<>(newCapacity);
+    Collections.fill(newStorage, null);
     T[] newArray = (T[]) newStorage.toArray();
-    Arrays.fill(newArray, null);
 
     System.arraycopy(array, 0, newArray, 0, currentSize());
     array = newArray;
+    capacity = newCapacity;
   }
 }
