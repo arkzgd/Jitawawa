@@ -6,4 +6,5 @@ public interface Heap<T> {
   T deleteMin();
   boolean isEmpty();
   void makeEmpty();
+  boolean isHeap();
 }

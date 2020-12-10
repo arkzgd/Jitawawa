@@ -119,8 +119,7 @@ public class BinaryHeap<T> implements Heap<T> {
       if (comparator.compare(v, array[parent]) < 0) {
         array[current] = array[parent];
         current = parent;
-      }
-      else break;
+      } else break;
     } while (parent > 0);
 
     array[current] = v;
@@ -132,11 +131,28 @@ public class BinaryHeap<T> implements Heap<T> {
 
   private void enlargeArray(int newCapacity) {
     List<T> newStorage = new ArrayList<>(newCapacity);
-    Collections.fill(newStorage, null);
+    for (int i = 0; i < newCapacity; i++) newStorage.add(null);
     T[] newArray = (T[]) newStorage.toArray();
 
     System.arraycopy(array, 0, newArray, 0, currentSize());
     array = newArray;
     capacity = newCapacity;
+  }
+
+  @Override
+  public boolean isHeap() {
+    for (int i = 0; i < currentSize(); i++) {
+      int lchild = i * 2 + 1;
+      int rchild = i * 2 + 2;
+      if (lchild < currentSize()) {
+        if (rchild < currentSize()) {
+          if (comparator.compare(array[rchild], array[i]) < 0) return false;
+        } else {
+          if (comparator.compare(array[lchild], array[i]) < 0) return false;
+        }
+      }
+    }
+
+    return true;
   }
 }

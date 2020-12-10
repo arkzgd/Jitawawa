@@ -8,13 +8,14 @@ public class AppBinaryHeap {
     Heap<Integer> heap = new BinaryHeap<>(Integer::compareTo);
     assert heap.isEmpty();
 
-    heap.insert(1);
-    assert !heap.isEmpty();
+    for (int v = 20; v > 0; v--) {
+      heap.insert(v);
+      assert heap.isHeap();
+    }
 
-    heap.insert(2);
-    heap.insert(0);
-    heap.insert(4);
+    assert heap.findMin() == 1;
 
-    assert heap.findMin() == 0;
+    heap.makeEmpty();
+    assert heap.isEmpty();
   }
 }
