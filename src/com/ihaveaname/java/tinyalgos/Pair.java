@@ -1,8 +1,8 @@
 package com.ihaveaname.java.tinyalgos;
 
 public class Pair<U, V> {
-  private U u;
-  private V v;
+  public final U u;
+  public final V v;
 
   public Pair(U u, V v) {
     this.u = u;

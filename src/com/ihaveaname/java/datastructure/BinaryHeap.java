@@ -38,7 +38,6 @@ public class BinaryHeap<T> implements Heap<T> {
   @Override
   public T deleteMin() {
     T min = findMin();
-
     persolateDown(0);
 
     return min;
@@ -70,36 +69,28 @@ public class BinaryHeap<T> implements Heap<T> {
     array = (T[]) storage.toArray();
   }
 
+  private int calcLeftChild(int current) {
+    return 2 * current + 1;
+  }
+
   private void persolateDown(int hole) {
     int size = currentSize();
     T v = array[size - 1];
     int current = hole;
-    int lchild = hole * 2 + 1;
-    int rchild = hole * 2 + 2;
-    while (true) {
-      if (lchild >= size) {
-        return;
-      } else if (rchild >= size) {
-        if (comparator.compare(v, array[lchild]) > 0) {
-          array[current] = array[lchild];
-          current = lchild;
-        }
-      } else {
-        if (comparator.compare(array[current], array[lchild]) > 0) {
-          array[current] = array[lchild];
-          current = lchild;
-        } else if (comparator.compare(array[current], array[rchild]) > 0) {
-          array[current] = array[rchild];
-          current = rchild;
-        } else {
-          array[current] = v;
-          if (current < size - 1) {
-            array[size - 1] = null;
-          }
-          return;
-        }
-      }
+    int child = calcLeftChild(current);
+
+    while (child < size) {
+      if (child + 1 < size && comparator.compare(array[child], array[child + 1]) > 0) child++;
+
+      if (comparator.compare(v, array[child]) > 0) {
+        array[current] = array[child];
+        current = child;
+        child = calcLeftChild(current);
+      } else break;
     }
+
+    array[current] = v;
+    if (current != size - 1 || size == 1) array[size - 1] = null;
   }
 
   private int calcParent(int current) {
