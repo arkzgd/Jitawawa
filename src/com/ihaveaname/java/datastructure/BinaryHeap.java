@@ -4,8 +4,9 @@ import java.util.*;
 
 public class BinaryHeap<T> implements Heap<T> {
 
-  int capacity;
   private Comparator<T> comparator;
+  private ArrayList<T> array;
+  private static final int DEFAULT_CAPACITY = 10;
 
   public BinaryHeap(Comparator<T> comparator) {
     initialize(DEFAULT_CAPACITY, comparator);
@@ -22,17 +23,15 @@ public class BinaryHeap<T> implements Heap<T> {
 
   @Override
   public void insert(T v) {
-    if (currentSize() == capacity) enlargeArray(currentSize() * 2);
-
-    array[currentSize()] = v;
-    persolateUp(currentSize() - 1);
+    array.add(v);
+    persolateUp(array.size() - 1);
   }
 
   @Override
   public T findMin() {
     if (isEmpty()) throw new IllegalStateException("BinaryHeap is empty");
 
-    return array[0];
+    return array.get(0);
   }
 
   @Override
@@ -43,9 +42,13 @@ public class BinaryHeap<T> implements Heap<T> {
     return min;
   }
 
+  private int currentSize() {
+    return array.size();
+  }
+
   @Override
   public boolean isEmpty() {
-    return currentSize() == 0;
+    return array.isEmpty();
   }
 
   @Override
@@ -53,20 +56,9 @@ public class BinaryHeap<T> implements Heap<T> {
     initialize(DEFAULT_CAPACITY, comparator);
   }
 
-  private static final int DEFAULT_CAPACITY = 10;
-
-  private int currentSize() {
-    return Math.toIntExact(Arrays.stream(array).takeWhile(t -> t != null).count());
-  }
-
-  private T[] array;
-
   private void initialize(int capacity, Comparator<T> comparator) {
-    this.capacity = capacity;
     this.comparator = comparator;
-    List<T> storage = new ArrayList<>(capacity);
-    for (int i = 0; i < capacity; i++) storage.add(null);
-    array = (T[]) storage.toArray();
+    array = new ArrayList<>(capacity);
   }
 
   private int calcLeftChild(int current) {
@@ -74,23 +66,24 @@ public class BinaryHeap<T> implements Heap<T> {
   }
 
   private void persolateDown(int hole) {
-    int size = currentSize();
-    T v = array[size - 1];
+    int size = array.size();
+    T v = array.get(size - 1);
     int current = hole;
     int child = calcLeftChild(current);
 
     while (child < size) {
-      if (child + 1 < size && comparator.compare(array[child], array[child + 1]) > 0) child++;
+      if (child + 1 < size && comparator.compare(array.get(child), array.get(child + 1)) > 0)
+        child++;
 
-      if (comparator.compare(v, array[child]) > 0) {
-        array[current] = array[child];
+      if (comparator.compare(v, array.get(child)) > 0) {
+        array.set(current, array.get(child));
         current = child;
         child = calcLeftChild(current);
       } else break;
     }
 
-    array[current] = v;
-    if (current != size - 1 || size == 1) array[size - 1] = null;
+    array.set(current, v);
+    if (current != size - 1 || size == 1) array.remove(size - 1);
   }
 
   private int calcParent(int current) {
@@ -101,45 +94,35 @@ public class BinaryHeap<T> implements Heap<T> {
   private void persolateUp(int hole) {
     if (hole == 0) return;
 
-    T v = array[hole];
+    T v = array.get(hole);
     int current = hole;
     int parent;
 
     do {
       parent = calcParent(current);
-      if (comparator.compare(v, array[parent]) < 0) {
-        array[current] = array[parent];
+      if (comparator.compare(v, array.get(parent)) < 0) {
+        array.set(current, array.get(parent));
         current = parent;
       } else break;
     } while (parent > 0);
 
-    array[current] = v;
+    array.set(current, v);
   }
 
   private void buildHeap(T[] items, Comparator<T> comparator) {
     for (T e : items) insert(e);
   }
 
-  private void enlargeArray(int newCapacity) {
-    List<T> newStorage = new ArrayList<>(newCapacity);
-    for (int i = 0; i < newCapacity; i++) newStorage.add(null);
-    T[] newArray = (T[]) newStorage.toArray();
-
-    System.arraycopy(array, 0, newArray, 0, currentSize());
-    array = newArray;
-    capacity = newCapacity;
-  }
-
   @Override
   public boolean isHeap() {
-    for (int i = 0; i < currentSize(); i++) {
+    for (int i = 0; i < array.size(); i++) {
       int lchild = i * 2 + 1;
       int rchild = i * 2 + 2;
-      if (lchild < currentSize()) {
-        if (rchild < currentSize()) {
-          if (comparator.compare(array[rchild], array[i]) < 0) return false;
+      if (lchild < array.size()) {
+        if (rchild < array.size()) {
+          if (comparator.compare(array.get(rchild), array.get(i)) < 0) return false;
         } else {
-          if (comparator.compare(array[lchild], array[i]) < 0) return false;
+          if (comparator.compare(array.get(lchild), array.get(i)) < 0) return false;
         }
       }
     }
