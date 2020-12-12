@@ -16,8 +16,8 @@ public class BinaryHeap<T> implements Heap<T> {
     initialize(initialCapacity, comparator);
   }
 
-  public BinaryHeap(T[] items, Comparator<T> comparator) {
-    initialize(items.length, comparator);
+  public BinaryHeap(List<T> items, Comparator<T> comparator) {
+    initialize(items.size(), comparator);
     buildHeap(items, comparator);
   }
 
@@ -25,6 +25,11 @@ public class BinaryHeap<T> implements Heap<T> {
   public void insert(T v) {
     array.add(v);
     persolateUp(array.size() - 1);
+  }
+
+  @Override
+  public void insert(List<T> values) {
+    for (T v: values) insert(v);
   }
 
   @Override
@@ -68,6 +73,10 @@ public class BinaryHeap<T> implements Heap<T> {
   private void persolateDown(int hole) {
     int size = array.size();
     T v = array.get(size - 1);
+    array.remove(size - 1);
+    size = array.size();
+    if (size == 0) return;
+
     int current = hole;
     int child = calcLeftChild(current);
 
@@ -83,7 +92,6 @@ public class BinaryHeap<T> implements Heap<T> {
     }
 
     array.set(current, v);
-    if (current != size - 1 || size == 1) array.remove(size - 1);
   }
 
   private int calcParent(int current) {
@@ -109,7 +117,7 @@ public class BinaryHeap<T> implements Heap<T> {
     array.set(current, v);
   }
 
-  private void buildHeap(T[] items, Comparator<T> comparator) {
+  private void buildHeap(List<T> items, Comparator<T> comparator) {
     for (T e : items) insert(e);
   }
 
