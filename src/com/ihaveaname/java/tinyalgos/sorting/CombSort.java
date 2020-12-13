@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ihaveaname.java.tinyalgos.sorting.Util.nextGap;
-import static com.ihaveaname.java.tinyalgos.sorting.Util.swap;
+import static com.ihaveaname.java.tinyalgos.sorting.Utils.nextGap;
+import static com.ihaveaname.java.tinyalgos.sorting.Utils.swap;
 
 public class CombSort {
   public static <T> List<T> combSort(List<T> input, Comparator<T> comparator) {

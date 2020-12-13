@@ -2,7 +2,7 @@ package com.ihaveaname.java.datastructure.app;
 
 import com.ihaveaname.java.datastructure.BinaryHeap;
 import com.ihaveaname.java.datastructure.Heap;
-import com.ihaveaname.java.tinyalgos.sorting.Util;
+import com.ihaveaname.java.tinyalgos.sorting.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class AppBinaryHeap {
     while (!heap.isEmpty()) {
       sorted.add(heap.deleteMin());
     }
-    assert Util.checkAscendingOrder(sorted, Integer::compareTo);
+    assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     assert heap.isEmpty();
 
     List<Integer> input = new ArrayList<>(100);
@@ -38,7 +38,7 @@ public class AppBinaryHeap {
     while (!heap.isEmpty()) {
       sorted.add(heap.deleteMin());
     }
-    assert Util.checkAscendingOrder(sorted, Integer::compareTo);
+    assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
     assert heap.isEmpty();
 
@@ -48,7 +48,7 @@ public class AppBinaryHeap {
     while (!heap.isEmpty()) {
       sorted.add(heap.deleteMin());
     }
-    assert Util.checkAscendingOrder(sorted, Integer::compareTo);
+    assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
     assert heap.isEmpty();
 
@@ -61,7 +61,7 @@ public class AppBinaryHeap {
     while (!heap.isEmpty()) {
       sorted.add(heap.deleteMin());
     }
-    assert Util.checkAscendingOrder(sorted, Integer::compareTo);
+    assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
     assert heap.isEmpty();
   }

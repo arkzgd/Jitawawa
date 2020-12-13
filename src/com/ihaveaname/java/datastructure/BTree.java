@@ -17,16 +17,12 @@ public class BTree<T> {
     }
   }
 
-  private BTreeNode<T> root = null;
-
-  private boolean isOddValue(int value) {
-    return (value % 2) == 1;
-  }
+  BTreeNode<T> root = null;
 
   private ArrayList<T> getLeftSubTreeNodes(ArrayList<T> nodes) {
     ArrayList<T> result = new ArrayList<>();
 
-    if (isOddValue(nodes.size()) && nodes.size() > 1) {
+    if (Utils.isOddValue(nodes.size()) && nodes.size() > 1) {
       int len = (nodes.size() - 1) >> 1;
       result.addAll(nodes.subList(1, len + 1));
     }
@@ -37,7 +33,7 @@ public class BTree<T> {
   private ArrayList<T> getRightSubTreeNodes(ArrayList<T> nodes) {
     ArrayList<T> result = new ArrayList<>();
 
-    if (isOddValue(nodes.size()) && nodes.size() > 1) {
+    if (Utils.isOddValue(nodes.size()) && nodes.size() > 1) {
       int len = (nodes.size() - 1) >> 1;
       result.addAll(nodes.subList(len + 1, nodes.size()));
     }
@@ -60,12 +56,17 @@ public class BTree<T> {
     return root;
   }
 
-  public BTreeNode<T> insertAsLeftChild(BTreeNode<T> of, BTreeNode<T> newNode) {
+  BTreeNode<T> insertAsRoot(BTreeNode<T> newNode) {
+    root = newNode;
+    return root;
+  }
+
+  BTreeNode<T> insertAsLeftChild(BTreeNode<T> of, BTreeNode<T> newNode) {
     if (of != null) of.leftTree = newNode;
     return newNode;
   }
 
-  public BTreeNode<T> insertAsRightChild(BTreeNode<T> of, BTreeNode<T> newNode) {
+  BTreeNode<T> insertAsRightChild(BTreeNode<T> of, BTreeNode<T> newNode) {
     if (of != null) of.rightTree = newNode;
     return newNode;
   }
@@ -82,6 +83,22 @@ public class BTree<T> {
 
       result.addAll(traverse_pre_order(tree.leftTree));
       result.addAll(traverse_pre_order(tree.rightTree));
+    }
+
+    return result;
+  }
+
+  public ArrayList<T> traverse_in_order() {
+    return traverse_in_order(root);
+  }
+
+  private ArrayList<T> traverse_in_order(BTreeNode<T> tree) {
+    ArrayList<T> result = new ArrayList<>();
+
+    if (tree != null) {
+      result.addAll(traverse_in_order(tree.leftTree));
+      result.add(tree.v);
+      result.addAll(traverse_in_order(tree.rightTree));
     }
 
     return result;
@@ -106,6 +123,7 @@ public class BTree<T> {
   public ArrayList<T> dfs_non_recursive() {
     return dfs_non_recursive(root);
   }
+
   private ArrayList<T> dfs_non_recursive(BTreeNode<T> tree) {
     ArrayList<T> result = new ArrayList<>();
     java.util.Stack<BTreeNode<T>> stack = new java.util.Stack<>();

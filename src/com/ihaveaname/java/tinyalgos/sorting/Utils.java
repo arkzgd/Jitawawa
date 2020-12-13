@@ -3,7 +3,7 @@ package com.ihaveaname.java.tinyalgos.sorting;
 import java.util.Comparator;
 import java.util.List;
 
-public class Util {
+public class Utils {
   public static <T> boolean swap(T[] array, int i, int j) {
     boolean sanity = 0 <= i && i < array.length && 0 <= j && j < array.length;
     if (i != j && sanity) {

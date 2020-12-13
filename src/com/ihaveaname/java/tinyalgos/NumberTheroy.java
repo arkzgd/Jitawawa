@@ -1,5 +1,7 @@
 package com.ihaveaname.java.tinyalgos;
 
+import com.ihaveaname.java.datastructure.Pair;
+
 import java.util.*;
 
 public class NumberTheroy {

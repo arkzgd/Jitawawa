@@ -10,7 +10,7 @@ import static com.ihaveaname.java.tinyalgos.sorting.CombSort.combSort;
 import static com.ihaveaname.java.tinyalgos.sorting.InsertSort.insertSort;
 import static com.ihaveaname.java.tinyalgos.sorting.QuickSort.quickSort;
 import static com.ihaveaname.java.tinyalgos.sorting.ShellSort.shellSort;
-import static com.ihaveaname.java.tinyalgos.sorting.Util.checkAscendingOrder;
+import static com.ihaveaname.java.tinyalgos.sorting.Utils.checkAscendingOrder;
 
 public class AppSorting {
 

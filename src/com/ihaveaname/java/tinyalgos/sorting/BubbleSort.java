@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ihaveaname.java.tinyalgos.sorting.Util.swap;
+import static com.ihaveaname.java.tinyalgos.sorting.Utils.swap;
 
 public class BubbleSort {
   public static <T> List<T> bubbleSort(List<T> input, Comparator<T> comparator) {

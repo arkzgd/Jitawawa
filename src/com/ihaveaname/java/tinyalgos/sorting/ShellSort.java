@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.ihaveaname.java.tinyalgos.sorting.Util.nextGap;
+import static com.ihaveaname.java.tinyalgos.sorting.Utils.nextGap;
 
 public class ShellSort {
   public static <T> List<T> shellSort(List<T> input, Comparator<T> comparator) {

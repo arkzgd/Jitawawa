@@ -1,4 +1,4 @@
-package com.ihaveaname.java.tinyalgos;
+package com.ihaveaname.java.datastructure;
 
 public class Pair<U, V> {
   public final U u;
