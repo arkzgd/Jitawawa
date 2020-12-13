@@ -44,9 +44,7 @@ public class BTree<T> {
   }
 
   public BTreeNode<T> buildBTree(ArrayList<T> nodes) {
-    if (nodes.size() == 0) return null;
-
-    if (nodes.get(0) == null) return null;
+    if (nodes.size() == 0 || nodes.get(0) == null) return null;
 
     ArrayList<T> l = getLeftSubTreeNodes(nodes);
     ArrayList<T> r = getRightSubTreeNodes(nodes);
@@ -105,11 +103,11 @@ public class BTree<T> {
   }
 
   public int height_dfs_non_recursive(BTreeNode<T> tree) {
-    class Pair {
+    class Frame {
       int level;
       BTreeNode<T> node;
 
-      Pair(int level, BTreeNode<T> node) {
+      Frame(int level, BTreeNode<T> node) {
         this.level = level;
         this.node = node;
       }
@@ -119,19 +117,16 @@ public class BTree<T> {
       return 0;
     }
 
-    int level = 1;
-    java.util.Stack<Pair> stack = new Stack<>();
-    stack.push(new Pair(level, tree));
+    java.util.Stack<Frame> stack = new Stack<>();
+    stack.push(new Frame(1, tree));
 
     int waterMark = 1;
     while (!stack.empty()) {
-      Pair current = stack.pop();
+      Frame current = stack.pop();
       if (current.node != null) {
-        stack.push(new Pair(current.level + 1, current.node.leftTree));
-        stack.push(new Pair(current.level + 1, current.node.rightTree));
-        if (current.level + 1 > waterMark
-            && current.node.leftTree != null
-            && current.node.rightTree != null) waterMark++;
+        waterMark = Math.max(waterMark, current.level);
+        stack.push(new Frame(current.level + 1, current.node.leftTree));
+        stack.push(new Frame(current.level + 1, current.node.rightTree));
       }
     }
 
