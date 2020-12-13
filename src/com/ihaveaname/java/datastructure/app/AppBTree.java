@@ -21,32 +21,32 @@ public class AppBTree {
     Integer[] input = {1, 2, 4, 8, 9, 5, null, null, 3, 6, null, null, 7, null, null};
     ArrayList<Integer> nodes = new ArrayList<>();
     nodes.addAll(Arrays.asList(input));
-    BTree.BTreeNode<Integer> tree = iBTree.buildBTree(nodes);
+    iBTree.buildBTree(nodes);
 
-    List<Integer> traversed = iBTree.traverse_pre_order(tree);
+    List<Integer> traversed = iBTree.traverse_pre_order();
     assert Arrays.equals(input, traversed.toArray());
     System.out.println(traversed);
 
-    List<Integer> dfsed = iBTree.dfs(tree);
+    List<Integer> dfsed = iBTree.dfs();
     assert Arrays.equals(input, dfsed.toArray());
     System.out.println(dfsed);
 
-    List<Integer> dfsed_non_recursive = iBTree.dfs_non_recursive(tree);
+    List<Integer> dfsed_non_recursive = iBTree.dfs_non_recursive();
     assert Arrays.equals(input, dfsed_non_recursive.toArray());
     System.out.println(dfsed_non_recursive);
 
-    int h = iBTree.height_dfs(tree);
+    int h = iBTree.height_dfs();
     assert h == 4;
     System.out.println("tree has height: " + h);
 
-    h = iBTree.height_dfs_non_recursive(tree);
+    h = iBTree.height_dfs_non_recursive();
     assert h == 4;
     System.out.println("tree has height: " + h);
 
-    ArrayList<ArrayList<Integer>> ll = iBTree.bfs(tree);
+    ArrayList<ArrayList<Integer>> ll = iBTree.bfs();
     System.out.println("tree traversed by level: " + Arrays.toString(ll.toArray()));
 
-    ll = iBTree.bfs_with_queue(tree);
+    ll = iBTree.bfs_with_queue();
     System.out.println("tree traversed by level: " + Arrays.toString(ll.toArray()));
   }
 }

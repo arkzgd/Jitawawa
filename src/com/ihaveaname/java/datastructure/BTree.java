@@ -17,6 +17,8 @@ public class BTree<T> {
     }
   }
 
+  private BTreeNode<T> root = null;
+
   private boolean isOddValue(int value) {
     return (value % 2) == 1;
   }
@@ -43,16 +45,36 @@ public class BTree<T> {
     return result;
   }
 
-  public BTreeNode<T> buildBTree(ArrayList<T> nodes) {
-    if (nodes.size() == 0 ) return null;
+  public void buildBTree(ArrayList<T> nodes) {
+    root = buildTree(nodes);
+  }
+
+  private BTreeNode<T> buildTree(ArrayList<T> nodes) {
+    if (nodes.size() == 0) return null;
     if (nodes.get(0) == null) return new BTreeNode<>(null, null, null);
 
     ArrayList<T> l = getLeftSubTreeNodes(nodes);
     ArrayList<T> r = getRightSubTreeNodes(nodes);
-    return new BTreeNode<>(buildBTree(l), nodes.get(0), buildBTree(r));
+    root = new BTreeNode<>(buildTree(l), nodes.get(0), buildTree(r));
+
+    return root;
   }
 
-  public ArrayList<T> traverse_pre_order(BTreeNode<T> tree) {
+  public BTreeNode<T> insertAsLeftChild(BTreeNode<T> of, BTreeNode<T> newNode) {
+    if (of != null) of.leftTree = newNode;
+    return newNode;
+  }
+
+  public BTreeNode<T> insertAsRightChild(BTreeNode<T> of, BTreeNode<T> newNode) {
+    if (of != null) of.rightTree = newNode;
+    return newNode;
+  }
+
+  public ArrayList<T> traverse_pre_order() {
+    return traverse_pre_order(root);
+  }
+
+  private ArrayList<T> traverse_pre_order(BTreeNode<T> tree) {
     ArrayList<T> result = new ArrayList<>();
 
     if (tree != null) {
@@ -65,7 +87,11 @@ public class BTree<T> {
     return result;
   }
 
-  public ArrayList<T> dfs(BTreeNode<T> tree) {
+  public ArrayList<T> dfs() {
+    return dfs(root);
+  }
+
+  private ArrayList<T> dfs(BTreeNode<T> tree) {
     ArrayList<T> result = new ArrayList<>();
 
     if (tree == null) return result;
@@ -77,7 +103,10 @@ public class BTree<T> {
     return result;
   }
 
-  public ArrayList<T> dfs_non_recursive(BTreeNode<T> tree) {
+  public ArrayList<T> dfs_non_recursive() {
+    return dfs_non_recursive(root);
+  }
+  private ArrayList<T> dfs_non_recursive(BTreeNode<T> tree) {
     ArrayList<T> result = new ArrayList<>();
     java.util.Stack<BTreeNode<T>> stack = new java.util.Stack<>();
 
@@ -97,13 +126,21 @@ public class BTree<T> {
     return result;
   }
 
-  public int height_dfs(BTreeNode<T> tree) {
+  public int height_dfs() {
+    return height_dfs(root);
+  }
+
+  private int height_dfs(BTreeNode<T> tree) {
     if (tree == null) return 0;
 
     return Math.max(height_dfs(tree.leftTree), height_dfs(tree.rightTree)) + 1;
   }
 
-  public int height_dfs_non_recursive(BTreeNode<T> tree) {
+  public int height_dfs_non_recursive() {
+    return height_dfs_non_recursive(root);
+  }
+
+  private int height_dfs_non_recursive(BTreeNode<T> tree) {
     class Frame {
       int level;
       BTreeNode<T> node;
@@ -134,6 +171,10 @@ public class BTree<T> {
     return waterMark;
   }
 
+  public ArrayList<ArrayList<T>> bfs() {
+    return bfs(root);
+  }
+
   public ArrayList<ArrayList<T>> bfs(BTreeNode<T> tree) {
     ArrayList<ArrayList<T>> result = new ArrayList<>();
 
@@ -155,7 +196,11 @@ public class BTree<T> {
     bfs_recursive(tree.rightTree, level + 1, result);
   }
 
-  public ArrayList<ArrayList<T>> bfs_with_queue(BTreeNode<T> tree) {
+  public ArrayList<ArrayList<T>> bfs_with_queue() {
+    return bfs_with_queue(root);
+  }
+
+  private ArrayList<ArrayList<T>> bfs_with_queue(BTreeNode<T> tree) {
     ArrayList<ArrayList<T>> result = new ArrayList<>();
     Queue<BTreeNode<T>> queue = new LinkedList<>();
 
