@@ -44,7 +44,8 @@ public class BTree<T> {
   }
 
   public BTreeNode<T> buildBTree(ArrayList<T> nodes) {
-    if (nodes.size() == 0 || nodes.get(0) == null) return null;
+    if (nodes.size() == 0 ) return null;
+    if (nodes.get(0) == null) return new BTreeNode<>(null, null, null);
 
     ArrayList<T> l = getLeftSubTreeNodes(nodes);
     ArrayList<T> r = getRightSubTreeNodes(nodes);
