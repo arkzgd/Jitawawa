@@ -78,8 +78,9 @@ public class BST<T> {
     } else if (compareResult < 0) {
       root.rightTree = remove(v, root.rightTree);
     } else if (root.leftTree != null && root.rightTree != null) {
-      root.v = findMin(root.rightTree).v;
-      Pair<BTreeNode<T>, BTreeNode<T>> found = find(root.v);
+      T rightMin = findMin(root.rightTree).v;
+      Pair<BTreeNode<T>, BTreeNode<T>> found = find(rightMin);
+      root.v = rightMin;
       BTreeNode<T> parent = found.u;
       BTreeNode<T> node = found.v;
       if (node == parent.leftTree) {
