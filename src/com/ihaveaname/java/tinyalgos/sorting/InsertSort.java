@@ -6,27 +6,22 @@ import java.util.Comparator;
 import java.util.List;
 
 public class InsertSort {
-  public static <T> List<T> insertSort(List<T> input, Comparator<T> comparator) {
-    List<T> result = new ArrayList<>();
-
-    T[] sorted = insertSort_with_gap((T[]) input.toArray(), 1, comparator);
-
-    result.addAll(Arrays.asList(sorted));
-    return result;
+  public static <T> List<T> insertSort(ArrayList<T> input, Comparator<T> comparator) {
+    return insertSort_with_gap(input, 1, comparator);
   }
 
-  public static <T> T[] insertSort_with_gap(T[] input, int gap, Comparator<T> comparator) {
-    int length = input.length;
+  public static <T> ArrayList<T> insertSort_with_gap(ArrayList<T> input, int gap, Comparator<T> comparator) {
+    int length = input.size();
     for (int i = gap; i < length; i++) {
-      T v = input[i];
+      T v = input.get(i);
       int j = i;
       while (j >= gap) {
-        if (comparator.compare(input[j - gap], v) > 0) {
-          input[j] = input[j - gap];
+        if (comparator.compare(input.get(j - gap), v) > 0) {
+          input.set(j, input.get(j - gap));
           j -= gap;
         } else break;
       }
-      input[j] = v;
+      input.set(j, v);
     }
 
     return input;
