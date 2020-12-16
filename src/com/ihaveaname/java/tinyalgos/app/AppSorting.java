@@ -21,7 +21,7 @@ public class AppSorting {
   }
 
   public static void main(String[] args) {
-    List input = new ArrayList<Integer>(100);
+    ArrayList input = new ArrayList<Integer>(100);
     for (int i = 100; i > 0; i--) input.add(i);
 
     List sorted = bubbleSort(input, Integer::compareTo);

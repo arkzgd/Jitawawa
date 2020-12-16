@@ -1,5 +1,6 @@
 package com.ihaveaname.java.tinyalgos.sorting;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,6 +11,16 @@ public class Utils {
       T v = array[i];
       array[i] = array[j];
       array[j] = v;
+      return true;
+    } else return false;
+  }
+
+  public static <T> boolean swap(ArrayList<T> list, int i, int j) {
+    boolean sanity = 0 <= i && i < list.size() && 0 <= j && j < list.size();
+    if (i != j && sanity) {
+      T v = list.get(i);
+      list.set(i, list.get(j));
+      list.set(j, v);
       return true;
     } else return false;
   }
