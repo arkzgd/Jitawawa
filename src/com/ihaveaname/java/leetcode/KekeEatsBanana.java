@@ -1,6 +1,6 @@
-package com.ihaveaname.java.playground;
+package com.ihaveaname.java.leetcode;
 
-public class PlayKekeEatsBanana {
+public class KekeEatsBanana {
   private static int eat(int[] piles, int hours) {
     int low = 1;
     int high = maxPile(piles);
@@ -8,11 +8,11 @@ public class PlayKekeEatsBanana {
     while (low < high) {
       int mid = low + ((high - low) >> 1);
       if (canEatup(piles, mid, hours)) high = mid;
-      else
-        low =
-            mid
-                + 1; // the key is to have low = mid + 1, otherwise, it will be loop forever because
-                     // mid will always be low if high = low + 1
+      else {
+        // the key is to have low = mid + 1, otherwise, it will be loop forever because
+        // mid will always be low if high = low + 1
+        low = mid + 1;
+      }
     }
 
     return low;
