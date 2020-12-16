@@ -9,10 +9,8 @@ import static com.ihaveaname.java.tinyalgos.sorting.Utils.nextGap;
 import static com.ihaveaname.java.tinyalgos.sorting.Utils.swap;
 
 public class CombSort {
-  public static <T> List<T> combSort(List<T> input, Comparator<T> comparator) {
-    T[] array = (T[]) input.toArray();
-
-    int length = array.length;
+  public static <T> List<T> combSort(ArrayList<T> input, Comparator<T> comparator) {
+    int length = input.size();
     int gap = length;
     boolean sorted = false;
 
@@ -21,17 +19,14 @@ public class CombSort {
         sorted = true;
       }
       for (int i = 0; i < length - gap; i++) {
-        if (comparator.compare(array[i], array[i + gap]) > 0)  {
-          swap(array, i, i + gap);
-          sorted =  false;
+        if (comparator.compare(input.get(i), input.get(i + gap)) > 0) {
+          swap(input, i, i + gap);
+          sorted = false;
         }
       }
       gap = nextGap(gap);
     }
 
-    ArrayList<T> result = new ArrayList<>();
-    result.addAll(Arrays.asList(array));
-
-    return result;
+    return input;
   }
 }
