@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AppBST {
   public static void main(String[] args) {
-    final int numOfElements = 11;
+    final int numOfElements = 20;
     BST<Integer> bst = new BST<>(Integer::compareTo);
 
     List<Integer> input = new ArrayList<>(numOfElements);
@@ -25,12 +25,12 @@ public class AppBST {
 
     Collections.shuffle(input);
     for (int i : input) {
-      System.out.println("before removing " + i + ": " + bst.traverse_in_order());
       bst.remove(i);
       assert bst.isBST();
       assert bst.contains(i) == false;
       assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);
       System.out.println("after removing " + i + ": " + bst.traverse_in_order());
+      System.out.println("bst height: " + bst.height());
     }
   }
 }

@@ -66,13 +66,9 @@ public class BST<T> {
   }
 
   public void remove(T v) {
-    remove(v, tree.root);
-  }
+    if (tree.root == null) return;
 
-  private void remove(T v, BTreeNode<T> root) {
-    if (root == null) return;
-
-    BTreeNode<T> p = root, pre = null;
+    BTreeNode<T> p = tree.root, pre = null;
     while (p != null) {
       int compareResult = comparator.compare(p.v, v);
       if (compareResult > 0) {
@@ -95,7 +91,7 @@ public class BST<T> {
         break;
       } else {
         if (pre == null) {
-          if (p != root)
+          if (p != tree.root)
             throw new IllegalStateException(
                 "current node is not equal to root but current node has no parent.");
           else tree.root = (p.leftTree != null) ? p.leftTree : p.rightTree;
@@ -128,5 +124,9 @@ public class BST<T> {
 
   public List<T> traverse_in_order() {
     return tree.traverse_in_order();
+  }
+
+  public int height() {
+    return tree.height_dfs();
   }
 }
