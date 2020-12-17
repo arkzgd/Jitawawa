@@ -26,8 +26,7 @@ public class AppBST {
     Collections.shuffle(input);
     for (int i : input) {
       System.out.println("before removing " + i + ": " + bst.traverse_in_order());
-      Integer r = bst.remove(i);
-      // System.out.println("removed: " + r);
+      bst.remove(i);
       assert bst.isBST();
       assert bst.contains(i) == false;
       assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);

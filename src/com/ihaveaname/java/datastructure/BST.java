@@ -65,14 +65,12 @@ public class BST<T> {
     return rc;
   }
 
-  public T remove(T v) {
-    BTreeNode<T> r = remove(v, tree.root);
-    if (r != null) return r.v;
-    else return null;
+  public void remove(T v) {
+    remove(v, tree.root);
   }
 
-  private BTreeNode<T> remove(T v, BTreeNode<T> root) {
-    if (root == null) return null;
+  private void remove(T v, BTreeNode<T> root) {
+    if (root == null) return;
 
     BTreeNode<T> p = root, pre = null;
     while (p != null) {
@@ -109,8 +107,6 @@ public class BST<T> {
         break;
       }
     }
-
-    return p;
   }
 
   private Pair<BTreeNode<T>, BTreeNode<T>> find(T v) {
