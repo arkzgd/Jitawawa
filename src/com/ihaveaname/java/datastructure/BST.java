@@ -65,35 +65,52 @@ public class BST<T> {
     return rc;
   }
 
-  public void remove(T v) {
-    tree.root = remove(v, tree.root);
+  public T remove(T v) {
+    BTreeNode<T> r = remove(v, tree.root);
+    if (r != null) return r.v;
+    else return null;
   }
 
   private BTreeNode<T> remove(T v, BTreeNode<T> root) {
     if (root == null) return null;
 
-    int compareResult = comparator.compare(root.v, v);
-    if (compareResult > 0) {
-      root.leftTree = remove(v, root.leftTree);
-    } else if (compareResult < 0) {
-      root.rightTree = remove(v, root.rightTree);
-    } else if (root.leftTree != null && root.rightTree != null) {
-      T rightMin = findMin(root.rightTree).v;
-      Pair<BTreeNode<T>, BTreeNode<T>> found = find(rightMin);
-      root.v = rightMin;
-      BTreeNode<T> parent = found.u;
-      BTreeNode<T> node = found.v;
-      if (node == parent.leftTree) {
-        parent.leftTree = node.rightTree;
+    BTreeNode<T> p = root, pre = null;
+    while (p != null) {
+      int compareResult = comparator.compare(p.v, v);
+      if (compareResult > 0) {
+        pre = p;
+        p = p.leftTree;
+      } else if (compareResult < 0) {
+        pre = p;
+        p = p.rightTree;
+      } else if (p.leftTree != null && p.rightTree != null) {
+        T rightMin = findMin(p.rightTree).v;
+        Pair<BTreeNode<T>, BTreeNode<T>> found = find(rightMin);
+        p.v = rightMin;
+        BTreeNode<T> parent = found.u;
+        BTreeNode<T> node = found.v;
+        if (node == parent.leftTree) {
+          parent.leftTree = node.rightTree;
+        } else {
+          parent.rightTree = node.rightTree;
+        }
+        break;
+      } else {
+        if (pre == null) {
+          if (p != root)
+            throw new IllegalStateException(
+                "current node is not equal to root but current node has no parent.");
+          else tree.root = (p.leftTree != null) ? p.leftTree : p.rightTree;
+        } else {
+          BTreeNode<T> subTree = (p.leftTree != null) ? p.leftTree : p.rightTree;
+          if (pre.leftTree == p) pre.leftTree = subTree;
+          else if (pre.rightTree == p) pre.rightTree = subTree;
+        }
+        break;
       }
-      else {
-        parent.rightTree = node.rightTree;
-      }
-    } else {
-      root = (root.leftTree != null) ? root.leftTree : root.rightTree;
     }
 
-    return root;
+    return p;
   }
 
   private Pair<BTreeNode<T>, BTreeNode<T>> find(T v) {
