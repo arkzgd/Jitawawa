@@ -15,7 +15,7 @@ public class AVL<T> extends BST<AVLNode<T>> {
   private void updateBalanceFactor(BTreeNode<AVLNode<T>> root) {
     if (root == null) return;
 
-    root.v.setBalanceFactor(height(root.leftTree) - height(root.rightTree));
+    root.v.balanceFactor = height(root.leftTree) - height(root.rightTree);
     updateBalanceFactor(root.leftTree);
     updateBalanceFactor(root.rightTree);
   }
