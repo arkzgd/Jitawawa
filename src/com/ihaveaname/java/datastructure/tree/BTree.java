@@ -7,18 +7,6 @@ import java.util.Stack;
 
 public class BTree<T> {
 
-  public static class BTreeNode<T> {
-    T v;
-    BTreeNode<T> leftTree;
-    BTreeNode<T> rightTree;
-
-    public BTreeNode(BTreeNode<T> left, T v, BTreeNode<T> right) {
-      this.v = v;
-      this.leftTree = left;
-      this.rightTree = right;
-    }
-  }
-
   BTreeNode<T> root = null;
 
   private ArrayList<T> getLeftSubTreeNodes(ArrayList<T> nodes) {

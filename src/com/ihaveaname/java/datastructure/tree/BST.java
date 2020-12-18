@@ -1,6 +1,5 @@
 package com.ihaveaname.java.datastructure.tree;
 
-import com.ihaveaname.java.datastructure.tree.BTree.BTreeNode;
 import com.ihaveaname.java.datastructure.Pair;
 
 import java.util.Comparator;
