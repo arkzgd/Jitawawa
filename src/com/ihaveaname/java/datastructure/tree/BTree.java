@@ -1,4 +1,6 @@
-package com.ihaveaname.java.datastructure;
+package com.ihaveaname.java.datastructure.tree;
+
+import com.ihaveaname.java.datastructure.Utils;
 
 import java.util.*;
 import java.util.Stack;
@@ -148,7 +150,7 @@ public class BTree<T> {
     return height_dfs(root);
   }
 
-  private int height_dfs(BTreeNode<T> tree) {
+  protected int height_dfs(BTreeNode<T> tree) {
     if (tree == null) return 0;
 
     return Math.max(height_dfs(tree.leftTree), height_dfs(tree.rightTree)) + 1;
@@ -158,7 +160,7 @@ public class BTree<T> {
     return height_dfs_non_recursive(root);
   }
 
-  private int height_dfs_non_recursive(BTreeNode<T> tree) {
+  protected int height_dfs_non_recursive(BTreeNode<T> tree) {
     class Frame {
       int level;
       BTreeNode<T> node;

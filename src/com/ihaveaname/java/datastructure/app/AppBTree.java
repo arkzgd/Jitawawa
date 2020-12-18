@@ -1,6 +1,6 @@
 package com.ihaveaname.java.datastructure.app;
 
-import com.ihaveaname.java.datastructure.BTree;
+import com.ihaveaname.java.datastructure.tree.BTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;

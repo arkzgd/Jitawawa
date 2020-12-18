@@ -1,6 +1,7 @@
-package com.ihaveaname.java.datastructure;
+package com.ihaveaname.java.datastructure.tree;
 
-import com.ihaveaname.java.datastructure.BTree.BTreeNode;
+import com.ihaveaname.java.datastructure.tree.BTree.BTreeNode;
+import com.ihaveaname.java.datastructure.Pair;
 
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class BST<T> {
   private Comparator<T> comparator;
 
-  private BTree<T> tree;
+  protected BTree<T> tree;
 
   public BST(Comparator<T> comparator) {
     tree = new BTree<>();
@@ -128,5 +129,9 @@ public class BST<T> {
 
   public int height() {
     return tree.height_dfs();
+  }
+
+  protected int height(BTreeNode<T> root) {
+    return tree.height_dfs(root);
   }
 }

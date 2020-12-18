@@ -1,6 +1,6 @@
 package com.ihaveaname.java.datastructure.app;
 
-import com.ihaveaname.java.datastructure.BST;
+import com.ihaveaname.java.datastructure.tree.BST;
 import com.ihaveaname.java.tinyalgos.sorting.Utils;
 
 import java.util.ArrayList;
