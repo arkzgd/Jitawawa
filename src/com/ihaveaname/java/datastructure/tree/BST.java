@@ -57,17 +57,29 @@ public class BST<T> {
   }
 
   private BTreeNode<T> findMin(BTreeNode<T> ofRoot) {
-    BTreeNode<T> lc = ofRoot;
-    while (lc.leftTree != null) lc = lc.leftTree;
+    if (ofRoot == null) return null;
 
-    return lc;
+    BTreeNode<T> minNode = ofRoot;
+    BTreeNode<T> lc = ofRoot;
+    while (lc.leftTree != null) {
+      lc = lc.leftTree;
+      if (comparator.compare(lc.v, minNode.v) < 0) minNode = lc;
+    }
+
+    return minNode;
   }
 
   private BTreeNode<T> findMax(BTreeNode<T> ofRoot) {
-    BTreeNode<T> rc = ofRoot;
-    while (rc.rightTree != null) rc = rc.rightTree;
+    if (ofRoot == null) return null;
 
-    return rc;
+    BTreeNode<T> maxNode = ofRoot;;
+    BTreeNode<T> rc = ofRoot;
+    while (rc.rightTree != null) {
+      rc = rc.rightTree;
+      if (comparator.compare(rc.v, maxNode.v) > 0) maxNode = rc;
+    }
+
+    return maxNode;
   }
 
   public void remove(T v) {
