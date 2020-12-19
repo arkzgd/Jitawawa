@@ -2,6 +2,7 @@ package com.ihaveaname.java.datastructure.tree;
 
 import com.ihaveaname.java.datastructure.Pair;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class BST<T> {
   private BTreeNode<T> findMax(BTreeNode<T> ofRoot) {
     if (ofRoot == null) return null;
 
-    BTreeNode<T> maxNode = ofRoot;;
+    BTreeNode<T> maxNode = ofRoot;
     BTreeNode<T> rc = ofRoot;
     while (rc.rightTree != null) {
       rc = rc.rightTree;
@@ -145,5 +146,9 @@ public class BST<T> {
 
   public int height() {
     return tree.height_dfs();
+  }
+
+  public ArrayList<ArrayList<T>> traverse_layer_order() {
+    return tree.bfs();
   }
 }

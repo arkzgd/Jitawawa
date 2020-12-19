@@ -7,7 +7,7 @@ import java.util.List;
 public class AVL<T> {
 
   private AVLNode<T> root;
-  private Comparator<T> comparator;
+  private final Comparator<T> comparator;
 
   public AVL(Comparator<T> comparator) {
     root = null;
@@ -45,6 +45,43 @@ public class AVL<T> {
     return node;
   }
 
+  public void remove(T v) {
+    root = remove(v, root);
+  }
+
+  private AVLNode<T> remove(T v, AVLNode<T> node) {
+    if (node == null) return null;
+
+    int compareResult = comparator.compare(node.v, v);
+    if (compareResult > 0) {
+      node.leftTree = remove(v, node.leftTree);
+    } else if (compareResult < 0) {
+      node.rightTree = remove(v, node.rightTree);
+    } else {
+      if (node.leftTree != null && node.rightTree != null) {
+        AVLNode<T> rightMinNode = mostLeftChild(node.rightTree);
+        node.v = rightMinNode.v;
+        node.rightTree = remove(rightMinNode.v, node.rightTree);
+      } else {
+        node = (node.leftTree != null) ? node.leftTree : node.rightTree;
+      }
+    }
+
+    if (node != null) {
+      node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
+    }
+
+    return node;
+  }
+
+  private AVLNode<T> mostLeftChild(AVLNode<T> node) {
+    if (node == null) return null;
+
+    AVLNode<T> lc = node;
+    while (lc.leftTree != null) lc = lc.leftTree;
+
+    return lc;
+  }
   // Right Rotate
   private AVLNode<T> rotateWithLeftChild(AVLNode<T> node) {
     AVLNode<T> l = node.leftTree;

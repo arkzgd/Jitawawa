@@ -15,7 +15,7 @@ public class AppAVL {
 
     AVL<Integer> avl = new AVL<>(Integer::compareTo);
 
-    final int numOfElements = 20;
+    final int numOfElements = 63;
     List<Integer> input = new ArrayList<>(numOfElements);
     for (int i = 1; i <= numOfElements; i++) input.add(i);
     Collections.shuffle(input);
@@ -32,5 +32,16 @@ public class AppAVL {
     assert bst.isBST();
     assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);
     System.out.println(bst.traverse_in_order());
+
+    System.out.println(bst.height());
+    System.out.println(bst.traverse_layer_order());
+
+    for (Integer e : input) {
+      avl.remove(e);
+      bst = avl.toBST();
+      assert bst.isBST();
+      assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);
+      System.out.println(bst.traverse_in_order());
+    }
   }
 }
