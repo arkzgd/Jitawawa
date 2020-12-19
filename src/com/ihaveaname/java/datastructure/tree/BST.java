@@ -8,10 +8,15 @@ import java.util.List;
 public class BST<T> {
   private Comparator<T> comparator;
 
-  protected BTree<T> tree;
+  private BTree<T> tree;
 
   public BST(Comparator<T> comparator) {
     tree = new BTree<>();
+    this.comparator = comparator;
+  }
+
+  public BST(BTreeNode<T> tree, Comparator<T> comparator) {
+    this.tree = new BTree<>(tree);
     this.comparator = comparator;
   }
 
@@ -128,9 +133,5 @@ public class BST<T> {
 
   public int height() {
     return tree.height_dfs();
-  }
-
-  protected int height(BTreeNode<T> root) {
-    return tree.height_dfs(root);
   }
 }

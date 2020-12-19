@@ -7,7 +7,15 @@ import java.util.Stack;
 
 public class BTree<T> {
 
-  BTreeNode<T> root = null;
+  BTreeNode<T> root;
+
+  public BTree() {
+    root = null;
+  }
+
+  public BTree(BTreeNode<T> root) {
+    this.root = root;
+  }
 
   private ArrayList<T> getLeftSubTreeNodes(ArrayList<T> nodes) {
     ArrayList<T> result = new ArrayList<>();

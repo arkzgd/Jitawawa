@@ -1,6 +1,8 @@
 package com.ihaveaname.java.datastructure.tree;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class AVL<T> {
 
@@ -43,19 +45,80 @@ public class AVL<T> {
     return node;
   }
 
+  // Right Rotate
   private AVLNode<T> rotateWithLeftChild(AVLNode<T> node) {
-    return node;
+    AVLNode<T> l = node.leftTree;
+
+    node.leftTree = l.rightTree;
+    l.rightTree = node;
+
+    node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
+    l.height = Math.max(height(l.leftTree), height(l.rightTree)) + 1;
+
+    return l;
   }
 
+  // Node's Left Child, Left Rotate with its Right Child
+  // Node Right Rotate with its new Left Child
   private AVLNode<T> doubleRotateWithLeftChild(AVLNode<T> node) {
-    return node;
+    node.leftTree = rotateWithRightChild(node.leftTree);
+    return rotateWithLeftChild(node);
   }
 
+  // Left Rotate
   private AVLNode<T> rotateWithRightChild(AVLNode<T> node) {
-    return node;
+    AVLNode<T> r = node.rightTree;
+
+    node.rightTree = r.leftTree;
+    r.leftTree = node;
+
+    node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
+    r.height = Math.max(height(r.leftTree), height(r.rightTree)) + 1;
+
+    return r;
   }
 
+  // Node's Right Child, Right Rotate with its Left Child
+  // Node Left Rotate with its new Right Child
   private AVLNode<T> doubleRotateWithRightChild(AVLNode<T> node) {
-    return node;
+    node.rightTree = rotateWithLeftChild(node.rightTree);
+    return rotateWithRightChild(node);
+  }
+
+  public List<AVLNode<T>> traverse_in_order() {
+    List<AVLNode<T>> result = new ArrayList<>();
+
+    traverse_in_order(result, root);
+
+    return result;
+  }
+
+  private void traverse_in_order(List<AVLNode<T>> result, AVLNode<T> node) {
+    if (node == null) return;
+
+    traverse_in_order(result, node.leftTree);
+    result.add(node);
+    traverse_in_order(result, node.rightTree);
+  }
+
+  public boolean isAVL() {
+    return isAVL(root);
+  }
+
+  private boolean isAVL(AVLNode<T> node) {
+    if (node == null) return true;
+
+    int balanceFactor = Math.abs(height(node.leftTree) - height(node.rightTree));
+    return (balanceFactor <= 1) && isAVL(node.leftTree) && isAVL(node.rightTree);
+  }
+
+  public BST<T> toBST() {
+    return new BST<>(toBST(root), comparator);
+  }
+
+  private BTreeNode<T> toBST(AVLNode<T> node) {
+    if (node == null) return null;
+
+    return new BTreeNode<>(toBST(node.leftTree), node.v, toBST(node.rightTree));
   }
 }
