@@ -18,6 +18,29 @@ public class AVL<T> {
     return (node == null) ? -1 : node.height;
   }
 
+  private int balanceFactor(AVLNode<T> node) {
+    return (node == null) ? 0 : height(node.leftTree) - height(node.rightTree);
+  }
+
+  private AVLNode<T> balanceNode(AVLNode<T> node) {
+    if (node == null) return null;
+
+    int balance = balanceFactor(node);
+    if (balance > 1) {
+      if (balanceFactor(node.leftTree) > 0) node = rotateWithLeftChild(node);
+      else node = doubleRotateWithLeftChild(node);
+    } else if (balance < -1) {
+      if (balanceFactor(node.rightTree) > 0) node = doubleRotateWithRightChild(node);
+      else node = rotateWithRightChild(node);
+    }
+
+    return node;
+  }
+
+  private void updateNodeHeight(AVLNode<T> node) {
+    if (node != null) node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
+  }
+
   public void insert(T v) {
     root = insert(v, root);
   }
@@ -28,19 +51,12 @@ public class AVL<T> {
     int compareResult = comparator.compare(v, node.v);
     if (compareResult < 0) {
       node.leftTree = insert(v, node.leftTree);
-      if (height(node.leftTree) - height(node.rightTree) == 2) {
-        if (comparator.compare(v, node.leftTree.v) < 0) node = rotateWithLeftChild(node);
-        else node = doubleRotateWithLeftChild(node);
-      }
     } else if (compareResult > 0) {
       node.rightTree = insert(v, node.rightTree);
-      if (height(node.leftTree) - height(node.rightTree) == -2) {
-        if (comparator.compare(v, node.rightTree.v) < 0) node = doubleRotateWithRightChild(node);
-        else node = rotateWithRightChild(node);
-      }
     }
 
-    node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
+    updateNodeHeight(node);
+    node = balanceNode(node);
 
     return node;
   }
@@ -67,9 +83,8 @@ public class AVL<T> {
       }
     }
 
-    if (node != null) {
-      node.height = Math.max(height(node.leftTree), height(node.rightTree)) + 1;
-    }
+    updateNodeHeight(node);
+    node = balanceNode(node);
 
     return node;
   }
@@ -145,7 +160,15 @@ public class AVL<T> {
   private boolean isAVL(AVLNode<T> node) {
     if (node == null) return true;
 
-    int balanceFactor = Math.abs(height(node.leftTree) - height(node.rightTree));
+    int balanceFactor = Math.abs(balanceFactor(node));
+    if (balanceFactor > 1)
+      throw new IllegalStateException(
+          "node ["
+              + node.v
+              + "] left height: "
+              + height(node.leftTree)
+              + " right height: "
+              + height(node.rightTree));
     return (balanceFactor <= 1) && isAVL(node.leftTree) && isAVL(node.rightTree);
   }
 
