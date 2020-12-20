@@ -25,7 +25,7 @@ public class Heater {
     int low = 0;
     int high = heaters.length - 1;
     while (low <= high) {
-      int mid = low + (high - low) >> 1;
+      int mid = low + ((high - low) >> 1); // shifting is the lowest priority
       if (heaters[mid] <= house && heaters[mid + 1] >= house) {
         result = Math.min(Math.abs(heaters[mid] - house), Math.abs(heaters[mid + 1] - house));
         break;
@@ -47,8 +47,11 @@ public class Heater {
   }
 
   public static void main(String[] args) {
-    int[] houses = {1, 5};
-    int[] heaters = {2};
-    test(houses, heaters);
+    int[][] houses = {{1, 2, 3}, {1, 2, 3, 4}, {282475249,622650073,984943658,144108930,470211272,101027544,457850878,458777923}};
+    int[][] heaters = {{2}, {1, 4}, {823564440,115438165,784484492,74243042,114807987,137522503,441282327,16531729,823378840,143542612}};
+
+    for (int i = 0; i < houses.length; i++) {
+      test(houses[i], heaters[i]);
+    }
   }
 }
