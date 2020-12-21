@@ -26,7 +26,7 @@ public class AVL<T> {
     if (node == null) return null;
 
     int balance = balanceFactor(node);
-    System.out.println("Balancing: " + node.v + " of " + balance);
+    // System.out.println("Balancing: " + node.v + " of " + balance);
     if (balance > 1) {
       if (balanceFactor(node.leftTree) < 0) node = doubleRotateWithLeftChild(node);
       else node = rotateWithLeftChild(node);
@@ -35,7 +35,7 @@ public class AVL<T> {
       else node = rotateWithRightChild(node);
     }
 
-    System.out.println("Balanced: " + node.v + " of " + balanceFactor(node));
+    // System.out.println("Balanced: " + node.v + " of " + balanceFactor(node));
     return node;
   }
 
