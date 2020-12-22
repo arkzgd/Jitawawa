@@ -15,7 +15,7 @@ public class AppAVL {
 
     AVL<Integer> avl = new AVL<>(Integer::compareTo);
 
-    final int numOfElements = 4095;
+    final int numOfElements = 65535;
     List<Integer> input = new ArrayList<>(numOfElements);
     for (int i = 1; i <= numOfElements; i++) input.add(i);
     Collections.shuffle(input);
@@ -26,15 +26,15 @@ public class AppAVL {
       assert avl.isAVL();
     }
 
-    assert Utils.checkAscendingOrder(
-        avl.traverse_in_order().stream().map(e -> e.v).collect(Collectors.toList()),
-        Integer::compareTo);
+    List<Integer> traversed =
+        avl.traverse_in_order().stream().map(e -> e.v).collect(Collectors.toList());
+    assert Utils.checkAscendingOrder(traversed, Integer::compareTo);
+    System.out.println("AVL Traversed in-order: \n" + traversed);
+    System.out.println("Tree Height: " + avl.avlHeight());
 
     BST<Integer> bst = avl.toBST();
     assert bst.isBST();
     assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);
-
-    System.out.println("Tree Height: " + bst.height());
 
     Collections.shuffle(input);
     for (Integer e : input) {
@@ -45,5 +45,7 @@ public class AppAVL {
       assert bst.isBST();
       assert Utils.checkAscendingOrder(bst.traverse_in_order(), Integer::compareTo);
     }
+
+    System.out.println("AVL validations passed.");
   }
 }
