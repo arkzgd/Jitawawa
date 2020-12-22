@@ -1,9 +1,9 @@
-package com.ihaveaname.java.playground;
+package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaySearchMinElementInShiftedArray {
+public class SearchMinElementInShiftedArray {
 
   private static ArrayList<Integer> shiftArray(List<Integer> array, int shift) {
     if (shift % array.size() == 0) return new ArrayList<>(array);
