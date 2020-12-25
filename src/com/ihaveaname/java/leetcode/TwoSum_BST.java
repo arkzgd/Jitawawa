@@ -1,5 +1,9 @@
 package com.ihaveaname.java.leetcode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 public class TwoSum_BST {
 
   static class TreeNode {
@@ -21,24 +25,24 @@ public class TwoSum_BST {
     }
   }
 
-  private TreeNode treeRoot;
-
   public boolean findTarget(TreeNode root, int k) {
-    treeRoot = root;
     return search(root, k);
   }
 
   private boolean search(TreeNode root, int k) {
-    if (root != null) {
-      int target = k - root.val;
-      if (target < root.val) {
-        if (search_in_tree(treeRoot, target)) return true;
-      } else if (target > root.val) {
-        if (search_in_tree(treeRoot, target)) return true;
+    Queue<TreeNode> levelQueue = new LinkedList<>();
+    if (root != null) levelQueue.offer(root);
+
+    TreeNode node;
+    while ((node = levelQueue.poll()) != null) {
+      if (k < 2 * node.val) {
+        if (search_in_tree(node.left, k - node.val)) return true;
+      } else if (k > 2 * node.val) {
+        if (search_in_tree(root, k - node.val)) return true;
       }
 
-      if (search(root.left, k)) return true;
-      if (search(root.right, k)) return true;
+      if (node.left != null) levelQueue.offer(node.left);
+      if (node.right != null) levelQueue.offer(node.right);
     }
 
     return false;
