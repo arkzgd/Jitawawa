@@ -4,16 +4,22 @@ import java.util.Arrays;
 
 public class TwoSum_Sorted_Input {
   int[] result = new int[2];
-  int i, j;
+  int low, high;
 
   public int[] twoSum(int[] numbers, int target) {
-    for (i = 0; i < numbers.length - 1; i++) {
-      j = Arrays.binarySearch(numbers, i + 1, numbers.length, target - numbers[i]);
-      if (j > -1) break;
+    low = 0;
+    high = numbers.length - 1;
+    while (low < high) {
+      if (numbers[low] + numbers[high] == target) {
+        result[0] = low + 1;
+        result[1] = high + 1;
+        break;
+      }
+
+      if (numbers[low] + numbers[high] > target) high--;
+      else low++;
     }
 
-    result[0] = i + 1;
-    result[1] = j + 1;
     return result;
   }
 
