@@ -21,26 +21,33 @@ public class TwoSum_BST {
     }
   }
 
-  public boolean solution(TreeNode root, int k) {
-    return search(root, root, k);
+  private TreeNode treeRoot;
+
+  public boolean findTarget(TreeNode root, int k) {
+    treeRoot = root;
+    return search(root, k);
   }
 
-  private boolean search(TreeNode treeRoot, TreeNode root, int k) {
+  private boolean search(TreeNode root, int k) {
     if (root != null) {
       int target = k - root.val;
-      if (search_in_tree(treeRoot, target) && target != root.val) return true;
-      if (search(treeRoot, root.left, k)) return true;
-      if (search(treeRoot, root.right, k)) return true;
+      if (target < root.val) {
+        if (search_in_tree(treeRoot, target)) return true;
+      } else if (target > root.val) {
+        if (search_in_tree(treeRoot, target)) return true;
+      }
+
+      if (search(root.left, k)) return true;
+      if (search(root.right, k)) return true;
     }
 
     return false;
   }
 
   private boolean search_in_tree(TreeNode root, int k) {
-    TreeNode current = root;
-    while (current != null) {
-      if (current.val > k) current = current.left;
-      else if (current.val < k) current = current.right;
+    while (root != null) {
+      if (root.val > k) root = root.left;
+      else if (root.val < k) root = root.right;
       else return true;
     }
 
@@ -54,10 +61,10 @@ public class TwoSum_BST {
             5,
             new TreeNode(3, new TreeNode(2, null, null), new TreeNode(4, null, null)),
             new TreeNode(6, null, new TreeNode(7, null, null)));
-    System.out.println(twoSum.solution(root, 9));
-    System.out.println(twoSum.solution(root, 28));
-    System.out.println(twoSum.solution(root, 11));
-    System.out.println(twoSum.solution(root, 10));
-    System.out.println(twoSum.solution(root, 14));
+    System.out.println(twoSum.findTarget(root, 9));
+    System.out.println(twoSum.findTarget(root, 28));
+    System.out.println(twoSum.findTarget(root, 11));
+    System.out.println(twoSum.findTarget(root, 10));
+    System.out.println(twoSum.findTarget(root, 14));
   }
 }
