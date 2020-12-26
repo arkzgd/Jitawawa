@@ -1,8 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class MinValueInTheWindow {
 
@@ -10,12 +8,13 @@ public class MinValueInTheWindow {
     int[] result = new int[nums.length - k + 1];
     int resulti = 0;
 
-    Queue<Integer> queue = new PriorityQueue<>(((o1, o2) -> o2 - o1));
+    Deque<Integer> queue = new LinkedList<>();
+
     for (int i = 0; i < nums.length; i++) {
-      if (!queue.isEmpty() && nums[i] > queue.peek()) queue.clear();
-      queue.offer(nums[i]);
-      if (i >= k && nums[i - k] == queue.peek()) queue.poll();
-      if (i >= k - 1) result[resulti++] = queue.peek();
+      while (!queue.isEmpty() && queue.peekLast() < nums[i]) queue.pollLast();
+      queue.offerLast(nums[i]);
+      if (i >= k && queue.peekFirst() == nums[i - k]) queue.pollFirst();
+      if (i >= k - 1) result[resulti++] = queue.peekFirst();
     }
 
     return result;
