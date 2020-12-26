@@ -13,22 +13,24 @@ public class AppBinaryHeap {
     Heap<Integer> heap = new BinaryHeap<>(Integer::compareTo);
     assert heap.isEmpty();
 
-    for (int v = 2000; v > 0; v--) {
+    int numElements = 500000;
+
+    for (int v = numElements; v > 0; v--) {
       heap.insert(v);
       assert heap.isHeap();
     }
 
     assert heap.findMin() == 1;
 
-    List<Integer> sorted = new ArrayList<>(2000);
+    List<Integer> sorted = new ArrayList<>(numElements);
     while (!heap.isEmpty()) {
       sorted.add(heap.deleteMin());
     }
     assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     assert heap.isEmpty();
 
-    List<Integer> input = new ArrayList<>(100);
-    for (int i = 1; i <= 100; i++) input.add(i);
+    List<Integer> input = new ArrayList<>(numElements);
+    for (int i = 1; i <= numElements; i++) input.add(i);
     Collections.shuffle(input);
     System.out.println(input);
 
@@ -42,7 +44,7 @@ public class AppBinaryHeap {
     System.out.println(sorted);
     assert heap.isEmpty();
 
-    heap = new BinaryHeap<>(20, Integer::compareTo);
+    heap = new BinaryHeap<>(numElements, Integer::compareTo);
     for (int e: input) heap.insert(e);
     sorted.clear();
     while (!heap.isEmpty()) {
