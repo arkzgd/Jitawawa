@@ -14,7 +14,7 @@ public class AppBinaryHeapBigTopWithDup {
 
     assert heap.isHeap();
     while (!heap.isEmpty()) {
-      System.out.print(heap.deleteMin() + " ");
+      System.out.print(heap.deleteTop() + " ");
       assert heap.isHeap();
     }
   }

@@ -33,15 +33,15 @@ public class BinaryHeap<T> implements Heap<T> {
   }
 
   @Override
-  public T findMin() {
+  public T getTop() {
     if (isEmpty()) throw new IllegalStateException("BinaryHeap is empty");
 
     return array.get(0);
   }
 
   @Override
-  public T deleteMin() {
-    T min = findMin();
+  public T deleteTop() {
+    T min = getTop();
     persolateDown(0);
 
     return min;
@@ -57,7 +57,7 @@ public class BinaryHeap<T> implements Heap<T> {
   }
 
   @Override
-  public void makeEmpty() {
+  public void clear() {
     initialize(DEFAULT_CAPACITY, comparator);
   }
 

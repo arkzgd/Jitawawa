@@ -5,9 +5,9 @@ import java.util.List;
 public interface Heap<T> {
   void insert(T v);
   void insert(List<T> values);
-  T findMin();
-  T deleteMin();
+  T getTop();
+  T deleteTop();
   boolean isEmpty();
-  void makeEmpty();
+  void clear();
   boolean isHeap();
 }

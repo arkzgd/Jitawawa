@@ -20,11 +20,11 @@ public class AppBinaryHeap {
       assert heap.isHeap();
     }
 
-    assert heap.findMin() == 1;
+    assert heap.getTop() == 1;
 
     List<Integer> sorted = new ArrayList<>(numElements);
     while (!heap.isEmpty()) {
-      sorted.add(heap.deleteMin());
+      sorted.add(heap.deleteTop());
     }
     assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     assert heap.isEmpty();
@@ -38,7 +38,7 @@ public class AppBinaryHeap {
     assert heap.isHeap();
     sorted.clear();
     while (!heap.isEmpty()) {
-      sorted.add(heap.deleteMin());
+      sorted.add(heap.deleteTop());
     }
     assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
@@ -48,20 +48,20 @@ public class AppBinaryHeap {
     for (int e: input) heap.insert(e);
     sorted.clear();
     while (!heap.isEmpty()) {
-      sorted.add(heap.deleteMin());
+      sorted.add(heap.deleteTop());
     }
     assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
     assert heap.isEmpty();
 
-    heap.makeEmpty();
+    heap.clear();
     assert heap.isEmpty();
     heap.insert(input);
     assert heap.isHeap();
 
     sorted.clear();
     while (!heap.isEmpty()) {
-      sorted.add(heap.deleteMin());
+      sorted.add(heap.deleteTop());
     }
     assert Utils.checkAscendingOrder(sorted, Integer::compareTo);
     System.out.println(sorted);
