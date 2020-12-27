@@ -9,14 +9,13 @@ public class ThreeSum {
   public static List<List<Integer>> solution(int[] nums, int target) {
     Arrays.sort(nums);
     List<List<Integer>> result = new ArrayList<>();
-    if (nums.length < 3) return result;
 
     int length = nums.length;
     int fixed = 0;
     int left = fixed + 1;
     int right = length - 1;
 
-    while (fixed <= length - 2 && nums[fixed] <= target) {
+    for (fixed = 0; fixed <= length - 2 && left < right && nums[fixed] <= target;) {
       int s = sum(nums, fixed, left, right);
       if (s == target) {
         List<Integer> l = new ArrayList<>(3);
@@ -30,7 +29,7 @@ public class ThreeSum {
         while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
         right--;
       } else if (s < target) {
-        while (left < length - 1 && nums[left] == nums[left + 1]) left++;
+        while (left + 1 <= length - 1 && nums[left] == nums[left + 1]) left++;
         left++;
       } else if (s > target) {
         while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
@@ -38,7 +37,7 @@ public class ThreeSum {
       }
 
       if (left >= right) {
-        while (fixed < length - 2 && nums[fixed] == nums[fixed + 1]) fixed++;
+        while (fixed + 1 <= length - 1 && nums[fixed] == nums[fixed + 1]) fixed++;
         fixed++;
         left = fixed + 1;
         right = length - 1;
@@ -57,7 +56,10 @@ public class ThreeSum {
     int[] input = {-1, 0, 1, 2, -1, -4};
     System.out.println(solution(input, 0));
 
-    input = new int[]{-2,-3,0,0,-2};
+    input = new int[] {-2, -3, 0, 0, -2};
+    System.out.println(solution(input, 0));
+
+    input = new int[] {0, 0};
     System.out.println(solution(input, 0));
   }
 }
