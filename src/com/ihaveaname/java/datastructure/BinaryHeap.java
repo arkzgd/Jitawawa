@@ -29,7 +29,7 @@ public class BinaryHeap<T> implements Heap<T> {
 
   @Override
   public void insert(List<T> values) {
-    for (T v: values) insert(v);
+    for (T v : values) insert(v);
   }
 
   @Override
@@ -47,7 +47,8 @@ public class BinaryHeap<T> implements Heap<T> {
     return min;
   }
 
-  private int currentSize() {
+  @Override
+  public int size() {
     return array.size();
   }
 
@@ -66,7 +67,7 @@ public class BinaryHeap<T> implements Heap<T> {
     array = new ArrayList<>(capacity);
   }
 
-  private int calcLeftChild(int current) {
+  private int calcChild(int current) {
     return 2 * current + 1;
   }
 
@@ -78,7 +79,7 @@ public class BinaryHeap<T> implements Heap<T> {
     if (size == 0) return;
 
     int current = hole;
-    int child = calcLeftChild(current);
+    int child = calcChild(current);
 
     while (child < size) {
       if (child + 1 < size && comparator.compare(array.get(child), array.get(child + 1)) > 0)
@@ -87,7 +88,7 @@ public class BinaryHeap<T> implements Heap<T> {
       if (comparator.compare(v, array.get(child)) > 0) {
         array.set(current, array.get(child));
         current = child;
-        child = calcLeftChild(current);
+        child = calcChild(current);
       } else break;
     }
 

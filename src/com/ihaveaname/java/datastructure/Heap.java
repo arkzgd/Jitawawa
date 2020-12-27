@@ -7,6 +7,7 @@ public interface Heap<T> {
   void insert(List<T> values);
   T getTop();
   T deleteTop();
+  int size();
   boolean isEmpty();
   void clear();
   boolean isHeap();
