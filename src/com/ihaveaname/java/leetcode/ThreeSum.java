@@ -15,29 +15,29 @@ public class ThreeSum {
     int left = fixed + 1;
     int right = length - 1;
 
-    for (fixed = 0; fixed <= length - 2 && left < right && nums[fixed] <= target;) {
-      int s = sum(nums, fixed, left, right);
-      if (s == target) {
-        result.add(Arrays.asList(nums[fixed], nums[left], nums[right]));
+    for (fixed = 0; fixed < length - 2 && nums[fixed] <= target; ) {
+      while (left < right) {
+        int s = nums[fixed] + nums[left] + nums[right];
+        if (s == target) {
+          result.add(Arrays.asList(nums[fixed], nums[left], nums[right]));
 
-        while (left + 1 < length && nums[left] == nums[left + 1]) left++;
-        left++;
-        while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
-        right--;
-      } else if (s < target) {
-        while (left + 1 < length && nums[left] == nums[left + 1]) left++;
-        left++;
-      } else if (s > target) {
-        while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
-        right--;
+          while (left + 1 < length && nums[left] == nums[left + 1]) left++;
+          left++;
+          while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
+          right--;
+        } else if (s < target) {
+          while (left + 1 < length && nums[left] == nums[left + 1]) left++;
+          left++;
+        } else if (s > target) {
+          while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
+          right--;
+        }
       }
 
-      if (left >= right) {
-        while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
-        fixed++;
-        left = fixed + 1;
-        right = length - 1;
-      }
+      while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
+      fixed++;
+      left = fixed + 1;
+      right = length - 1;
     }
 
     return result;
