@@ -7,7 +7,7 @@ import static com.ihaveaname.java.leetcode.Utils.sum;
 
 public class ThreeSum {
   public static List<List<Integer>> solution(int[] nums, int target) {
-    Arrays.sort(nums);
+    Arrays.parallelSort(nums);
     List<List<Integer>> result = new ArrayList<>();
 
     int length = nums.length;
@@ -18,18 +18,14 @@ public class ThreeSum {
     for (fixed = 0; fixed <= length - 2 && left < right && nums[fixed] <= target;) {
       int s = sum(nums, fixed, left, right);
       if (s == target) {
-        List<Integer> l = new ArrayList<>(3);
-        l.add(nums[fixed]);
-        l.add(nums[left]);
-        l.add(nums[right]);
-        result.add(l);
+        result.add(Arrays.asList(nums[fixed], nums[left], nums[right]));
 
-        while (left < length - 1 && nums[left] == nums[left + 1]) left++;
+        while (left + 1 < length && nums[left] == nums[left + 1]) left++;
         left++;
         while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
         right--;
       } else if (s < target) {
-        while (left + 1 <= length - 1 && nums[left] == nums[left + 1]) left++;
+        while (left + 1 < length && nums[left] == nums[left + 1]) left++;
         left++;
       } else if (s > target) {
         while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
@@ -37,7 +33,7 @@ public class ThreeSum {
       }
 
       if (left >= right) {
-        while (fixed + 1 <= length - 1 && nums[fixed] == nums[fixed + 1]) fixed++;
+        while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
         fixed++;
         left = fixed + 1;
         right = length - 1;
