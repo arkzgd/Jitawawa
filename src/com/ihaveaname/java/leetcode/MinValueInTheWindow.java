@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MinValueInTheWindow {
 
-  public int[] findMax(int[] nums, int k) {
+  public int[] findMax_deque(int[] nums, int k) {
     int[] result = new int[nums.length - k + 1];
     int resulti = 0;
 
@@ -63,18 +63,23 @@ public class MinValueInTheWindow {
 
     int[] input1 = {1, 3, -1, -3, 5, 3, 6, 7};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input1, 3)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input1, 3)));
 
     int[] input2 = {1};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input2, 1)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input2, 1)));
 
     int[] input3 = {1, -1};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input3, 1)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input3, 1)));
 
     int[] input4 = {9, 11};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input4, 2)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input4, 2)));
 
     int[] input5 = {4, -2};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input5, 2)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input5, 2)));
 
     int[] input6 = {
       7157, 9172, 7262, -9146, 3087, 5117, 4046, 7726, -1071, 6011, 5444, -48, -1385, -7328, 3255,
@@ -137,5 +142,6 @@ public class MinValueInTheWindow {
       -7761, -4711, 3076, -2699, 224
     };
     System.out.println(Arrays.toString(mvitm.findMax_dp(input6, 45)));
+    System.out.println(Arrays.toString(mvitm.findMax_deque(input6, 45)));
   }
 }
