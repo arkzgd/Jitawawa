@@ -20,23 +20,61 @@ public class MinValueInTheWindow {
     return result;
   }
 
+  public int[] findMax_dp(int[] nums, int k) {
+    if (nums.length == 0 || nums.length < k || k == 0) {
+      return new int[0];
+    }
+
+    int len = nums.length;
+    int[] leftmax = new int[len];
+    int[] rightmax = new int[len];
+    int max = Integer.MIN_VALUE;
+    for (int i = 0; i < len; i = i + k) {
+      int end = i + k - 1 < len ? i + k - 1 : len - 1;
+      max = nums[i];
+      leftmax[i] = max;
+      for (int j = i + 1; j <= end; j++) {
+        if (nums[j] > max) {
+          max = nums[j];
+        }
+        leftmax[j] = max;
+      }
+
+      max = nums[end];
+      rightmax[end] = max;
+      for (int j = end - 1; j >= i; j--) {
+        if (nums[j] > max) {
+          max = nums[j];
+        }
+        rightmax[j] = max;
+      }
+    }
+
+    int[] res = new int[len - k + 1];
+    for (int start = 0; start < len - k + 1; start++) {
+      int end = start + k - 1;
+      res[start] = Math.max(rightmax[start], leftmax[end]);
+    }
+    return res;
+  }
+
   public static void main(String[] args) {
     MinValueInTheWindow mvitm = new MinValueInTheWindow();
 
     int[] input1 = {1, 3, -1, -3, 5, 3, 6, 7};
-    System.out.println(Arrays.toString(mvitm.findMax(input1, 3)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input1, 3)));
 
     int[] input2 = {1};
-    System.out.println(Arrays.toString(mvitm.findMax(input2, 1)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input2, 1)));
 
     int[] input3 = {1, -1};
-    System.out.println(Arrays.toString(mvitm.findMax(input3, 1)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input3, 1)));
 
     int[] input4 = {9, 11};
-    System.out.println(Arrays.toString(mvitm.findMax(input4, 2)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input4, 2)));
 
     int[] input5 = {4, -2};
-    System.out.println(Arrays.toString(mvitm.findMax(input5, 2)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input5, 2)));
 
     int[] input6 = {
       7157, 9172, 7262, -9146, 3087, 5117, 4046, 7726, -1071, 6011, 5444, -48, -1385, -7328, 3255,
@@ -98,6 +136,6 @@ public class MinValueInTheWindow {
       5709, 9201, 9740, -5969, -3092, -5806, -1012, -7508, -9508, -9229, -6246, -5063, -8889, -4678,
       -7761, -4711, 3076, -2699, 224
     };
-    System.out.println(Arrays.toString(mvitm.findMax(input6, 45)));
+    System.out.println(Arrays.toString(mvitm.findMax_dp(input6, 45)));
   }
 }
