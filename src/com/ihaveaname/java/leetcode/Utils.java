@@ -12,4 +12,8 @@ public class Utils {
   public static Integer sum(Integer[] input, int fixed, int left, int right) {
     return input[fixed] + input[left] + input[right];
   }
+
+  public static Integer sum(int[] input, int fixed, int left, int right) {
+    return input[fixed] + input[left] + input[right];
+  }
 }
