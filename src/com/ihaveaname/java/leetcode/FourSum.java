@@ -13,7 +13,8 @@ public class FourSum {
 
     while (fixed < length - 3 && input[fixed] < target) {
       Integer targetOfThree = target - input[fixed];
-      List<List<Integer>> resultsOfThree = ThreeSum.threeSum(input, fixed + 1, length, targetOfThree);
+      List<List<Integer>> resultsOfThree =
+          ThreeSum.threeSum(input, fixed + 1, length, targetOfThree);
       if (resultsOfThree.size() > 0) {
         for (int l = 0; l < resultsOfThree.size(); l++) {
           List<Integer> ll = resultsOfThree.get(l);
