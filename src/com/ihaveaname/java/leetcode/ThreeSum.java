@@ -11,9 +11,7 @@ public class ThreeSum {
     Arrays.parallelSort(nums, start, end);
     List<List<Integer>> result = new ArrayList<>();
 
-    int length = end - start;
-
-    for (int fixed = start; fixed < length - 2 && nums[fixed] <= target; ) {
+    for (int fixed = start; fixed < end - 2 && nums[fixed] <= target; ) {
       int left = fixed + 1;
       int right = end - 1;
 
@@ -22,12 +20,12 @@ public class ThreeSum {
         if (s == target) {
           result.add(Arrays.asList(nums[fixed], nums[left], nums[right]));
 
-          while (left + 1 < length && nums[left] == nums[left + 1]) left++;
+          while (left + 1 < end && nums[left] == nums[left + 1]) left++;
           left++;
           while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
           right--;
         } else if (s < target) {
-          while (left + 1 < length && nums[left] == nums[left + 1]) left++;
+          while (left + 1 < end && nums[left] == nums[left + 1]) left++;
           left++;
         } else if (s > target) {
           while (right - 1 >= 0 && nums[right] == nums[right - 1]) right--;
@@ -35,7 +33,7 @@ public class ThreeSum {
         }
       }
 
-      while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
+      while (fixed + 1 < end && nums[fixed] == nums[fixed + 1]) fixed++;
       fixed++;
     }
 
