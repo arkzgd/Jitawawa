@@ -5,27 +5,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FourSum {
-  public static List<List<Integer>> solution(int[] input, Integer target) {
-    Arrays.parallelSort(input);
+  public static List<List<Integer>> solution(int[] nums, Integer target) {
+    Arrays.parallelSort(nums);
     List<List<Integer>> result = new ArrayList<>();
-    int length = input.length;
+    int length = nums.length;
     int fixed = 0;
 
-    while (fixed < length - 3 && input[fixed] < target) {
-      Integer targetOfThree = target - input[fixed];
+    while (fixed < length - 3) {
+      Integer targetOfThree = target - nums[fixed];
       List<List<Integer>> resultsOfThree =
-          ThreeSum.threeSum(input, fixed + 1, length, targetOfThree);
+          ThreeSum.threeSum(nums, fixed + 1, length, targetOfThree);
       if (resultsOfThree.size() > 0) {
         for (int l = 0; l < resultsOfThree.size(); l++) {
           List<Integer> ll = resultsOfThree.get(l);
           List<Integer> nl = new ArrayList<>(1);
-          nl.add(input[fixed]);
+          nl.add(nums[fixed]);
           nl.addAll(ll);
           result.add(nl);
         }
       }
 
-      while (fixed < length - 3 && input[fixed] == input[fixed + 1]) fixed++;
+      while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
       fixed++;
     }
 
@@ -40,5 +40,11 @@ public class FourSum {
 
     array = new int[]{1,0,-1,0,-2,2};
     System.out.println(solution(array, 0));
+
+    array = new int[]{0, 0, 0, 0};
+    System.out.println(solution(array, 0));
+
+    array = new int[]{1,-2,-5,-4,-3,3,3,5};
+    System.out.println(solution(array, -11));
   }
 }

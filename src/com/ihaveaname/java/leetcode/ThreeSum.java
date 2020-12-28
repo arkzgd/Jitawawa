@@ -11,7 +11,7 @@ public class ThreeSum {
     Arrays.parallelSort(nums, start, end);
     List<List<Integer>> result = new ArrayList<>();
 
-    for (int fixed = start; fixed < end - 2 && nums[fixed] <= target; ) {
+    for (int fixed = start; fixed < end - 2;) {
       int left = fixed + 1;
       int right = end - 1;
 
@@ -53,6 +53,9 @@ public class ThreeSum {
     System.out.println(threeSum(input, 0));
 
     input = new int[] {0, 0};
+    System.out.println(threeSum(input, 0));
+
+    input = new int[] {0, 0, 0};
     System.out.println(threeSum(input, 0));
   }
 }
