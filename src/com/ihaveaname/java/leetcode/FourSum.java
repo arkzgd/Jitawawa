@@ -34,9 +34,11 @@ public class FourSum {
 
   public static void main(String[] args) {
     int[] array = {-1, 0, 1, 2, -1, -4, -9, 9, 8, -2, 3, 6};
-
     for (int i = 4; i > -5; i--) {
       System.out.println(i + "-> " + solution(array, i));
     }
+
+    array = new int[]{1,0,-1,0,-2,2};
+    System.out.println(solution(array, 0));
   }
 }

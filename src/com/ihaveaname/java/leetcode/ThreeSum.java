@@ -15,7 +15,7 @@ public class ThreeSum {
 
     for (int fixed = start; fixed < length - 2 && nums[fixed] <= target; ) {
       int left = fixed + 1;
-      int right = length - 1;
+      int right = end - 1;
 
       while (left < right) {
         int s = nums[fixed] + nums[left] + nums[right];
