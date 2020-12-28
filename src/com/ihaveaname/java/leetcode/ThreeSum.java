@@ -2,20 +2,21 @@ package com.ihaveaname.java.leetcode;
 
 import java.util.*;
 
-import static com.ihaveaname.java.leetcode.Utils.sort;
-import static com.ihaveaname.java.leetcode.Utils.sum;
-
 public class ThreeSum {
-  public static List<List<Integer>> solution(int[] nums, int target) {
-    Arrays.parallelSort(nums);
+  public static List<List<Integer>> threeSum(int[] nums, int target) {
+    return threeSum(nums, 0, nums.length, target);
+  }
+
+  public static List<List<Integer>> threeSum(int[] nums, int start, int end, int target) {
+    Arrays.parallelSort(nums, start, end);
     List<List<Integer>> result = new ArrayList<>();
 
-    int length = nums.length;
-    int fixed = 0;
-    int left = fixed + 1;
-    int right = length - 1;
+    int length = end - start;
 
-    for (fixed = 0; fixed < length - 2 && nums[fixed] <= target; ) {
+    for (int fixed = start; fixed < length - 2 && nums[fixed] <= target; ) {
+      int left = fixed + 1;
+      int right = length - 1;
+
       while (left < right) {
         int s = nums[fixed] + nums[left] + nums[right];
         if (s == target) {
@@ -36,8 +37,6 @@ public class ThreeSum {
 
       while (fixed + 1 < length && nums[fixed] == nums[fixed + 1]) fixed++;
       fixed++;
-      left = fixed + 1;
-      right = length - 1;
     }
 
     return result;
@@ -46,16 +45,16 @@ public class ThreeSum {
   public static void main(String[] args) {
     int[] array = {-1, 0, 1, 2, -1, -4, -9, 9, 8, -2, 3, 6};
     for (int i = 4; i > -5; i--) {
-      System.out.println(i + "-> " + solution(array, i));
+      System.out.println(i + "-> " + threeSum(array, i));
     }
 
     int[] input = {-1, 0, 1, 2, -1, -4};
-    System.out.println(solution(input, 0));
+    System.out.println(threeSum(input, 0));
 
     input = new int[] {-2, -3, 0, 0, -2};
-    System.out.println(solution(input, 0));
+    System.out.println(threeSum(input, 0));
 
     input = new int[] {0, 0};
-    System.out.println(solution(input, 0));
+    System.out.println(threeSum(input, 0));
   }
 }
