@@ -13,7 +13,7 @@ public class ThreeSum {
 
     int length = end - start;
 
-    for (int fixed = start; fixed < length - 2 && nums[fixed] <= target; ) {
+    for (int fixed = start; fixed < end - 2 && nums[fixed] <= target; ) {
       int left = fixed + 1;
       int right = end - 1;
 
