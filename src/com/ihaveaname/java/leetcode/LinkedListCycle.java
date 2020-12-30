@@ -1,5 +1,8 @@
 package com.ihaveaname.java.leetcode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 class ListNode {
   int val;
   ListNode next;
@@ -24,13 +27,27 @@ public class LinkedListCycle {
     return false;
   }
 
+  public ListNode detectCycle(ListNode head) {
+    Set<ListNode> set = new HashSet<>();
+    set.add(head);
+    while (head != null) {
+      head = head.next;
+      if (set.contains(head)) return head;
+      set.add(head);
+    }
+
+    return null;
+  }
+
   public static void main(String[] args) {
     LinkedListCycle llc = new LinkedListCycle();
     ListNode head = new ListNode(3, new ListNode(2, new ListNode(0, new ListNode(-4, null))));
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == false;
+    assert llc.detectCycle(head) == null;
 
     head = new ListNode(1, null);
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == false;
+    assert llc.detectCycle(head) == null;
 
     ListNode node3 = new ListNode(3, null);
     ListNode node2 = new ListNode(2, null);
@@ -42,20 +59,24 @@ public class LinkedListCycle {
     node0.next = nodeMinus4;
     nodeMinus4.next = node2;
     head = node3;
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == true;
+    assert llc.detectCycle(head) == node2;
 
     ListNode node1 = new ListNode(1, null);
     node2 = new ListNode(2, null);
     node1.next = node2;
     node2.next = node1;
     head = node1;
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == true;
+    assert llc.detectCycle(head) == node1;
 
     head = new ListNode(1, null);
     head.next = head;
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == true;
+    assert llc.detectCycle(head) == head;
 
     head = null;
-    System.out.println(llc.hasCycle(head));
+    assert llc.hasCycle(head) == false;
+    assert llc.detectCycle(head) == null;
   }
 }
