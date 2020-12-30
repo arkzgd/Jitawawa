@@ -16,10 +16,10 @@ class ListNode {
 public class LinkedListCycle {
   public boolean hasCycle(ListNode head) {
     ListNode slow = head;
-    ListNode fast = head != null && head.next != null ? head.next.next : null;
+    ListNode fast = head;
 
     while (fast != null && slow != null) {
-      if (slow == fast) return true;
+      if (fast.next != null && slow.next == fast.next.next) return true;
       fast = (fast.next != null) ? fast.next.next : null;
       slow = slow.next;
     }
