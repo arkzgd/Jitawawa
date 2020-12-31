@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MinValueInTheWindow {
+public class MaxValueInTheWindow {
 
   public int[] findMax_heap(int[] nums, int k) {
     int[] result = new int[nums.length - k + 1];
@@ -81,7 +81,7 @@ public class MinValueInTheWindow {
   }
 
   public static void main(String[] args) throws IOException {
-    MinValueInTheWindow mvitm = new MinValueInTheWindow();
+    MaxValueInTheWindow mvitm = new MaxValueInTheWindow();
 
     int[] input1 = {1, 3, -1, -3, 5, 3, 6, 7};
     System.out.println(Arrays.toString(mvitm.findMax_dp(input1, 3)));

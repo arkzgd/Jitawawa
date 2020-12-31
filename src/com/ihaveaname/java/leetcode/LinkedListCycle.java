@@ -19,7 +19,7 @@ public class LinkedListCycle {
     ListNode fast = head;
 
     while (fast != null && slow != null) {
-      if (fast.next != null && slow.next == fast.next.next) return true;
+      if (fast.next != null && slow.next != null && slow.next == fast.next.next) return true;
       fast = (fast.next != null) ? fast.next.next : null;
       slow = slow.next;
     }
@@ -28,12 +28,21 @@ public class LinkedListCycle {
   }
 
   public ListNode detectCycle(ListNode head) {
-    Set<ListNode> set = new HashSet<>();
-    set.add(head);
-    while (head != null) {
-      head = head.next;
-      if (set.contains(head)) return head;
-      set.add(head);
+    ListNode slow = head;
+    ListNode fast = head;
+
+    while (fast != null && slow != null) {
+      if (fast.next != null && slow.next != null && slow.next == fast.next.next) {
+        slow = head;
+        fast = fast.next.next;
+        while (slow != fast) {
+          fast = fast.next;
+          slow = slow.next;
+        }
+        return slow;
+      };
+      fast = (fast.next != null) ? fast.next.next : null;
+      slow = slow.next;
     }
 
     return null;
