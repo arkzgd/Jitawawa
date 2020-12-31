@@ -1,8 +1,5 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.HashSet;
-import java.util.Set;
-
 class ListNode {
   int val;
   ListNode next;
@@ -18,10 +15,10 @@ public class LinkedListCycle {
     ListNode slow = head;
     ListNode fast = head;
 
-    while (fast != null && slow != null) {
-      if (fast.next != null && slow.next != null && slow.next == fast.next.next) return true;
+    while (fast != null && fast.next != null) {
       fast = (fast.next != null) ? fast.next.next : null;
       slow = slow.next;
+      if (slow == fast) return true;
     }
 
     return false;
@@ -31,18 +28,17 @@ public class LinkedListCycle {
     ListNode slow = head;
     ListNode fast = head;
 
-    while (fast != null && slow != null) {
-      if (fast.next != null && slow.next != null && slow.next == fast.next.next) {
+    while (fast != null && fast.next != null) {
+      fast = (fast.next != null) ? fast.next.next : null;
+      slow = slow.next;
+      if (slow == fast) {
         slow = head;
-        fast = fast.next.next;
         while (slow != fast) {
           fast = fast.next;
           slow = slow.next;
         }
         return slow;
-      };
-      fast = (fast.next != null) ? fast.next.next : null;
-      slow = slow.next;
+      }
     }
 
     return null;
