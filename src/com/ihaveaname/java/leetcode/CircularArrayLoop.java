@@ -6,13 +6,10 @@ import java.util.Set;
 public class CircularArrayLoop {
   private int next(int i, int[] nums, int length) {
     if (i + nums[i] > 0) {
-      // System.out.format("%d + %d -> %d\n", i, nums[i], (i + nums[i]) % length);
       return (i + nums[i]) % length;
     } else if (i + nums[i] < 0) {
-      // System.out.format("%d + %d -> %d\n", i, nums[i], length + ((i + nums[i]) % length));
       return length + ((i + nums[i]) % length);
     } else {
-      // System.out.format("%d + %d -> %d\n", i, nums[i], 0);
       return 0;
     }
   }
