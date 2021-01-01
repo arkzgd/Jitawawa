@@ -6,13 +6,13 @@ import java.util.Set;
 public class CircularArrayLoop {
   private int next(int i, int[] nums, int length) {
     if (i + nums[i] > 0) {
-      System.out.format("%d + %d -> %d\n", i, nums[i], (i + nums[i]) % length);
+      // System.out.format("%d + %d -> %d\n", i, nums[i], (i + nums[i]) % length);
       return (i + nums[i]) % length;
     } else if (i + nums[i] < 0) {
-      System.out.format("%d + %d -> %d\n", i, nums[i], length + ((i + nums[i]) % length));
+      // System.out.format("%d + %d -> %d\n", i, nums[i], length + ((i + nums[i]) % length));
       return length + ((i + nums[i]) % length);
     } else {
-      System.out.format("%d + %d -> %d\n", i, nums[i], 0);
+      // System.out.format("%d + %d -> %d\n", i, nums[i], 0);
       return 0;
     }
   }
@@ -24,6 +24,7 @@ public class CircularArrayLoop {
   private Set<Integer> set = new HashSet<>();
 
   private boolean detectLoop(int[] nums, int s) {
+    set.clear();
     int n = nums.length;
     int i = s;
 
@@ -50,8 +51,8 @@ public class CircularArrayLoop {
     if (nums.length <= 1) return false;
 
     for (int i = 0; i < nums.length; i++) {
+      if (set.contains(i)) continue;
       if (detectLoop(nums, i)) return true;
-      set.clear();
     }
 
     return false;
@@ -62,24 +63,33 @@ public class CircularArrayLoop {
 
     int[] inputs = new int[] {2, -1, 1, 2, 2};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == true;
 
     inputs = new int[] {-1, 2};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
 
     inputs = new int[] {-2, 1, -1, -2, -2};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
 
     inputs = new int[] {3, 1, 2};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == true;
 
     inputs = new int[] {-1, -1, -3};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
 
     inputs = new int[] {-1};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
+
 
     inputs = new int[] {-2, -3, -9};
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
+
 
     inputs =
         new int[] {
@@ -152,5 +162,6 @@ public class CircularArrayLoop {
           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1
         };
     System.out.println(cal.circularArrayLoop(inputs));
+    assert cal.circularArrayLoop(inputs) == false;
   }
 }
