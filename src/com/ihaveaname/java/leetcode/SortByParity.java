@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SortEvenOdd {
-  private static List<Integer> solutionSortEvenOdd(ArrayList<Integer> input) {
+public class SortByParity {
+  private static List<Integer> sortByParity(ArrayList<Integer> input) {
     int left = 0;
     int right = input.size() - 1;
 
@@ -39,7 +39,7 @@ public class SortEvenOdd {
     for (int i = 0; i < numberOfValues; i++) for (int j = 0; j < i / 100; j++) input.add(i);
     Collections.shuffle(input);
 
-    System.out.println(solutionSortEvenOdd(input));
+    System.out.println(sortByParity(input));
     assert validate(input);
   }
 }
