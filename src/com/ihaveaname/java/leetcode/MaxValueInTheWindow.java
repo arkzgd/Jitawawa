@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.ihaveaname.java.leetcode.Utils.readNumbersFromTxtFile;
+
 public class MaxValueInTheWindow {
 
   public int[] findMax_heap(int[] nums, int k) {
@@ -108,31 +110,14 @@ public class MaxValueInTheWindow {
     System.out.println(Arrays.toString(mvitm.findMax_deque(input5, 2)));
     System.out.println(Arrays.toString(mvitm.findMax_heap(input5, 2)));
 
-    int[] input6 = mvitm.readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_1.txt");
+    int[] input6 = readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_1.txt");
     System.out.println(Arrays.toString(mvitm.findMax_dp(input6, 45)));
     System.out.println(Arrays.toString(mvitm.findMax_deque(input6, 45)));
     System.out.println(Arrays.toString(mvitm.findMax_heap(input6, 45)));
 
-    int[] input7 = mvitm.readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_2.txt");
+    int[] input7 = readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_2.txt");
     System.out.println(Arrays.toString(mvitm.findMax_dp(input7, 10007)));
     System.out.println(Arrays.toString(mvitm.findMax_deque(input7, 10007)));
     System.out.println(Arrays.toString(mvitm.findMax_heap(input7, 10007)));
-  }
-
-  private int[] readNumbersFromTxtFile(String fileName) throws IOException {
-    String line = readSmallTextFile(fileName);
-    String[] numbers = line.split(",");
-    int[] input = new int[numbers.length];
-    int idx = 0;
-    for (String num : numbers) {
-      input[idx++] = Integer.parseInt(num.trim());
-    }
-
-    return input;
-  }
-
-  private String readSmallTextFile(String fileName) throws IOException {
-    Path path = Paths.get(fileName);
-    return Files.readAllLines(path, StandardCharsets.UTF_8).stream().collect(Collectors.joining());
   }
 }
