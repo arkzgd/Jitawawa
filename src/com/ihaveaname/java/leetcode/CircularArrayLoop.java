@@ -5,21 +5,35 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CircularArrayLoop {
+
+  // Return next index of i, if i to next index is of the same direction as
+  // currentDir (true: forward / nums[i] > 0; false: backward / nums[i] < 0);
+  // Otherwise, return -1 indicating error conditions
   private int next(int i, int[] nums, int length) {
+    if (i == -1) return -1;
+
+    boolean currentDir = nums[i] > 0;
+    int nexti;
+    boolean nextDir;
     if (i + nums[i] > 0) {
-      return (i + nums[i]) % length;
+      nexti = (i + nums[i]) % length;
     } else if (i + nums[i] < 0) {
-      return length + ((i + nums[i]) % length);
+      nexti = length + ((i + nums[i]) % length);
     } else {
-      return 0;
+      nexti = 0;
     }
+    nextDir = nums[nexti] > 0;
+
+    if (nextDir == currentDir) return nexti;
+    else return -1;
   }
 
   private boolean sameDir(int i, int j, int[] nums) {
+    if (i == -1 || j == -1) return false;
     return nums[i] > 0 && nums[j] > 0 || nums[i] < 0 && nums[j] < 0;
   }
 
-  private Set<Integer> set = new HashSet<>();
+  private final Set<Integer> set = new HashSet<>();
 
   private boolean detectLoop_sf_pointer(int[] nums, int s) {
     int slow = s;
@@ -28,16 +42,10 @@ public class CircularArrayLoop {
     do {
       slow = next(slow, nums, nums.length);
       fast = next(next(fast, nums, nums.length), nums, nums.length);
-    } while (slow != fast);
+    } while (slow != -1 && fast != -1 && slow != fast);
 
-    if (slow == next(slow, nums, nums.length)) return false;
-    int start = slow;
-    do {
-      if (!sameDir(slow, next(slow, nums, nums.length), nums)) return false;
-      slow = next(slow, nums, nums.length);
-    } while (slow != start);
-
-    return true;
+    if (slow == -1 || fast == -1) return false;
+    return slow != next(slow, nums, nums.length);
   }
 
   // There must be a loop in the array, given the array is circular and its elements can't be zero
@@ -55,8 +63,7 @@ public class CircularArrayLoop {
           i = next(i, nums, n);
           jumps++;
         } while (i != start);
-        if (jumps == 1) return false;
-        return true;
+        return jumps != 1;
       }
       set.add(i);
       i = next(i, nums, n);
@@ -90,56 +97,56 @@ public class CircularArrayLoop {
 
     int[] inputs = new int[] {2, -1, 1, 2, 2};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == true;
+    assert cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == true;
+    assert cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {-1, 2};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {-2, 1, -1, -2, -2};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {3, 1, 2};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == true;
+    assert cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == true;
+    assert cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {-1, -1, -3};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {-1};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {-2, -3, -9};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = Utils.readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_3.txt");
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
 
     inputs = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, -5};
     System.out.println(cal.circularArrayLoop(inputs));
-    assert cal.circularArrayLoop(inputs) == false;
+    assert !cal.circularArrayLoop(inputs);
     System.out.println(cal.circularArrayLoop_sf_pointer(inputs));
-    assert cal.circularArrayLoop_sf_pointer(inputs) == false;
+    assert !cal.circularArrayLoop_sf_pointer(inputs);
   }
 }
