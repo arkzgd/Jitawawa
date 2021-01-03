@@ -36,12 +36,16 @@ public class CircularArrayLoop {
   private final Set<Integer> set = new HashSet<>();
 
   private boolean detectLoop_sf_pointer(int[] nums, int s) {
+    set.clear();
     int slow = s;
     int fast = s;
 
     do {
       slow = next(slow, nums, nums.length);
-      fast = next(next(fast, nums, nums.length), nums, nums.length);
+      int fastNext = next(fast, nums, nums.length);
+      if (fastNext != -1) set.add(fastNext);
+      fast = next(fastNext, nums, nums.length);
+      if (fast != -1) set.add(fast);
     } while (slow != -1 && fast != -1 && slow != fast);
 
     if (slow == -1 || fast == -1) return false;
@@ -72,6 +76,7 @@ public class CircularArrayLoop {
 
   public boolean circularArrayLoop(int[] nums) {
     if (nums.length <= 1) return false;
+    set.clear();
 
     for (int i = 0; i < nums.length; i++) {
       if (set.contains(i)) continue;
@@ -83,9 +88,10 @@ public class CircularArrayLoop {
 
   public boolean circularArrayLoop_sf_pointer(int[] nums) {
     if (nums.length <= 1) return false;
+    set.clear();
 
     for (int i = 0; i < nums.length; i++) {
-      if (nums[i] == -2000) continue;
+      if (set.contains(i)) continue;
       if (detectLoop_sf_pointer(nums, i)) return true;
     }
 
