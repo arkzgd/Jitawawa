@@ -1,17 +1,19 @@
 package com.ihaveaname.java.leetcode;
 
+import com.ihaveaname.java.datastructure.Stack;
+import com.ihaveaname.java.datastructure.StackByQueue;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class InOrderTraversal {
   public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> result = new ArrayList<>();
 
-    Stack<TreeNode> stack = new Stack<>();
+    Stack<TreeNode> stack = new StackByQueue<>();
     if (root != null) stack.push(root);
 
-    while (!stack.isEmpty()) {
+    while (!stack.empty()) {
       while (root != null) {
         stack.push(root.left);
         root = root.left;
@@ -37,24 +39,43 @@ public class InOrderTraversal {
   }
 
   public static void main(String[] args) {
+    List<Integer> result = new ArrayList<>();
     InOrderTraversal iots = new InOrderTraversal();
 
     TreeNode root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3, null, null), null));
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
 
     root = null;
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
 
     root = new TreeNode(1, null, null);
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
 
     root = new TreeNode(1, new TreeNode(2, null, null), null);
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
 
     root = new TreeNode(1, null, new TreeNode(2, null, null));
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
 
     root = new TreeNode(2, new TreeNode(3, new TreeNode(1, null, null), null), null);
     System.out.println(iots.inorderTraversal(root));
+    iots.inorderTraversal_recursive(root, result);
+    System.out.println(result);
+    result.clear();
   }
 }
