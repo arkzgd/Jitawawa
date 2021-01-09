@@ -1,18 +1,35 @@
 package com.ihaveaname.java.leetcode;
 
+import com.ihaveaname.java.datastructure.Pair;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaxWidthRamp {
   public int maxWidthRamp(int[] A) {
     int answer = 0;
-    for (int i = A.length - 1; i > 0 && i > answer; i--) {
-      for (int j = 0; j < i; j++) {
-        if (A[j] <= A[i]) {
-          answer = Math.max(answer, i - j);
-          break;
-        }
+
+    List<Pair<Integer, Integer>> candidate = new ArrayList<>();
+    int length = A.length;
+    candidate.add(new Pair<>(length - 1, A[length - 1]));
+
+    for (int i = length - 2; i >= 0; i--) {
+      int low = 0;
+      int high = candidate.size();
+      while (low < high) {
+        int mid = low + (high - low) / 2;
+        if (candidate.get(mid).v < A[i]) low = mid + 1;
+        else high = mid;
+      }
+
+      if (low < candidate.size()) {
+        answer = Math.max(answer, candidate.get(low).u - i);
+      } else {
+        candidate.add(new Pair<>(i, A[i]));
       }
     }
+
     return answer;
   }
 
