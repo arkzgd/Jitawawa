@@ -11,20 +11,28 @@ public class MaxWidthRamp {
   // 如何继续优化？
   //  减少搜索minSoFar的时间复杂度：要么缩短minSoFar的长度；要么采取更聪明的搜索算法。
   //    注意：minSoFar是一个降序数组；而且每次的搜索也不需要 i - 1 开始
-  //  也可以用一个堆栈来记录最小的元素的下标，这样栈顶永远指向最后一个比A[i]小的元素
+  //  试试用二分查找来处理minSoFar...
   public int maxWidthRamp(int[] A) {
     int answer = 0;
 
-    Deque<Integer> minValStack = new LinkedList<>();
-    minValStack.push(0);
-    for (int i = 0; i < A.length; i++)
-      if (A[i] < A[minValStack.peek()]) {
-        minValStack.push(i);
+    int[] minSoFar = new int[A.length];
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < A.length; i++) {
+        min = Math.min(min, A[i]);
+        minSoFar[i] = min;
+    }
+
+    int j = minSoFar.length - 1;
+    for (int i = A.length - 1; i > answer; i--) {
+      int low = 0, high = j;
+      while (low < high) {
+        int mid = low + (high - low) / 2;
+        if (A[i] >= minSoFar[mid]) high = mid;
+        else low = mid + 1;
       }
 
-    for (int i = A.length - 1; i > answer; i--) {
-      while (!minValStack.isEmpty() && A[i] >= A[minValStack.peek()])
-        answer = Math.max(answer, i - minValStack.pop());
+      answer = Math.max(answer, i - high);
+      j = high;
     }
 
     return answer;
