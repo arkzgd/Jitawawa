@@ -13,8 +13,14 @@ public class MaxWidthRamp {
       minSoFar[i] = min;
     }
 
+    // 为什么这个算法还是比较慢？
+    //  1. 使用了数组，线性搜索最后一个比A[i]小的元素（当前最长的ramp）
+    //  2. 对于每一个A[i]，搜索minSoFar的代价为O(n)
+    // 如何继续优化？
+    //  减少搜索minSoFar的时间复杂度：要么缩短minSoFar的长度；要么采取更聪明的搜索算法。
+    //    注意：minSoFar是一个降序数组；而且每次的搜索也不需要 i - 1 开始
+    int j = A.length - 1;
     for (int i = A.length - 1; i > answer; i--) {
-      int j = i - 1;
       while (j >= 0 && A[i] >= minSoFar[j]) j--;
       answer = Math.max(answer, i - j - 1);
     }
