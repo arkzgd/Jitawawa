@@ -1,33 +1,22 @@
 package com.ihaveaname.java.leetcode;
 
-import com.ihaveaname.java.datastructure.Pair;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MaxWidthRamp {
   public int maxWidthRamp(int[] A) {
     int answer = 0;
 
-    List<Pair<Integer, Integer>> candidate = new ArrayList<>();
-    int length = A.length;
-    candidate.add(new Pair<>(length - 1, A[length - 1]));
+    int[] minSoFar = new int[A.length];
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < A.length; i++) {
+      min = Math.min(A[i], min);
+      minSoFar[i] = min;
+    }
 
-    for (int i = length - 2; i >= 0; i--) {
-      int low = 0;
-      int high = candidate.size();
-      while (low < high) {
-        int mid = low + (high - low) / 2;
-        if (candidate.get(mid).v < A[i]) low = mid + 1;
-        else high = mid;
-      }
-
-      if (low < candidate.size()) {
-        answer = Math.max(answer, candidate.get(low).u - i);
-      } else {
-        candidate.add(new Pair<>(i, A[i]));
-      }
+    for (int i = A.length - 1; i > answer; i--) {
+      int j = i - 1;
+      while (j >= 0 && A[i] >= minSoFar[j]) j--;
+      answer = Math.max(answer, i - j - 1);
     }
 
     return answer;
@@ -67,5 +56,9 @@ public class MaxWidthRamp {
     input = Utils.readNumbersFromTxtFile("src/com/ihaveaname/java/leetcode/numbers_4.txt");
     System.out.println(mwr.maxWidthRamp(input));
     assert mwr.maxWidthRamp(input) == 262;
+
+    input = new int[] {1, 2, 1};
+    System.out.println(mwr.maxWidthRamp(input));
+    assert mwr.maxWidthRamp(input) == 2;
   }
 }
