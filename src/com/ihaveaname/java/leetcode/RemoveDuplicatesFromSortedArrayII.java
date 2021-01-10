@@ -4,29 +4,20 @@ import java.util.Arrays;
 
 public class RemoveDuplicatesFromSortedArrayII {
   public int removeDuplicates(int[] nums) {
-    int slow = 0, fast = 0;
-    int length = nums.length;
-    while (slow < length && fast < length) {
-      while (fast < length && nums[slow] == nums[fast])
-        fast++;
-
-      if (fast - slow > 2) {
-        int i = slow + 2;
-        int j = fast;
-        while (i < j && j < length) {
-          nums[i++] = nums[j++];
-        }
-        length = fast - slow - 2 > 0 ? length - (fast - slow - 2) : length;
-        slow = slow + 2;
-        fast = slow;
+    int slow = 0;
+    int count = 1;
+    for (int fast = 1; fast < nums.length; fast++) {
+      if (nums[fast] == nums[slow] && count < 2 ) {
+        nums[++slow] = nums[fast];
+        count++;
       }
-      else {
-        slow = fast;
-        fast = slow;
+      else if (nums[fast] != nums[slow]) {
+        nums[++slow] = nums[fast];
+        count = 1;
       }
     }
 
-    return length;
+    return slow + 1;
   }
 
   public static void main(String[] args) {
