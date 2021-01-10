@@ -1,8 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 import java.io.IOException;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class MaxWidthRamp {
   // 为什么这个算法还是比较慢？
