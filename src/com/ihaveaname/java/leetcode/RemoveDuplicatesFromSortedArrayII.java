@@ -36,25 +36,30 @@ public class RemoveDuplicatesFromSortedArrayII {
     int length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 5;
 
     inputs = new int[]{0,0,1,1,1,1,2,3,3};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 7;
 
     inputs = new int[]{1, 2};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 2;
 
     inputs = new int[]{1,1,1,2,2,2,3,3};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 6;
 
     inputs = new int[]{1, 2, 2, 2};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 3;
   }
 }
