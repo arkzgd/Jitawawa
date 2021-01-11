@@ -25,40 +25,48 @@ public class RemoveElement {
     int length = re.removeElement(inputs, 3);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 2;
 
     inputs = new int[]{0,1,2,2,3,0,4,2};
     length = re.removeElement(inputs, 2);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 5;
 
     inputs = new int[]{1};
     length = re.removeElement(inputs, 1);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 0;
 
     inputs = new int[]{1, 1, 1, 1};
     length = re.removeElement(inputs, 1);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 0;
 
     inputs = new int[]{1, 2, 1, 2, 1, 2, 1};
     length = re.removeElement(inputs, 1);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 3;
 
     inputs = new int[]{1, 1, 1, 1};
     length = re.removeElement(inputs, 2);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 4;
 
     inputs = new int[]{1, 2, 1, 2, 1, 2, 1};
     length = re.removeElement(inputs, 2);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 4;
 
     inputs = new int[]{};
     length = re.removeElement(inputs, 2);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 0;
   }
 }

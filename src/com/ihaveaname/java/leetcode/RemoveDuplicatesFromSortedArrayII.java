@@ -7,11 +7,10 @@ public class RemoveDuplicatesFromSortedArrayII {
     int slow = 0;
     int count = 1;
     for (int fast = 1; fast < nums.length; fast++) {
-      if (nums[fast] == nums[slow] && count < 2 ) {
+      if (nums[fast] == nums[slow] && count < 2) {
         nums[++slow] = nums[fast];
         count++;
-      }
-      else if (nums[fast] != nums[slow]) {
+      } else if (nums[fast] != nums[slow]) {
         nums[++slow] = nums[fast];
         count = 1;
       }
@@ -23,34 +22,46 @@ public class RemoveDuplicatesFromSortedArrayII {
   public static void main(String[] args) {
     RemoveDuplicatesFromSortedArrayII rdfsaii = new RemoveDuplicatesFromSortedArrayII();
 
-    int[] inputs = new int[]{1,1,1,2,2,3};
+    int[] inputs = new int[] {1, 1, 1, 2, 2, 3};
     int length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
     assert length == 5;
 
-    inputs = new int[]{0,0,1,1,1,1,2,3,3};
+    inputs = new int[] {0, 0, 1, 1, 1, 1, 2, 3, 3};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
     assert length == 7;
 
-    inputs = new int[]{1, 2};
+    inputs = new int[] {1, 2};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
     assert length == 2;
 
-    inputs = new int[]{1,1,1,2,2,2,3,3};
+    inputs = new int[] {1, 1, 1, 2, 2, 2, 3, 3};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
     assert length == 6;
 
-    inputs = new int[]{1, 2, 2, 2};
+    inputs = new int[] {1, 2, 2, 2};
     length = rdfsaii.removeDuplicates(inputs);
     System.out.println(length);
     System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
     assert length == 3;
+
+    inputs = new int[50000000];
+    for (int i = 0; i < 10000000; i++) {
+      for (int j = 0; j < 5; j++) {
+        inputs[i * 5 + j] = i;
+      }
+    }
+    length = rdfsaii.removeDuplicates(inputs);
+    System.out.println(length);
+    System.out.println(Arrays.toString(Arrays.copyOf(inputs, length)));
+    assert length == 20000000;
+
   }
 }
