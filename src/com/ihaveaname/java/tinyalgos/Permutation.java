@@ -28,27 +28,6 @@ public class Permutation<T> {
     return PermudationIndicator.NotYetLastPermutation;
   }
 
-  public void nextPermutation(int[] nums) {
-    // Leetcode solution, Leetcode tests including duplicated numbers, like [1, 5, 1]
-    int length = nums.length;
-
-    int i;
-    for (i = length - 2; i >= 0 && nums[i] >= nums[i + 1]; i--);
-    if (i == -1) {
-      Arrays.sort(nums);
-      return;
-    }
-
-    int j;
-    for (j = length - 1; j > i && nums[j] <= nums[i]; j--);
-
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
-
-    Arrays.sort(nums, i + 1, length);
-  }
-
   public List<List<T>> permutations(ArrayList<T> input, Comparator<T> comparator) {
     List<List<T>> result = new ArrayList<>();
 
