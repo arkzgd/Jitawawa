@@ -1,6 +1,7 @@
 package com.ihaveaname.java.tinyalgos.sorting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,6 +24,14 @@ public class Utils {
       list.set(j, v);
       return true;
     } else return false;
+  }
+
+  public static <T> void reverse(ArrayList<T> list, int low, int high) {
+    while (low < high) {
+      swap(list, low, high);
+      low++;
+      high--;
+    }
   }
 
   public static <T> boolean checkAscendingOrder(List<T> input, Comparator<T> comparator) {
