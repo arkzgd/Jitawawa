@@ -2,14 +2,15 @@ package com.ihaveaname.java.tinyalgos;
 
 import com.ihaveaname.java.tinyalgos.sorting.Utils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
-enum PermudationIndicator {
-  LastPermutation,
-  NotYetLastPermutation
-}
+public abstract class Permutation<T> {
+  public enum PermudationIndicator {
+    LastPermutation,
+    NotYetLastPermutation
+  }
 
-public class Permutation<T> {
   public PermudationIndicator nextPermutation(ArrayList<T> array, Comparator<T> comparator) {
     int length = array.size();
     int i;
@@ -28,14 +29,5 @@ public class Permutation<T> {
     return PermudationIndicator.NotYetLastPermutation;
   }
 
-  public List<List<T>> permutations(ArrayList<T> input, Comparator<T> comparator) {
-    List<List<T>> result = new ArrayList<>();
-
-    // TODO: Stupid, you need deep copy and T shall be subclass of clonable
-    do {
-      result.add(input);
-    } while (nextPermutation(input, comparator) == PermudationIndicator.NotYetLastPermutation);
-
-    return result;
-  }
+  public abstract List<List<T>> permutations(ArrayList<T> input);
 }
