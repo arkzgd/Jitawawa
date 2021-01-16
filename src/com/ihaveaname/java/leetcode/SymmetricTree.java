@@ -1,28 +1,18 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SymmetricTree {
   public boolean isSymmetric(TreeNode root) {
-    ArrayList<Integer> result = new ArrayList<>();
-    inOrder(root, result);
-    int low = 0, high = result.size() - 1;
-    while (low < high) {
-      if (!result.get(low++).equals(result.get(high--))) return false;
-    }
+    if (root == null) return true;
 
-    return true;
+    return isMirror(root.left, root.right);
   }
 
-  private void inOrder(TreeNode node, List<Integer> result) {
-    if (node.left != null) inOrder(node.left, result);
-    else result.add(Integer.MIN_VALUE);
+  private boolean isMirror(TreeNode node1, TreeNode node2) {
+    if (node1 == null && node2 == null) return true;
+    if (node1 != null && node2 != null && node1.val == node2.val)
+      return isMirror(node1.left, node2.right) && isMirror(node1.right, node2.left);
 
-    result.add(node.val);
-
-    if (node.right != null) inOrder(node.right, result);
-    else result.add(Integer.MIN_VALUE);
+    return false;
   }
 
   public static void main(String[] args) {
@@ -33,21 +23,27 @@ public class SymmetricTree {
             1,
             new TreeNode(2, new TreeNode(3, null, null), new TreeNode(4, null, null)),
             new TreeNode(2, new TreeNode(4, null, null), new TreeNode(3, null, null)));
-    System.out.println(st.isSymmetric(root));
+    assert st.isSymmetric(root);
 
     root =
         new TreeNode(
             1,
             new TreeNode(2, null, new TreeNode(3, null, null)),
             new TreeNode(2, null, new TreeNode(3, null, null)));
-    System.out.println(st.isSymmetric(root));
+    assert !st.isSymmetric(root);
 
     root =
-      new TreeNode(
-        1,
-        new TreeNode(2, new TreeNode(2, null, null), null),
-        new TreeNode(2, new TreeNode(2, null, null), null)
-      );
-    System.out.println(st.isSymmetric(root));
+        new TreeNode(
+            1,
+            new TreeNode(2, new TreeNode(2, null, null), null),
+            new TreeNode(2, new TreeNode(2, null, null), null));
+    assert !st.isSymmetric(root);
+
+    root =
+        new TreeNode(
+            5,
+            new TreeNode(4, null, new TreeNode(1, new TreeNode(2, null, null), null)),
+            new TreeNode(1, null, new TreeNode(4, new TreeNode(2, null, null), null)));
+    assert !st.isSymmetric(root);
   }
 }
