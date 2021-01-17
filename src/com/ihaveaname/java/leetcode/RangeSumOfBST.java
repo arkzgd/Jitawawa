@@ -1,17 +1,19 @@
 package com.ihaveaname.java.leetcode;
 
 public class RangeSumOfBST {
+  private int cnt;
+
   public int rangeSumBST(TreeNode root, int low, int high) {
-    int cnt = 0;
-    for (int i = low; i <= high; i++) cnt = search(root, i, cnt);
+    cnt = 0;
+    inOrder(root, low, high);
     return cnt;
   }
 
-  private int search(TreeNode root, int t, int cnt) {
-    if (root == null) return cnt;
-    if (t == root.val) return cnt + t;
-    else if (t > root.val) return search(root.right, t, cnt);
-    else return search(root.left, t, cnt);
+  private void inOrder(TreeNode root, int low, int high) {
+    if (root == null) return;
+    inOrder(root.left, low, high);
+    if (root.val >= low && root.val <= high) cnt += root.val;
+    inOrder(root.right, low, high);
   }
 
   public static void main(String[] args) {
