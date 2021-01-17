@@ -11,9 +11,9 @@ public class RangeSumOfBST {
 
   private void inOrder(TreeNode root, int low, int high) {
     if (root == null) return;
-    inOrder(root.left, low, high);
+    if (root.val > low) inOrder(root.left, low, high);
     if (root.val >= low && root.val <= high) cnt += root.val;
-    inOrder(root.right, low, high);
+    if (root.val < high) inOrder(root.right, low, high);
   }
 
   public static void main(String[] args) {
