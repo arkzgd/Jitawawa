@@ -12,7 +12,10 @@ public class ClimbingTheLeaderboard {
     int slow = 0;
     int fast;
     for (fast = 0; fast < ranks.size(); fast++) {
-      if (ranks.get(fast) != ranks.get(slow)) ranks.set(++slow, ranks.get(fast));
+      if (!ranks.get(fast).equals(ranks.get(slow))) {
+        slow++;
+        ranks.set(slow, ranks.get(fast));
+      }
     }
     for (int i = 0; i <= slow; i++) System.out.print(" " + ranks.get(i));
     System.out.println();
