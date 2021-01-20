@@ -1,30 +1,25 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import scala.reflect.internal.Trees;
 
 public class SecondMinimumNodeInBinaryTree {
-  private void preOrder(TreeNode root, List<Integer> result) {
+  private int lowMark;
+  private int min;
+
+  private void traverse(TreeNode root) {
     if (root != null) {
-      result.add(root.val);
-      preOrder(root.left, result);
-      preOrder(root.right, result);
+      if (root.val > lowMark && lowMark == min) lowMark = root.val;
+      if (root.val < lowMark && root.val > min) lowMark = root.val;
+      traverse(root.left);
+      traverse(root.right);
     }
   }
 
   public int findSecondMinimumValue(TreeNode root) {
-    ArrayList<Integer> result = new ArrayList<>();
-    preOrder(root, result);
-
-    Collections.sort(result);
-    int slow = 0, fast = 0;
-    for (; fast < result.size(); fast++) {
-      if (!Objects.equals(result.get(fast), result.get(slow))) return result.get(fast);
-    }
-
-    return -1;
+    min = root.val;
+    lowMark = root.val;
+    traverse(root);
+    return lowMark == min ? -1 : lowMark;
   }
 
   public static void main(String[] args) {
@@ -35,16 +30,22 @@ public class SecondMinimumNodeInBinaryTree {
             2,
             new TreeNode(2, null, null),
             new TreeNode(5, new TreeNode(5, null, null), new TreeNode(7, null, null)));
-    System.out.println(smnib.findSecondMinimumValue(tree));
+    assert smnib.findSecondMinimumValue(tree) == 5;
 
     tree = new TreeNode(2, new TreeNode(2, null, null), new TreeNode(2, null, null));
-    System.out.println(smnib.findSecondMinimumValue(tree));
+    assert smnib.findSecondMinimumValue(tree) == -1;
 
     tree =
         new TreeNode(
             2,
             new TreeNode(2, null, null),
             new TreeNode(5, new TreeNode(5, null, null), new TreeNode(5, null, null)));
-    System.out.println(smnib.findSecondMinimumValue(tree));
+    assert smnib.findSecondMinimumValue(tree) == 5;
+
+    tree = new TreeNode(2, new TreeNode(2, null, null), new TreeNode(2147483647, null, null));
+    assert smnib.findSecondMinimumValue(tree) == 2147483647;
+
+    tree = new TreeNode(5, new TreeNode(8, null, null), new TreeNode(5, null, null));
+    assert smnib.findSecondMinimumValue(tree) == 8;
   }
 }
