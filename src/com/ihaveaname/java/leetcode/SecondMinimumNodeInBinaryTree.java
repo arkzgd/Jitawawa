@@ -1,7 +1,5 @@
 package com.ihaveaname.java.leetcode;
 
-import scala.reflect.internal.Trees;
-
 public class SecondMinimumNodeInBinaryTree {
   private int lowMark;
   private int min;
@@ -10,8 +8,10 @@ public class SecondMinimumNodeInBinaryTree {
     if (root != null) {
       if (root.val > lowMark && lowMark == min) lowMark = root.val;
       if (root.val < lowMark && root.val > min) lowMark = root.val;
-      traverse(root.left);
-      traverse(root.right);
+      if (root.val == min) {
+        traverse(root.left);
+        traverse(root.right);
+      }
     }
   }
 
