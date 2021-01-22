@@ -36,7 +36,7 @@ public class FindModeInBinarySearchTree {
     int high = 0;
     int curMax = 0;
     do {
-      if (traversed.get(high) != traversed.get(low)) {
+      if (!traversed.get(high).equals(traversed.get(low))) {
         int size = high - low;
         if (size > curMax) {
           result.clear();
@@ -49,7 +49,7 @@ public class FindModeInBinarySearchTree {
       }
 
       if (high == traversed.size() - 1) {
-        if (traversed.get(high) == traversed.get(low)) {
+        if (traversed.get(high).equals(traversed.get(low))) {
           int size = high - low + 1;
           if (size > curMax) {
             result.clear();
@@ -78,7 +78,7 @@ public class FindModeInBinarySearchTree {
     int high = 0;
     int curMax = 1;
     do {
-      if (traversed.get(high) != traversed.get(low)) {
+      if (!traversed.get(high).equals(traversed.get(low))) {
         int size = high - low;
         if (size > curMax) {
           result.clear();
@@ -91,7 +91,7 @@ public class FindModeInBinarySearchTree {
       }
 
       if (high == traversed.size() - 1) {
-        if (traversed.get(high) == traversed.get(low)) {
+        if (traversed.get(high).equals(traversed.get(low))) {
           int size = high - low + 1;
           if (size > curMax) {
             result.clear();
@@ -126,7 +126,7 @@ public class FindModeInBinarySearchTree {
     tree = new TreeNode(2147483647, null, null);
     System.out.println(Arrays.toString(fmibst.findMode(tree)));
 
-    List<Integer> traversed = Arrays.asList(-20, -19, -18, -17, -14, -14, -10, -9, -1, 0, 1, 9, 10, 14, 14, 17, 18, 19, 20);
+    List<Integer> traversed = Arrays.asList(-20, -19, -18, -17, -14, -14, -10, -9, -1, 0, 1, 9, 10, 14, 14, 17, 17, 17, 18, 18, 18, 20);
     System.out.println(Arrays.toString(fmibst.findModeTest(traversed)));
   }
 }
