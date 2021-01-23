@@ -1,6 +1,5 @@
 package com.ihaveaname.java.leetcode;
 
-import javax.swing.*;
 import java.util.*;
 
 public class FindModeInBinarySearchTree {
