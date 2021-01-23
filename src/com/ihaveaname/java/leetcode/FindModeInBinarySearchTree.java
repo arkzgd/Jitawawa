@@ -7,10 +7,10 @@ public class FindModeInBinarySearchTree {
 
   private void log(TreeNode pre, TreeNode current) {
     if (pre == null) System.out.print("pre: null");
-    else System.out.print("pre: " + pre.val);
+    else System.out.print("pre: " + pre.val + " @ " + pre.hashCode());
     System.out.print(" -> ");
     if (current == null) System.out.print("root: null");
-    else System.out.print("root: " + current.val);
+    else System.out.print("root: " + current.val + " @ " + current.hashCode());
     System.out.println(" , count: " + count + " currMax: " + currMax);
   }
 
@@ -21,9 +21,7 @@ public class FindModeInBinarySearchTree {
 
   private void inOrder(TreeNode root) {
     if (root == null) return;
-
     inOrder(root.left);
-
     if (pre != null) {
       if (pre.val == root.val) {
         count++;
@@ -32,15 +30,13 @@ public class FindModeInBinarySearchTree {
           currMax = count;
           result.clear();
           result.add(pre.val);
-          count = 1;
-        } else {
+        } else if (count == currMax) {
           result.add(pre.val);
-          count = 1;
         }
+        count = 1;
       }
     }
     pre = root;
-
     inOrder(root.right);
   }
 
@@ -51,6 +47,15 @@ public class FindModeInBinarySearchTree {
     result.clear();
 
     inOrder(root);
+    if (pre != null) {
+      if (count > currMax) {
+        result.clear();
+        result.add(pre.val);
+      } else if (count == currMax) {
+        result.add(pre.val);
+      }
+    }
+
     int[] resultArray = new int[result.size()];
     for (int i = 0; i < result.size(); i++) resultArray[i] = result.get(i);
     return resultArray;
@@ -69,6 +74,29 @@ public class FindModeInBinarySearchTree {
     System.out.println(Arrays.toString(fmibst.findMode(tree)));
 
     tree = new TreeNode(2147483647, null, null);
+    System.out.println(Arrays.toString(fmibst.findMode(tree)));
+
+    tree =
+        new TreeNode(
+            6,
+            new TreeNode(
+                2,
+                new TreeNode(0, null, null),
+                new TreeNode(4, new TreeNode(2, null, null), new TreeNode(6, null, null))),
+            new TreeNode(8, new TreeNode(7, null, null), new TreeNode(9, null, null)));
+    System.out.println(Arrays.toString(fmibst.findMode(tree)));
+
+    tree =
+        new TreeNode(
+            3,
+            new TreeNode(2, null, null),
+            new TreeNode(
+                3,
+                new TreeNode(3, null, null),
+                new TreeNode(
+                    4,
+                    new TreeNode(4, null, null),
+                    new TreeNode(5, new TreeNode(5, null, null), new TreeNode(6, null, null)))));
     System.out.println(Arrays.toString(fmibst.findMode(tree)));
   }
 }
