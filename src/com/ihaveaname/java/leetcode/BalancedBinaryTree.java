@@ -3,8 +3,6 @@ package com.ihaveaname.java.leetcode;
 public class BalancedBinaryTree {
   private int height(TreeNode node) {
     if (node == null) return 0;
-    if (node.left == null) return height(node.right) + 1;
-    if (node.right == null) return height(node.left) + 1;
     return Math.max(height(node.left), height(node.right)) + 1;
   }
 
