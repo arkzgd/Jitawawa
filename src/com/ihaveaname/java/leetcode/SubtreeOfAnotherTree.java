@@ -2,21 +2,24 @@ package com.ihaveaname.java.leetcode;
 
 public class SubtreeOfAnotherTree {
 
-  private boolean isSubtreePrivate(TreeNode s, TreeNode t, TreeNode ot) {
+  private boolean isSubtreePrivate(TreeNode s, TreeNode t) {
     if (s == null && t == null) return true;
     if (s != null && t != null && s.val == t.val) {
-      if (isSubtreePrivate(s.left, t.left, ot) && isSubtreePrivate(s.right, t.right, ot))
+      if (isSubtreePrivate(s.left, t.left) && isSubtreePrivate(s.right, t.right))
         return true;
     }
-
-    if (s != null && isSubtreePrivate(s.left, ot, ot)) return true;
-    if (s != null && isSubtreePrivate(s.right, ot, ot)) return true;
 
     return false;
   }
 
   public boolean isSubtree(TreeNode s, TreeNode t) {
-    return (isSubtreePrivate(s, t, t));
+    if (isSubtreePrivate(s, t)) return true;
+    else {
+      if (s != null && isSubtree(s.left, t)) return true;
+      else if (s != null && isSubtree(s.right, t)) return true;
+    }
+
+    return false;
   }
 
   public static void main(String[] args) {
