@@ -1,23 +1,29 @@
 package com.ihaveaname.java.leetcode;
 
 public class DiameterOfBinaryTree {
-  private int height(TreeNode node) {
-    if (node == null) return 0;
-    return Math.max(height(node.left), height(node.right)) + 1;
-  }
 
-  private int max = Integer.MIN_VALUE;
+  // height returns [height of node.left, maximum diameter so far, height of node.right]
+  private int[] height(TreeNode node) {
+    if (node == null) return new int[] {0, 0, 0};
+
+    int[] fromLeftSubtree = height(node.left);
+    int[] fromRightSubtree = height(node.right);
+    int leftSubTreeDiameter = fromLeftSubtree[1];
+    int rightSubTreeDiameter = fromRightSubtree[1];
+    int myDiameter =
+        Math.max(fromLeftSubtree[0], fromLeftSubtree[2])
+            + Math.max(fromRightSubtree[0], fromRightSubtree[2]);
+
+    return new int[] {
+      Math.max(fromLeftSubtree[0], fromLeftSubtree[2]) + 1,
+      Math.max(myDiameter, Math.max(leftSubTreeDiameter, rightSubTreeDiameter)),
+      Math.max(fromRightSubtree[0], fromRightSubtree[2]) + 1
+    };
+  }
 
   public int diameterOfBinaryTree(TreeNode root) {
     if (root == null) return 0;
-    int currMax = height(root.left) + height(root.right);
-    if (currMax > max) max = currMax;
-    currMax = diameterOfBinaryTree(root.left);
-    if (currMax > max) max = currMax;
-    currMax = diameterOfBinaryTree(root.right);
-    if (currMax > max) max = currMax;
-
-    return max;
+    return height(root)[1];
   }
 
   public static void main(String[] args) {
