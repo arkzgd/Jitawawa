@@ -7,4 +7,14 @@ public class SearchInBST {
     if (root.val < val) return searchBST(root.left, val);
     return searchBST(root.right, val);
   }
+
+  public TreeNode searchBSTIntuitive(TreeNode root, int val) {
+    while (root != null) {
+      if (root.val == val) return root;
+      if (root.val > val) root = root.left;
+      else root = root.right;
+    }
+
+    return root;
+  }
 }
