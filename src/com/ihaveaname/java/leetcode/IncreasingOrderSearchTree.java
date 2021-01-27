@@ -10,6 +10,7 @@ public class IncreasingOrderSearchTree {
     helper(root.left);
 
     if (newRoot == null) newRoot = root;
+    root.left = null;
     if (pre != null) {
       pre.left = null;
       pre.right = root;
