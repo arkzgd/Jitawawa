@@ -1,42 +1,40 @@
 package com.ihaveaname.java.leetcode;
 
-import com.ihaveaname.java.datastructure.Pair;
 import java.util.Stack;
 
 public class LowestCommonAncestorOfBT {
-  private Pair<Stack<TreeNode>, Boolean> reachable(TreeNode s, TreeNode t) {
-    if (s == null) return new Pair<>(new Stack<>(), false);
+  private boolean reachable(TreeNode s, TreeNode t, Stack<TreeNode> path) {
+    if (s == null) return false;
 
     if (s.val == t.val) {
-      Stack<TreeNode> ss = new Stack<>();
-      ss.push(s);
-      return new Pair<>(ss, true);
+      path.push(s);
+      return true;
     }
 
-    Pair<Stack<TreeNode>, Boolean> lr = reachable(s.left, t);
-    if (lr.v) {
-      lr.u.push(s);
-      return new Pair<>(lr.u, lr.v);
+    if (reachable(s.left, t, path)) {
+      path.push(s);
+      return true;
     }
 
-    Pair<Stack<TreeNode>, Boolean> rr = reachable(s.right, t);
-    if (rr.v) {
-      rr.u.push(s);
-      return new Pair<>(rr.u, rr.v);
+    if (reachable(s.right, t, path)) {
+      path.push(s);
+      return true;
     }
 
-    return new Pair<>(new Stack<>(), false);
+    return false;
   }
 
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    Pair<Stack<TreeNode>, Boolean> pr = reachable(root, p);
-    Pair<Stack<TreeNode>, Boolean> qr = reachable(root, q);
+    Stack<TreeNode> pr = new Stack<>();
+    boolean pf = reachable(root, p, pr);
+    Stack<TreeNode> qr = new Stack<>();
+    boolean qf = reachable(root, q, qr);
     TreeNode r = null;
 
-    if (pr.v && qr.v) {
-      while (!pr.u.isEmpty() && !qr.u.isEmpty() && pr.u.peek().val == qr.u.peek().val) {
-        r = pr.u.pop();
-        qr.u.pop();
+    if (pf && qf) {
+      while (!pr.isEmpty() && !qr.isEmpty() && pr.peek().val == qr.peek().val) {
+        r = pr.pop();
+        qr.pop();
       }
       return r;
     } else return null;
