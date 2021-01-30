@@ -16,13 +16,13 @@ public class LowestCommonAncestorOfBT {
     Pair<Stack<TreeNode>, Boolean> lr = reachable(s.left, t);
     if (lr.v) {
       lr.u.push(s);
-      return new Pair<>(lr.u, true);
+      return new Pair<>(lr.u, lr.v);
     }
 
     Pair<Stack<TreeNode>, Boolean> rr = reachable(s.right, t);
     if (rr.v) {
       rr.u.push(s);
-      return new Pair<>(rr.u, true);
+      return new Pair<>(rr.u, rr.v);
     }
 
     return new Pair<>(new Stack<>(), false);
