@@ -21,17 +21,17 @@ public class ClosestBinarySearchTreeValue {
     ClosestBinarySearchTreeValue cbstv = new ClosestBinarySearchTreeValue();
 
     TreeNode tree =
-      new TreeNode(
-        6,
         new TreeNode(
-          2,
-          new TreeNode(0, null, null),
-          new TreeNode(4, new TreeNode(3, null, null), new TreeNode(5, null, null))),
-        new TreeNode(8, new TreeNode(7, null, null), new TreeNode(9, null, null)));
+            6,
+            new TreeNode(
+                2,
+                new TreeNode(0, null, null),
+                new TreeNode(4, new TreeNode(3, null, null), new TreeNode(5, null, null))),
+            new TreeNode(8, new TreeNode(7, null, null), new TreeNode(9, null, null)));
 
-    System.out.println(cbstv.closestValue(tree,3.145926));
+    System.out.println(cbstv.closestValue(tree, 3.145926));
 
     cbstv.max = Double.MAX_VALUE;
-    System.out.println(cbstv.closestValue(tree,-3.145926));
+    System.out.println(cbstv.closestValue(tree, -3.145926));
   }
 }
