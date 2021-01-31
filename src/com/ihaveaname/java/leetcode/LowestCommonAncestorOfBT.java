@@ -1,52 +1,31 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
-
 public class LowestCommonAncestorOfBT {
-  private Set<TreeNode> reachable(
-      TreeNode s, TreeNode p, TreeNode q, Stack<TreeNode> ppath, Stack<TreeNode> qpath) {
-    if (s == null) return new HashSet<>();
+  private boolean reachable(TreeNode s, TreeNode t) {
+    if (s == null) return false;
 
-    Set<TreeNode> result = new HashSet<>();
+    if (s.val == t.val) return true;
 
-    if (s.val == p.val) {
-      ppath.push(p);
-      result.add(p);
-    }
-
-    if (s.val == q.val) {
-      qpath.push(q);
-      result.add(q);
-    }
-
-    Set<TreeNode> lr = reachable(s.left, p, q, ppath, qpath);
-    Set<TreeNode> rr = reachable(s.right, p, q, ppath, qpath);
-
-    if (lr.contains(p) || rr.contains(p)) {
-      ppath.push(s);
-      result.add(p);
-    }
-
-    if (lr.contains(q) || rr.contains(q)) {
-      qpath.push(s);
-      result.add(q);
-    }
-
-    return result;
+    if (reachable(s.left, t)) return true;
+    return reachable(s.right, t);
   }
 
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    Stack<TreeNode> pr = new Stack<>();
-    Stack<TreeNode> qr = new Stack<>();
-    reachable(root, p, q, pr, qr);
-    TreeNode r = null;
-    while (!pr.isEmpty() && !qr.isEmpty() && pr.peek().val == qr.peek().val) {
-      r = pr.pop();
-      qr.pop();
+    if (root != null) {
+      if (root.val == p.val && root.val == q.val) return root;
+      if (root.val == p.val && (reachable(root.left, q) || reachable(root.right, q))) return root;
+      if (root.val == q.val && (reachable(root.left, p) || reachable(root.right, p))) return root;
+
+      if (reachable(root.left, p) && reachable(root.right, q)
+          || reachable(root.left, q) && reachable(root.right, p)) return root;
+
+      if (reachable(root.left, p) && reachable(root.left, q))
+        return lowestCommonAncestor(root.left, p, q);
+      if (reachable(root.right, p) && reachable(root.right, q))
+        return lowestCommonAncestor(root.right, p, q);
     }
-    return r;
+
+    return null;
   }
 
   public static void main(String[] args) {
