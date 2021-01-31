@@ -8,41 +8,18 @@ public class LowestCommonAncestorOfBT {
   }
 
   private int reachable(TreeNode s, TreeNode p, TreeNode q) {
-    int ret = 0;
     if (s != null) {
-      if (s.val == p.val && s.val == q.val) {
+      int left = reachable(s.left, p, q) == 1 ? 1 : 0;
+      int right = reachable(s.right, p, q) == 1 ? 1 : 0;
+      int mid = s.val == p.val && s.val == q.val ? 2 : s.val == p.val || s.val == q.val ? 1 : 0;
+
+      if (left + right + mid == 2) {
         ans = s;
         return 2;
-      }
-
-      if (s.val == p.val || s.val == q.val) {
-        if (reachable(s.left, p, q) == 1 || reachable(s.right, p, q) == 1) {
-          ans = s;
-          return 2;
-        }
-        else return 1;
-      } else {
-        switch (reachable(s.left, p, q)) {
-          case 0:
-            ret = reachable(s.right, p, q);
-            break;
-          case 1:
-            if (reachable(s.right, p, q) == 1) {
-              ans = s;
-              return 2;
-            }
-            else ret = 1;
-            break;
-          case 2:
-            ret = reachable(s.left, p, q);
-            break;
-          default:
-            throw new IllegalStateException("Unexpected value: ");
-        }
-      }
+      } else return left + right + mid;
     }
 
-    return ret;
+    return 0;
   }
 
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
