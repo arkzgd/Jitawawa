@@ -1,31 +1,31 @@
 package com.ihaveaname.java.leetcode;
 
 public class LowestCommonAncestorOfBT {
-  private boolean reachable(TreeNode s, TreeNode t) {
-    if (s == null) return false;
+  private int reachable(TreeNode s, TreeNode p, TreeNode q) {
+    if (s == null) return 0;
 
-    if (s.val == t.val) return true;
-
-    if (reachable(s.left, t)) return true;
-    return reachable(s.right, t);
+    int ret = 0;
+    if (s.val == p.val) ret++;
+    if (s.val == q.val) ret++;
+    if (s.val == p.val || s.val == q.val) {
+      if (reachable(s.left, p, q) == 0) return reachable(s.right, p, q) + ret;
+      else return 2;
+    }
+    ret = reachable(s.left, p, q);
+    if (ret < 2) return reachable(s.right, p, q) + ret;
+    else return ret;
   }
 
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if (root != null) {
-      if (root.val == p.val && root.val == q.val) return root;
-      if (root.val == p.val && (reachable(root.left, q) || reachable(root.right, q))) return root;
-      if (root.val == q.val && (reachable(root.left, p) || reachable(root.right, p))) return root;
-
-      if (reachable(root.left, p) && reachable(root.right, q)
-          || reachable(root.left, q) && reachable(root.right, p)) return root;
-
-      if (reachable(root.left, p) && reachable(root.left, q))
-        return lowestCommonAncestor(root.left, p, q);
-      if (reachable(root.right, p) && reachable(root.right, q))
-        return lowestCommonAncestor(root.right, p, q);
+    while (root != null) {
+      if (root.val == p.val || root.val == q.val) break;
+      int ret = reachable(root.left, p, q);
+      if (ret == 1) break;
+      if (ret == 2) root = root.left;
+      else root = root.right;
     }
 
-    return null;
+    return root;
   }
 
   public static void main(String[] args) {
@@ -45,5 +45,6 @@ public class LowestCommonAncestorOfBT {
     assert lcaob.lowestCommonAncestor(tree, new TreeNode(7), new TreeNode(8)).val == 3;
     assert lcaob.lowestCommonAncestor(tree, new TreeNode(2), new TreeNode(4)).val == 2;
     assert lcaob.lowestCommonAncestor(tree, new TreeNode(4), new TreeNode(4)).val == 4;
+    //    System.out.println(lcaob.reachable(tree.left.left, new TreeNode(2), new TreeNode(8)));
   }
 }
