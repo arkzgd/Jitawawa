@@ -1,17 +1,24 @@
 package com.ihaveaname.java.leetcode;
 
 public class BinaryTreeTilt {
-  private int sum(TreeNode root) {
+  private int sum;
+
+  public BinaryTreeTilt() {
+    sum = 0;
+  }
+
+  private int helper(TreeNode root) {
     if (root == null) return 0;
-    return sum(root.left) + sum(root.right) + root.val;
+    int lsum = helper(root.left);
+    int rsum = helper(root.right);
+    sum += Math.abs(lsum - rsum);
+    return  lsum + rsum + root.val;
   }
 
   public int findTilt(TreeNode root) {
-    if (root == null) return 0;
+    helper(root);
 
-    int lsum = sum(root.left);
-    int rsum = sum(root.right);
-    return Math.abs(lsum - rsum) + findTilt(root.left) + findTilt(root.right);
+    return sum;
   }
 
   public static void main(String[] args) {
