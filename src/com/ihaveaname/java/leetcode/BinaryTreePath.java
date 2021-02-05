@@ -12,11 +12,10 @@ public class BinaryTreePath {
 
   private void helper(TreeNode root, String sofar) {
     if (root != null) {
-      if (root.left != null) helper(root.left, sofar + root.val + "->");
-      if (root.right != null) helper(root.right, sofar + root.val + "->");
+      helper(root.left, sofar + root.val + "->");
+      helper(root.right, sofar + root.val + "->");
       if (root.left == null && root.right == null) {
         path.add(sofar + root.val);
-        return;
       }
     }
   }
