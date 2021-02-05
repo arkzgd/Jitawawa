@@ -35,11 +35,10 @@ public class BinaryTreePath {
 
     btp = new BinaryTreePath();
     tree =
-      new TreeNode(
-        1,
-        new TreeNode(2, new TreeNode(3, null, null), new TreeNode(5, null, null)),
-        new TreeNode(3, null, new TreeNode(6, null, null))
-      );
+        new TreeNode(
+            1,
+            new TreeNode(2, new TreeNode(3, null, null), new TreeNode(5, null, null)),
+            new TreeNode(3, null, new TreeNode(6, null, null)));
     System.out.println(btp.binaryTreePaths(tree));
   }
 }
