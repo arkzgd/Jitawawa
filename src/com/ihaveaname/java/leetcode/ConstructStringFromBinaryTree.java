@@ -7,11 +7,10 @@ public class ConstructStringFromBinaryTree {
       if (t.left == null) {
         String r = tree2str(t.right);
         return t.val + (r.isBlank() ? r : "()(" + r + ")");
-      }
-      else {
+      } else {
         String l = tree2str(t.left);
         String r = tree2str(t.right);
-        return t.val + "(" + l +")" + (r.isBlank() ? r : "(" + r + ")");
+        return t.val + "(" + l + ")" + (r.isBlank() ? r : "(" + r + ")");
       }
     }
 
