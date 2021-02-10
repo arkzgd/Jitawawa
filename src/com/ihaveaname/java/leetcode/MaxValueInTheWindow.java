@@ -19,7 +19,7 @@ public class MaxValueInTheWindow {
 
     for (int i = 0; i < nums.length; i++) {
       int v = nums[i];
-      pq.removeIf(o -> (o < v) ? true : false);
+      pq.removeIf(o -> o < v);
       pq.offer(v);
       if (i >= k && pq.peek() == nums[i - k]) pq.poll();
       if (i >= k - 1) result[resulti++] = pq.peek();

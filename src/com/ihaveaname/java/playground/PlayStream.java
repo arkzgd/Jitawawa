@@ -11,9 +11,9 @@ public class PlayStream {
     List<String> tasks1 = new ArrayList<>();
     List<String> tasks2 = new ArrayList<>();
 
-    for (int i = 0; i < parallism + 1; i++) tasks1.add("Tasks1-" + String.valueOf(i));
+    for (int i = 0; i < parallism + 1; i++) tasks1.add("Tasks1-" + i);
 
-    for (int i = 0; i < parallism; i++) tasks2.add("Tasks2-" + String.valueOf(i));
+    for (int i = 0; i < parallism; i++) tasks2.add("Tasks2-" + i);
 
     Thread thread1 =
         new Thread(

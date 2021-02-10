@@ -7,9 +7,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BST<T> {
-  private Comparator<T> comparator;
+  private final Comparator<T> comparator;
 
-  private BTree<T> tree;
+  private final BTree<T> tree;
 
   public BST(Comparator<T> comparator) {
     tree = new BTree<>();

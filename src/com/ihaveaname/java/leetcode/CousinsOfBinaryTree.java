@@ -7,7 +7,7 @@ public class CousinsOfBinaryTree {
       int lh = height(root.left, v, currHeight + 1);
       if (lh != -1) return lh;
       int rh = height(root.right, v, currHeight + 1);
-      if (rh != -1) return rh;
+      return rh;
     }
 
     return -1;
@@ -19,7 +19,7 @@ public class CousinsOfBinaryTree {
       TreeNode lr = parent(root.left, v);
       if (lr != null) return lr;
       TreeNode rr = parent(root.right, v);
-      if (rr != null) return rr;
+      return rr;
     }
 
     return null;

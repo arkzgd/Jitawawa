@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cyclic {
 
-    private List<Integer> two_n_1;
+    private final List<Integer> two_n_1;
 
     public Cyclic(int n) {
         two_n_1 = gen_two_n_1(n);

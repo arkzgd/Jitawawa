@@ -158,8 +158,8 @@ public class BTree<T> {
 
   protected int height_dfs_non_recursive(BTreeNode<T> tree) {
     class Frame {
-      int level;
-      BTreeNode<T> node;
+      final int level;
+      final BTreeNode<T> node;
 
       Frame(int level, BTreeNode<T> node) {
         this.level = level;

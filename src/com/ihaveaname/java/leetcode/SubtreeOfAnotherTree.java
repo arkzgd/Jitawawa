@@ -5,8 +5,7 @@ public class SubtreeOfAnotherTree {
   private boolean isSubtreePrivate(TreeNode s, TreeNode t) {
     if (s == null && t == null) return true;
     if (s != null && t != null && s.val == t.val) {
-      if (isSubtreePrivate(s.left, t.left) && isSubtreePrivate(s.right, t.right))
-        return true;
+      return isSubtreePrivate(s.left, t.left) && isSubtreePrivate(s.right, t.right);
     }
 
     return false;
@@ -16,10 +15,8 @@ public class SubtreeOfAnotherTree {
     if (isSubtreePrivate(s, t)) return true;
     else {
       if (s != null && isSubtree(s.left, t)) return true;
-      else if (s != null && isSubtree(s.right, t)) return true;
+      else return s != null && isSubtree(s.right, t);
     }
-
-    return false;
   }
 
   public static void main(String[] args) {

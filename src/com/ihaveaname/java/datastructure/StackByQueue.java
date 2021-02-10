@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class StackByQueue<V> implements Stack<V> {
-    private Queue<V> queue = new LinkedList<>();
+    private final Queue<V> queue = new LinkedList<>();
 
     @Override
     public void push(V v) {

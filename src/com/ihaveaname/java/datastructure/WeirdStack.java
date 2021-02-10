@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class WeirdStack<V> implements Stack<V> {
-    private Queue<V> queueA = new LinkedList<>();
-    private Queue<V> queueB = new LinkedList<>();
+    private final Queue<V> queueA = new LinkedList<>();
+    private final Queue<V> queueB = new LinkedList<>();
     private Queue<V> current = queueA;
     private Queue<V> next = queueB;
 

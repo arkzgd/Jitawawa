@@ -9,10 +9,10 @@ public class PlayCondition_RoundRobinThreads {
   static Integer counter = Integer.valueOf(0);
 
   static class Tapper implements Runnable {
-    private Lock lock;
-    private Condition cond;
-    private int numberOfTappers;
-    private int order;
+    private final Lock lock;
+    private final Condition cond;
+    private final int numberOfTappers;
+    private final int order;
 
     public Tapper(Lock lock, Condition cond, int numberOfTappers, int order) {
       this.lock = lock;

@@ -5,8 +5,7 @@ public class SameTree {
     if (p != null && q != null) {
       if (p.val != q.val) return false;
       return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-    } else if (p == null && q == null) return true;
-    else return false;
+    } else return p == null && q == null;
   }
 
   public static void main(String[] args) {

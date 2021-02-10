@@ -7,9 +7,7 @@ public class PathSum {
     if (root.left == null && root.right == null && sum - root.val == 0) return true;
 
     if (hasPathSum(root.left, sum - root.val)) return true;
-    if (hasPathSum(root.right, sum - root.val)) return true;
-
-    return false;
+    return hasPathSum(root.right, sum - root.val);
   }
 
   public static void main(String[] args) {

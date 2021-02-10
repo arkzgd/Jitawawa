@@ -6,7 +6,7 @@ public class UnivaluedBinaryTree {
       if (root.left != null && root.left.val != root.val
           || root.right != null && root.right.val != root.val) return false;
       if (!isUnivalTree(root.left)) return false;
-      if (!isUnivalTree(root.right)) return false;
+      return isUnivalTree(root.right);
     }
 
     return true;

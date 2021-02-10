@@ -14,9 +14,9 @@ public class MyLRUCache<K, V> {
     }
   }
 
-  private int capacity;
-  private HashMap<K, Node<K, V>> keys;
-  private LinkedList<Node<K, V>> values;
+  private final int capacity;
+  private final HashMap<K, Node<K, V>> keys;
+  private final LinkedList<Node<K, V>> values;
 
   public MyLRUCache(int capacity) {
     this.capacity = capacity;
@@ -33,9 +33,7 @@ public class MyLRUCache<K, V> {
     if (isFull()) {
       Node<K, V> n = values.poll();
       K k = n.key;
-      if (keys.containsKey(k)) {
-        keys.remove(k);
-      }
+      keys.remove(k);
     }
 
     Node n = new Node(key, value);
