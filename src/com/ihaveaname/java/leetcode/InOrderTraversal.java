@@ -9,22 +9,17 @@ import java.util.List;
 public class InOrderTraversal {
   public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> result = new ArrayList<>();
-
     Stack<TreeNode> stack = new StackByQueue<>();
-    if (root != null) stack.push(root);
 
-    while (!stack.empty()) {
+    while (!stack.empty() || root != null) {
       while (root != null) {
-        stack.push(root.left);
+        stack.push(root);
         root = root.left;
       }
 
       root = stack.pop();
-      if (root != null) {
-        result.add(root.val);
-        stack.push(root.right);
-        root = root.right;
-      }
+      result.add(root.val);
+      root = root.right;
     }
 
     return result;
