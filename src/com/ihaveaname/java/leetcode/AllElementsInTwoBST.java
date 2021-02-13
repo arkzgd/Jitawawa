@@ -1,56 +1,38 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AllElementsInTwoBST {
-  public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
-    List<Integer> result = new LinkedList<>();
-    Deque<TreeNode> stack1 = new LinkedList<>();
-    Deque<TreeNode> stack2 = new LinkedList<>();
-    while (!stack1.isEmpty() || !stack2.isEmpty() || root1 != null || root2 != null) {
-      while (root1 != null) {
-        stack1.push(root1);
-        root1 = root1.left;
-      }
-
-      while (root2 != null) {
-        stack2.push(root2);
-        root2 = root2.left;
-      }
-
-      root1 = stack1.isEmpty() ? null : stack1.peek();
-      root2 = stack2.isEmpty() ? null : stack2.peek();
-      if (root1 != null && root2 != null) {
-        if (root1.val == root2.val) {
-          result.add(root1.val);
-          result.add(root2.val);
-          stack1.pop();
-          stack2.pop();
-          root1 = root1.right;
-          root2 = root2.right;
-        } else if (root1.val < root2.val) {
-          result.add(root1.val);
-          stack1.pop();
-          root1 = root1.right;
-          root2 = null;
-        } else if (root1.val > root2.val) {
-          root1 = null;
-          result.add(root2.val);
-          stack2.pop();
-          root2 = root2.right;
-        }
-      } else if (root1 != null) {
-        result.add(root1.val);
-        stack1.pop();
-        root1 = root1.right;
-      } else if (root2 != null) {
-        result.add(root2.val);
-        stack2.pop();
-        root2 = root2.right;
-      }
+  private void inorder(TreeNode tree, List<Integer> result) {
+    if (tree != null) {
+      inorder(tree.left, result);
+      result.add(tree.val);
+      inorder(tree.right, result);
     }
+  }
+
+  private void inorderAndMergeWith(TreeNode tree, List<Integer> withList, List<Integer> toList) {
+    if (tree != null) {
+      inorderAndMergeWith(tree.left, withList, toList);
+
+      // A simple while loop to insert all eligible elements from withList to toList
+      while (!withList.isEmpty() && withList.get(0) <= tree.val) {
+        toList.add(withList.get(0));
+        withList.remove(0);
+      }
+      toList.add(tree.val);
+
+      inorderAndMergeWith(tree.right, withList, toList);
+    }
+  }
+
+  public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+    List<Integer> withList = new LinkedList<>();
+    inorder(root1, withList);
+    List<Integer> result = new LinkedList<>();
+    inorderAndMergeWith(root2, withList, result);
+    result.addAll(withList);
 
     return result;
   }
