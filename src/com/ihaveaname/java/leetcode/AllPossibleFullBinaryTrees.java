@@ -1,6 +1,5 @@
 package com.ihaveaname.java.leetcode;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,41 +30,33 @@ public class AllPossibleFullBinaryTrees {
     }
   }
 
-  private void leaves(TreeNode root, List<TreeNode> result) {
-    if (root != null) {
-      if (root.left == null && root.right == null) result.add(root);
-      else {
-        leaves(root.left, result);
-        leaves(root.right, result);
-      }
-    }
+  public AllPossibleFullBinaryTrees() {
+    cache.clear();
   }
 
-  private void helper(int N) {
-    for (int i = 1; i <= N; i++) {
-      if (i == 1) {
-        addToCache(i, new TreeNode(0));
-        continue;
+  private List<TreeNode> helper(int N) {
+    if (!cache.containsKey(N)) {
+      if (N == 1) {
+        addToCache(N, new TreeNode(0));
+        return cache.get(N);
       }
-      if (i % 2 == 0) {
-        cache.put(i, new ArrayList<>());
-        continue;
-      }
-      for (TreeNode root : cache.get(i - 2)) {
-        List<TreeNode> leaves = new ArrayList<>();
-        leaves(root, leaves);
-        for (TreeNode leaf : leaves) {
-          leaf.left = new TreeNode(0);
-          leaf.right = new TreeNode(0);
-          addToCache(i, cloneTree(root));
-          leaf.left = null;
-          leaf.right = null;
-        }
+
+      for (int i = 1; i < N - 1; i += 2) {
+        int j = N - 1 - i;
+        List<TreeNode> leftRoots = helper(i);
+        List<TreeNode> rightRoots = helper(j);
+        for (TreeNode ln : leftRoots)
+          for (TreeNode rn : rightRoots) {
+            addToCache(N, new TreeNode(0, ln, rn));
+          }
       }
     }
+
+    return cache.get(N);
   }
 
   public List<TreeNode> allPossibleFBT(int N) {
+    if (N % 2 == 0) return new ArrayList<TreeNode>();
     helper(N);
     List<TreeNode> result = cache.get(N);
     return result;
@@ -73,9 +64,10 @@ public class AllPossibleFullBinaryTrees {
 
   public static void main(String[] args) {
     AllPossibleFullBinaryTrees allPossibleFullBinaryTrees = new AllPossibleFullBinaryTrees();
+    System.out.println(allPossibleFullBinaryTrees.allPossibleFBT(7).size());
 
-    System.out.println(allPossibleFullBinaryTrees.allPossibleFBT(9).size());
-    Solution solution = new Solution();
-    System.out.println(solution.allPossibleFBT(9).size());
+    AllPossibleFullBinaryTrees_RefSolution allPossibleFullBinaryTreesRefSolution =
+        new AllPossibleFullBinaryTrees_RefSolution();
+    System.out.println(allPossibleFullBinaryTreesRefSolution.allPossibleFBT(7).size());
   }
 }
