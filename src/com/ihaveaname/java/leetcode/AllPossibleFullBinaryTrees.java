@@ -1,7 +1,10 @@
 package com.ihaveaname.java.leetcode;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AllPossibleFullBinaryTrees {
   private TreeNode cloneTree(TreeNode root) {
@@ -16,47 +19,63 @@ public class AllPossibleFullBinaryTrees {
     return null;
   }
 
-  private void helper(TreeNode root, TreeNode currentNode, List<TreeNode> result, int remains) {
-    if (remains == 0) {
-      result.add(cloneTree(root));
-      return;
+  private Map<Integer, List<TreeNode>> cache = new LinkedHashMap<>();
+
+  private void addToCache(int N, TreeNode n) {
+    if (cache.containsKey(N)) {
+      cache.get(N).add(n);
+    } else {
+      List<TreeNode> l = new ArrayList<>();
+      l.add(n);
+      cache.put(N, l);
     }
+  }
 
-    currentNode.left = new TreeNode(0);
-    currentNode.right = new TreeNode(0);
-    remains -= 2;
-
-    if (remains == 0) {
-      result.add(cloneTree(root));
-      return;
+  private void leaves(TreeNode root, List<TreeNode> result) {
+    if (root != null) {
+      if (root.left == null && root.right == null) result.add(root);
+      else {
+        leaves(root.left, result);
+        leaves(root.right, result);
+      }
     }
+  }
 
-    helper(root, currentNode.left, result, remains);
-    currentNode.left.left = null;
-    currentNode.left.right = null;
-    helper(root, currentNode.right, result, remains);
+  private void helper(int N) {
+    for (int i = 1; i <= N; i++) {
+      if (i == 1) {
+        addToCache(i, new TreeNode(0));
+        continue;
+      }
+      if (i % 2 == 0) {
+        cache.put(i, new ArrayList<>());
+        continue;
+      }
+      for (TreeNode root : cache.get(i - 2)) {
+        List<TreeNode> leaves = new ArrayList<>();
+        leaves(root, leaves);
+        for (TreeNode leaf : leaves) {
+          leaf.left = new TreeNode(0);
+          leaf.right = new TreeNode(0);
+          addToCache(i, cloneTree(root));
+          leaf.left = null;
+          leaf.right = null;
+        }
+      }
+    }
   }
 
   public List<TreeNode> allPossibleFBT(int N) {
-    List<TreeNode> result = new ArrayList<>();
-    if (N % 2 == 0) return result;
-    else {
-      if (N == 1) {
-        result.add(new TreeNode(0));
-        return result;
-      }
-
-      TreeNode root = new TreeNode(0);
-      helper(root, root, result, N - 1);
-    }
-
+    helper(N);
+    List<TreeNode> result = cache.get(N);
     return result;
   }
 
   public static void main(String[] args) {
     AllPossibleFullBinaryTrees allPossibleFullBinaryTrees = new AllPossibleFullBinaryTrees();
 
-    System.out.println(allPossibleFullBinaryTrees.allPossibleFBT(1));
-    System.out.println(allPossibleFullBinaryTrees.allPossibleFBT(3));
+    System.out.println(allPossibleFullBinaryTrees.allPossibleFBT(9).size());
+    Solution solution = new Solution();
+    System.out.println(solution.allPossibleFBT(9).size());
   }
 }
