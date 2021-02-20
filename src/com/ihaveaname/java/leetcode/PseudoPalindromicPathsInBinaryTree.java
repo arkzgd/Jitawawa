@@ -20,6 +20,8 @@ public class PseudoPalindromicPathsInBinaryTree {
           helper(root.left, result);
           helper(root.right, result);
         }
+        // Because you are using int[] to record partial results, you have to
+        // clean the effect of this recursive level before return to upper level
         result[root.val - 1] ^= 1;
       }
     }
