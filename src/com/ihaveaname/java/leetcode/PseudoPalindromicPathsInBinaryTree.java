@@ -1,32 +1,26 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.*;
-
 public class PseudoPalindromicPathsInBinaryTree {
   class Solution {
-    private boolean isPseudoPalindromicPath(List<Integer> list) {
-      Set<Integer> set = new HashSet<>();
-      for (Integer e : list) {
-        if (set.contains(e)) set.remove(e);
-        else set.add(e);
+    private boolean isPseudoPalindromicPath(int[] result) {
+      int count = 0;
+      for (int i : result) {
+        if (i != 0) count++;
       }
 
-      if (set.size() == 0 && list.size() % 2 == 0 || set.size() == 1 && list.size() % 2 == 1)
-        return true;
-      return false;
+      return count <= 1;
     }
 
-    private void helper(TreeNode root, List<Integer> result) {
+    private void helper(TreeNode root, int[] result) {
       if (root != null) {
+        result[root.val - 1] ^= 1;
         if (root.left == null && root.right == null) {
-          result.add(root.val);
           if (isPseudoPalindromicPath(result)) count++;
         } else {
-          result.add(root.val);
           helper(root.left, result);
           helper(root.right, result);
         }
-        result.remove(result.size() - 1);
+        result[root.val - 1] ^= 1;
       }
     }
 
@@ -34,7 +28,7 @@ public class PseudoPalindromicPathsInBinaryTree {
 
     public int pseudoPalindromicPaths(TreeNode root) {
       count = 0;
-      List<Integer> result = new LinkedList<>();
+      int[] result = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
       helper(root, result);
       return count;
     }
