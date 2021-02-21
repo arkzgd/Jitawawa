@@ -1,28 +1,20 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MaximumDifferenceBetweenNodeAndAncestor {
   class Solution {
-    private int max;
-
-    private void helper(TreeNode root, List<Integer> soFar) {
+    private int helper(TreeNode root, int min, int max) {
       if (root != null) {
-        for (Integer i : soFar) {
-          if (Math.abs(root.val - i) > max) max = Math.abs(root.val - i);
-        }
-        soFar.add(root.val);
-        helper(root.left, soFar);
-        helper(root.right, soFar);
-        soFar.remove(soFar.size() - 1);
+        if (root.val > max) max = root.val;
+        if (root.val < min) min = root.val;
+        if (root.left == null && root.right == null) return max - min;
+        else return Math.max(helper(root.left, min, max), helper(root.right, min, max));
       }
+
+      return 0;
     }
 
     public int maxAncestorDiff(TreeNode root) {
-      max = Integer.MIN_VALUE;
-      helper(root, new ArrayList<>());
-      return max;
+      return helper(root, Integer.MAX_VALUE, Integer.MIN_VALUE);
     }
   }
 
@@ -39,6 +31,9 @@ public class MaximumDifferenceBetweenNodeAndAncestor {
     System.out.println(solution.maxAncestorDiff(tree));
 
     tree = new TreeNode(1, null, new TreeNode(2, null, new TreeNode(0, new TreeNode(3), null)));
+    System.out.println(solution.maxAncestorDiff(tree));
+
+    tree = new TreeNode(1, new TreeNode(2), new TreeNode(100));
     System.out.println(solution.maxAncestorDiff(tree));
   }
 }
