@@ -9,7 +9,7 @@ public class DistributeCoinsInBinaryTree {
         int fromLeft = helper(root.left);
         int fromRight = helper(root.right);
         count += Math.abs(fromLeft) + Math.abs(fromRight);
-        return fromLeft + fromRight + root.val - 1;
+        return fromLeft + fromRight + root.val - 1; // 返回的是当前节点的盈亏因子
       }
 
       return 0;
