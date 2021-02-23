@@ -1,23 +1,21 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.Stack;
-
 public class LowestCommonAncestorOfDeepestLeaves {
   class Solution {
-    private Stack<TreeNode> deepestLeaves;
     private int maxLevel;
     TreeNode ans;
 
-    private void helper(TreeNode root, int level) {
+    private void helper(TreeNode treeRoot, TreeNode root, int level) {
       if (root != null) {
-        helper(root.left, level + 1);
-        helper(root.right, level + 1);
+        helper(treeRoot, root.left, level + 1);
+        helper(treeRoot, root.right, level + 1);
         if (root.left == null && root.right == null) {
           if (level > maxLevel) {
-            deepestLeaves.clear();
-            deepestLeaves.push(root);
+            ans = root;
             maxLevel = level;
-          } else if (level == maxLevel) deepestLeaves.push(root);
+          } else if (level == maxLevel) {
+            reachable(treeRoot, root, ans);
+          }
         }
       }
     }
@@ -37,22 +35,11 @@ public class LowestCommonAncestorOfDeepestLeaves {
       return 0;
     }
 
-    private TreeNode reachable(TreeNode s) {
-      ans = deepestLeaves.pop();
-      while (!deepestLeaves.empty()) {
-        reachable(s, ans, deepestLeaves.pop());
-      }
-
-      return ans;
-    }
-
     public TreeNode lcaDeepestLeaves(TreeNode root) {
-      deepestLeaves = new Stack<>();
       maxLevel = -1;
       ans = null;
 
-      helper(root, 0);
-      reachable(root);
+      helper(root, root, 0);
       return ans;
     }
   }
