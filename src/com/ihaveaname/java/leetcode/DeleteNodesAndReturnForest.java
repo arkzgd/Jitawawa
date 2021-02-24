@@ -4,7 +4,7 @@ import java.util.*;
 
 public class DeleteNodesAndReturnForest {
   class Solution {
-    private Set<Integer> toDelete;
+    private boolean[] toDelete;
     private List<TreeNode> result;
 
     private void helper(TreeNode root, TreeNode parent) {
@@ -12,7 +12,7 @@ public class DeleteNodesAndReturnForest {
         helper(root.left, root);
         helper(root.right, root);
 
-        if (toDelete.contains(root.val)) {
+        if (toDelete[root.val]) {
           if (parent != null) {
             if (parent.left == root) parent.left = null;
             if (parent.right == root) parent.right = null;
@@ -26,8 +26,8 @@ public class DeleteNodesAndReturnForest {
 
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
       result = new ArrayList<>();
-      toDelete = new HashSet<>();
-      for (int i : to_delete) toDelete.add(i);
+      toDelete = new boolean[1001];
+      for (int i : to_delete) toDelete[i] = true;
 
       helper(root, null);
       return result;
