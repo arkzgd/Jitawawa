@@ -5,19 +5,19 @@ public class TrimABST {
     private TreeNode helper(TreeNode root, TreeNode parent, int low, int high) {
       if (root != null) {
         if (root.val < low) {
+          TreeNode n = root;
+          root = helper(root.right, root, low, high);
           if (parent != null) {
-            TreeNode n = root;
-            root = helper(root.right, root, low, high);
             if (parent.left == n) parent.left = root;
             if (parent.right == n) parent.right = root;
-          } else root = root.right;
+          }
         } else if (root.val > high) {
+          TreeNode n = root;
+          root = helper(root.left, root, low, high);
           if (parent != null) {
-            TreeNode n = root;
-            root = helper(root.left, root, low, high);
             if (parent.left == n) parent.left = root;
             if (parent.right == n) parent.right = root;
-          } else root = root.left;
+          }
         } else {
           root.left = helper(root.left, root, low, high);
           root.right = helper(root.right, root, low, high);
@@ -58,21 +58,11 @@ public class TrimABST {
     tree = solution.trimBST(tree, 2, 4);
     System.out.println(tree);
 
-    tree =
-      new TreeNode(
-        0,
-        null,
-        new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3)))
-        );
+    tree = new TreeNode(0, null, new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3))));
     tree = solution.trimBST(tree, 2, 4);
     System.out.println(tree);
 
-    tree =
-      new TreeNode(
-        0,
-        null,
-        new TreeNode(1)
-      );
+    tree = new TreeNode(0, null, new TreeNode(1));
     tree = solution.trimBST(tree, 2, 4);
     System.out.println(tree);
   }
