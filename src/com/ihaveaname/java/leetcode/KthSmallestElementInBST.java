@@ -7,9 +7,9 @@ public class KthSmallestElementInBST {
 
     public int kthSmallest(TreeNode root, int k) {
       if (root != null) {
-        kthSmallest(root.left, k);
+        if (rank < k) kthSmallest(root.left, k);
         if (++rank == k) ans = root.val;
-        kthSmallest(root.right, k);
+        if (rank < k) kthSmallest(root.right, k);
       }
 
       return ans;
@@ -21,7 +21,7 @@ public class KthSmallestElementInBST {
     Solution solution = kthSmallestElementInBST.new Solution();
 
     TreeNode tree = new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4));
-    System.out.println(solution.kthSmallest(tree, 1));
+    assert solution.kthSmallest(tree, 1) == 1;
 
     solution = kthSmallestElementInBST.new Solution();
     tree =
@@ -29,7 +29,7 @@ public class KthSmallestElementInBST {
             5,
             new TreeNode(3, new TreeNode(2, new TreeNode(1), null), new TreeNode(4)),
             new TreeNode(6));
-    System.out.println(solution.kthSmallest(tree, 3));
+    assert solution.kthSmallest(tree, 3) == 3;
 
     solution = kthSmallestElementInBST.new Solution();
     tree =
@@ -38,6 +38,6 @@ public class KthSmallestElementInBST {
         new TreeNode(2, null, new TreeNode(3)),
         new TreeNode(5)
       );
-    System.out.println(solution.kthSmallest(tree, 1));
+    assert solution.kthSmallest(tree, 1) == 2;
   }
 }
