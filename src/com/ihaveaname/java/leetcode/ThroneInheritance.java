@@ -1,6 +1,7 @@
 package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 class ThroneInheritance {
@@ -51,10 +52,14 @@ class ThroneInheritance {
     death(throne, name);
   }
 
-  private Person successor(Person x, List<String> currOrder) {
-    if (x.children.size() == 0
-        || x.children.stream().filter(c -> currOrder.contains(c.name)).count()
-            == x.children.size()) {
+  private boolean allChildrenInCurOrder(List<Person> children, LinkedHashSet<String> currOrder) {
+    for (Person c : children) if (!currOrder.contains(c.name)) return false;
+
+    return true;
+  }
+
+  private Person successor(Person x, LinkedHashSet<String> currOrder) {
+    if (x.children.size() == 0 || allChildrenInCurOrder(x.children, currOrder)) {
       if (x.name.equals(throne.name)) {
         return null;
       } else {
@@ -71,7 +76,7 @@ class ThroneInheritance {
   }
 
   public List<String> getInheritanceOrder() {
-    List<String> currOrder = new ArrayList<>();
+    LinkedHashSet<String> currOrder = new LinkedHashSet<>();
     List<String> result = new ArrayList<>();
     if (throne.alive) result.add(throne.name);
     Person yier = throne;
