@@ -1,104 +1,100 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 class ThroneInheritance {
   class Person {
     String name;
-    boolean alive;
-    Person parent;
-    ArrayList<Person> children;
+    HashMap<String, Person> children = new LinkedHashMap<>();
 
     Person(String name) {
       this.name = name;
-      alive = true;
-      parent = null;
-      children = new ArrayList<>();
     }
 
-    void childBirth(Person child) {
-      child.parent = this;
-      children.add(child);
-    }
-
-    void dead() {
-      alive = false;
+    void addChild(Person child) {
+      children.put(child.name, child);
     }
   }
 
   Person throne;
+  HashSet<String> deceased = new HashSet<>();
 
   public ThroneInheritance(String kingName) {
     throne = new Person(kingName);
   }
 
   private void birth(Person person, String parentName, String childName) {
-    if (person.name.equals(parentName)) person.childBirth(new Person(childName));
-    else for (Person p : person.children) birth(p, parentName, childName);
+    if (person != null) {
+      if (person.name.equals(parentName)) {
+        person.addChild(new Person(childName));
+      } else {
+        for (Person c : person.children.values()) {
+          birth(c, parentName, childName);
+        }
+      }
+    }
   }
 
   public void birth(String parentName, String childName) {
     birth(throne, parentName, childName);
   }
 
-  private void death(Person person, String name) {
-    if (person.name.equals(name)) person.dead();
-    else for (Person p : person.children) death(p, name);
-  }
-
   public void death(String name) {
-    death(throne, name);
+    deceased.add(name);
   }
 
-  private boolean allChildrenInCurOrder(List<Person> children, LinkedHashSet<String> currOrder) {
-    for (Person c : children) if (!currOrder.contains(c.name)) return false;
-
-    return true;
-  }
-
-  private Person successor(Person x, LinkedHashSet<String> currOrder) {
-    if (x.children.size() == 0 || allChildrenInCurOrder(x.children, currOrder)) {
-      if (x.name.equals(throne.name)) {
-        return null;
-      } else {
-        return successor(x.parent, currOrder);
-      }
-    } else {
-      for (Person c : x.children) {
-        if (currOrder.contains(c.name)) continue;
-        else return c;
+  private void helper(Person person, List<String> result) {
+    if (person != null) {
+      if (!deceased.contains(person.name)) result.add(person.name);
+      for (Person c : person.children.values()) {
+        helper(c, result);
       }
     }
-
-    return null;
   }
 
   public List<String> getInheritanceOrder() {
-    LinkedHashSet<String> currOrder = new LinkedHashSet<>();
     List<String> result = new ArrayList<>();
-    if (throne.alive) result.add(throne.name);
-    Person yier = throne;
-
-    while ((yier = successor(yier, currOrder)) != null) {
-      currOrder.add(yier.name);
-      if (yier.alive) result.add(yier.name);
-    }
+    helper(throne, result);
 
     return result;
   }
 
   public static void main(String[] args) {
     ThroneInheritance t = new ThroneInheritance("king");
+    System.out.println(t.getInheritanceOrder());
     t.birth("king", "andy");
+    System.out.println(t.getInheritanceOrder());
     t.birth("king", "bob");
+    System.out.println(t.getInheritanceOrder());
     t.birth("king", "catherine");
+    System.out.println(t.getInheritanceOrder());
     t.birth("andy", "matthew");
+    System.out.println(t.getInheritanceOrder());
     t.birth("bob", "alex");
+    System.out.println(t.getInheritanceOrder());
     t.birth("bob", "asha");
     System.out.println(t.getInheritanceOrder());
     t.death("bob");
     System.out.println(t.getInheritanceOrder());
+    t.death("catherine");
+    System.out.println(t.getInheritanceOrder());
+    t.death("king");
+    System.out.println(t.getInheritanceOrder());
+    t.death("alex");
+    System.out.println(t.getInheritanceOrder());
+    t.death("andy");
+    System.out.println(t.getInheritanceOrder());
+    t.death("matthew");
+    System.out.println(t.getInheritanceOrder());
+    t.death("asha");
+    System.out.println(t.getInheritanceOrder());
+
+    ThroneInheritance t2 = new ThroneInheritance("king");
+    t2.birth("king", "clyde");
+    System.out.println(t2.getInheritanceOrder());
+    t2.death("clyde");
+    System.out.println(t2.getInheritanceOrder());
+    t2.birth("king", "shannon");
+    System.out.println(t2.getInheritanceOrder());
   }
 }
