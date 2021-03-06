@@ -5,10 +5,12 @@ import java.util.*;
 class ThroneInheritance {
   class Person {
     String name;
+    boolean alive;
     List<Person> children = new ArrayList<>();
 
     Person(String name) {
       this.name = name;
+      alive = true;
     }
 
     void addChild(Person child) {
@@ -17,7 +19,6 @@ class ThroneInheritance {
   }
 
   Person throne;
-  HashSet<String> deceased = new HashSet<>();
   HashMap<String, Person> families = new HashMap<>();
 
   public ThroneInheritance(String kingName) {
@@ -32,12 +33,12 @@ class ThroneInheritance {
   }
 
   public void death(String name) {
-    deceased.add(name);
+    families.get(name).alive = false;
   }
 
   private void helper(Person person, List<String> result) {
     if (person != null) {
-      if (!deceased.contains(person.name)) result.add(person.name);
+      if (person.alive) result.add(person.name);
       for (Person c : person.children) helper(families.get(c.name), result);
     }
   }
