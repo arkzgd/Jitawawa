@@ -5,38 +5,30 @@ import java.util.*;
 class ThroneInheritance {
   class Person {
     String name;
-    HashMap<String, Person> children = new LinkedHashMap<>();
+    List<Person> children = new ArrayList<>();
 
     Person(String name) {
       this.name = name;
     }
 
     void addChild(Person child) {
-      children.put(child.name, child);
+      children.add(child);
     }
   }
 
   Person throne;
   HashSet<String> deceased = new HashSet<>();
+  HashMap<String, Person> families = new HashMap<>();
 
   public ThroneInheritance(String kingName) {
     throne = new Person(kingName);
-  }
-
-  private void birth(Person person, String parentName, String childName) {
-    if (person != null) {
-      if (person.name.equals(parentName)) {
-        person.addChild(new Person(childName));
-      } else {
-        for (Person c : person.children.values()) {
-          birth(c, parentName, childName);
-        }
-      }
-    }
+    families.put(kingName, throne);
   }
 
   public void birth(String parentName, String childName) {
-    birth(throne, parentName, childName);
+    Person child = new Person(childName);
+    families.get(parentName).addChild(child);
+    families.put(childName, child);
   }
 
   public void death(String name) {
@@ -46,9 +38,7 @@ class ThroneInheritance {
   private void helper(Person person, List<String> result) {
     if (person != null) {
       if (!deceased.contains(person.name)) result.add(person.name);
-      for (Person c : person.children.values()) {
-        helper(c, result);
-      }
+      for (Person c : person.children) helper(families.get(c.name), result);
     }
   }
 
