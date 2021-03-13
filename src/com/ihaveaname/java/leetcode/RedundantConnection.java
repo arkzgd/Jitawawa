@@ -1,40 +1,29 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.*;
-
 public class RedundantConnection {
   class Solution {
-    Set<Integer> seen = new HashSet();
-    int MAX_EDGE_VAL = 1000;
 
     public int[] findRedundantConnection(int[][] edges) {
-      ArrayList<Integer>[] graph = new ArrayList[MAX_EDGE_VAL + 1];
-      for (int i = 0; i <= MAX_EDGE_VAL; i++) {
-        graph[i] = new ArrayList();
-      }
+      int N = edges.length;
+      int[] graph = new int[N + 1];
+      for (int i = 0; i < N + 1; i++) graph[i] = 0;
 
       for (int[] edge : edges) {
-        seen.clear();
-        if (!graph[edge[0]].isEmpty()
-            && !graph[edge[1]].isEmpty()
-            && dfs(graph, edge[0], edge[1])) {
-          return edge;
-        }
-        graph[edge[0]].add(edge[1]);
-        graph[edge[1]].add(edge[0]);
-      }
-      throw new AssertionError();
-    }
+        int u = edge[0];
+        int up = u;
+        while (up > 0 && graph[up] > 0) up = graph[up];
+        int v = edge[1];
+        int vp = v;
+        while (vp > 0 && graph[vp] > 0) vp = graph[vp];
 
-    public boolean dfs(ArrayList<Integer>[] graph, int source, int target) {
-      if (!seen.contains(source)) {
-        seen.add(source);
-        if (source == target) return true;
-        for (int nei : graph[source]) {
-          if (dfs(graph, nei, target)) return true;
+        if (up == vp) {
+          return edge;
+        } else {
+          graph[vp] = up;
         }
       }
-      return false;
+
+      return null;
     }
   }
 
@@ -52,6 +41,9 @@ public class RedundantConnection {
         new int[][] {
           {9, 10}, {5, 8}, {2, 6}, {1, 5}, {3, 8}, {4, 9}, {8, 10}, {4, 10}, {6, 8}, {7, 9}
         };
+    System.out.println(solution.findRedundantConnection(input));
+
+    input = new int[][] {{1, 4}, {3, 4}, {1, 3}, {1, 2}, {4, 5}};
     System.out.println(solution.findRedundantConnection(input));
   }
 }
