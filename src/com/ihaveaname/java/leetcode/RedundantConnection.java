@@ -8,7 +8,6 @@ public class RedundantConnection {
         HashMap<Integer, List<Integer>> adjMatrix, HashSet<Integer> visited, int from, int to) {
       if (visited.contains(from) || from == to) return true;
       visited.add(from);
-      if (!adjMatrix.containsKey(from)) return false;
       for (Integer v : adjMatrix.get(from))
         if (!visited.contains(v)) {
           if (looped(adjMatrix, visited, v, to)) return true;
@@ -19,32 +18,23 @@ public class RedundantConnection {
     }
 
     public int[] findRedundantConnection(int[][] edges) {
-      int[] lastPair = null;
       HashMap<Integer, List<Integer>> adjMatrix = new LinkedHashMap<>();
+      for (int i = 1; i <= 1000; i++) {
+        ArrayList<Integer> l = new ArrayList<>();
+        adjMatrix.put(i, l);
+      }
       HashSet<Integer> visited = new HashSet<>();
       for (int[] e : edges) {
         visited.clear();
         if (looped(adjMatrix, visited, e[0], e[1])) {
-          lastPair = e;
-          break;
+          return e;
         } else {
-          if (adjMatrix.containsKey(e[0])) adjMatrix.get(e[0]).add(e[1]);
-          else {
-            List<Integer> l = new ArrayList<>();
-            l.add(e[1]);
-            adjMatrix.put(e[0], l);
-          }
-
-          if (adjMatrix.containsKey(e[1])) adjMatrix.get(e[1]).add(e[0]);
-          else {
-            List<Integer> l = new ArrayList<>();
-            l.add(e[0]);
-            adjMatrix.put(e[1], l);
-          }
+          adjMatrix.get(e[0]).add(e[1]);
+          adjMatrix.get(e[1]).add(e[0]);
         }
       }
 
-      return lastPair;
+      return null;
     }
   }
 
