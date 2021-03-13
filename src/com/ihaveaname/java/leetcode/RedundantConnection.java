@@ -2,7 +2,6 @@ package com.ihaveaname.java.leetcode;
 
 public class RedundantConnection {
   class Solution {
-
     public int[] findRedundantConnection(int[][] edges) {
       int N = edges.length;
       int[] graph = new int[N + 1];
@@ -19,7 +18,13 @@ public class RedundantConnection {
         if (up == vp) {
           return edge;
         } else {
-          graph[vp] = up;
+          if (Math.abs(graph[up]) <= Math.abs(graph[vp])) {
+            graph[vp] = up;
+            graph[up] -= 2;
+          } else {
+            graph[up] = vp;
+            graph[vp] -= 2;
+          }
         }
       }
 
