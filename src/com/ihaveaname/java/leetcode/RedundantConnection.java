@@ -4,37 +4,37 @@ import java.util.*;
 
 public class RedundantConnection {
   class Solution {
-    private boolean looped(
-        HashMap<Integer, List<Integer>> adjMatrix, HashSet<Integer> visited, int from, int to) {
-      if (visited.contains(from) || from == to) return true;
-      visited.add(from);
-      for (Integer v : adjMatrix.get(from))
-        if (!visited.contains(v)) {
-          if (looped(adjMatrix, visited, v, to)) return true;
-          visited.add(v);
-        }
-
-      return false;
-    }
+    Set<Integer> seen = new HashSet();
+    int MAX_EDGE_VAL = 1000;
 
     public int[] findRedundantConnection(int[][] edges) {
-      HashMap<Integer, List<Integer>> adjMatrix = new LinkedHashMap<>();
-      for (int i = 1; i <= 1000; i++) {
-        ArrayList<Integer> l = new ArrayList<>();
-        adjMatrix.put(i, l);
-      }
-      HashSet<Integer> visited = new HashSet<>();
-      for (int[] e : edges) {
-        visited.clear();
-        if (looped(adjMatrix, visited, e[0], e[1])) {
-          return e;
-        } else {
-          adjMatrix.get(e[0]).add(e[1]);
-          adjMatrix.get(e[1]).add(e[0]);
-        }
+      ArrayList<Integer>[] graph = new ArrayList[MAX_EDGE_VAL + 1];
+      for (int i = 0; i <= MAX_EDGE_VAL; i++) {
+        graph[i] = new ArrayList();
       }
 
-      return null;
+      for (int[] edge : edges) {
+        seen.clear();
+        if (!graph[edge[0]].isEmpty()
+            && !graph[edge[1]].isEmpty()
+            && dfs(graph, edge[0], edge[1])) {
+          return edge;
+        }
+        graph[edge[0]].add(edge[1]);
+        graph[edge[1]].add(edge[0]);
+      }
+      throw new AssertionError();
+    }
+
+    public boolean dfs(ArrayList<Integer>[] graph, int source, int target) {
+      if (!seen.contains(source)) {
+        seen.add(source);
+        if (source == target) return true;
+        for (int nei : graph[source]) {
+          if (dfs(graph, nei, target)) return true;
+        }
+      }
+      return false;
     }
   }
 
