@@ -4,27 +4,43 @@ import java.util.*;
 
 public class RedundantConnection {
   class Solution {
-    public int[] findRedundantConnection(int[][] edges) {
-      HashSet<Integer> visited = new HashSet<>();
-      int[] lastPair = new int[2];
-      HashMap<Integer, List<Integer>> adjMatrix = new LinkedHashMap<>();
-      for (int[] e : edges) {
-        if (adjMatrix.containsKey(e[0])) adjMatrix.get(e[0]).add(e[1]);
-        else {
-          List<Integer> l = new ArrayList<>();
-          l.add(e[1]);
-          adjMatrix.put(e[0], l);
+    private boolean looped(
+        HashMap<Integer, List<Integer>> adjMatrix, HashSet<Integer> visited, int from, int to) {
+      if (visited.contains(from) || from == to) return true;
+      visited.add(from);
+      if (!adjMatrix.containsKey(from)) return false;
+      for (Integer v : adjMatrix.get(from))
+        if (!visited.contains(v)) {
+          if (looped(adjMatrix, visited, v, to)) return true;
+          visited.add(v);
         }
-      }
 
-      for (int i = 0; i < edges.length; i++) {
-        if (visited.contains(edges[i][0]) && visited.contains(edges[i][1])) {
-          lastPair[0] = Math.min(edges[i][0], edges[i][1]);
-          lastPair[1] = Math.max(edges[i][0], edges[i][1]);
+      return false;
+    }
+
+    public int[] findRedundantConnection(int[][] edges) {
+      int[] lastPair = null;
+      HashMap<Integer, List<Integer>> adjMatrix = new LinkedHashMap<>();
+      HashSet<Integer> visited = new HashSet<>();
+      for (int[] e : edges) {
+        visited.clear();
+        if (looped(adjMatrix, visited, e[0], e[1])) {
+          lastPair = e;
           break;
         } else {
-          visited.add(edges[i][0]);
-          visited.add(edges[i][1]);
+          if (adjMatrix.containsKey(e[0])) adjMatrix.get(e[0]).add(e[1]);
+          else {
+            List<Integer> l = new ArrayList<>();
+            l.add(e[1]);
+            adjMatrix.put(e[0], l);
+          }
+
+          if (adjMatrix.containsKey(e[1])) adjMatrix.get(e[1]).add(e[0]);
+          else {
+            List<Integer> l = new ArrayList<>();
+            l.add(e[0]);
+            adjMatrix.put(e[1], l);
+          }
         }
       }
 
