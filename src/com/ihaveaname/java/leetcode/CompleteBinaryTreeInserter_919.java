@@ -1,47 +1,37 @@
 package com.ihaveaname.java.leetcode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class CompleteBinaryTreeInserter_919 {
   class CBTInserter {
     private TreeNode root;
-    private TreeNode offBalanced;
-
-    private int lowestOffBalance(TreeNode root) {
-      if (root != null) {
-        int lh = lowestOffBalance(root.left);
-        int rh = lowestOffBalance(root.right);
-        if (lh - rh >= 1 && offBalanced == null) offBalanced = root;
-        return Math.max(lh, rh) + 1;
-      }
-
-      return 0;
-    }
-
-    private TreeNode getNextInsertTo(TreeNode root) {
-      offBalanced = null;
-      lowestOffBalance(root);
-      if (offBalanced != null) {
-        if (offBalanced.right == null) return offBalanced;
-        else {
-          TreeNode n = offBalanced.right;
-          while (n.left != null) n = n.left;
-          return n;
-        }
-      } else {
-        while (root.left != null) root = root.left;
-        return root;
-      }
-    }
+    private Queue<TreeNode> queue;
 
     public CBTInserter(TreeNode root) {
       this.root = root;
+      queue = new LinkedList<>();
+      if (root != null) queue.offer(root);
+      while (!queue.isEmpty()) {
+        TreeNode n = queue.peek();
+        if (n.left != null) queue.offer(n.left);
+        if (n.right != null) queue.offer(n.right);
+        if (n.left != null && n.right != null) queue.poll();
+        else break;
+      }
     }
 
     public int insert(int v) {
-      TreeNode nextInsertTo = getNextInsertTo(root);
-      if (nextInsertTo.left != null) nextInsertTo.right = new TreeNode(v);
-      else nextInsertTo.left = new TreeNode(v);
+      TreeNode n = queue.peek();
+      if (n != null) {
+        TreeNode newNode = new TreeNode(v);
+        if (n.left == null) n.left = newNode;
+        else if (n.right == null) n.right = newNode;
+        queue.offer(newNode);
+        if (n.left != null && n.right != null) queue.poll();
+      }
 
-      return nextInsertTo.val;
+      return n.val;
     }
 
     public TreeNode get_root() {
@@ -88,6 +78,22 @@ public class CompleteBinaryTreeInserter_919 {
     System.out.println(cbtInserter.insert(10));
     System.out.println(cbtInserter.insert(11));
     System.out.println(cbtInserter.insert(12));
+    System.out.println(cbtInserter.get_root().val);
+    System.out.println("========");
+
+    tree = new TreeNode(1, new TreeNode(2), null);
+    cbtInserter = completeBinaryTreeInserter_919.new CBTInserter(tree);
+    System.out.println(cbtInserter.insert(3));
+    System.out.println(cbtInserter.insert(4));
+    System.out.println(cbtInserter.get_root().val);
+    System.out.println("========");
+
+    tree = new TreeNode(1, new TreeNode(2), null);
+    cbtInserter = completeBinaryTreeInserter_919.new CBTInserter(tree);
+    System.out.println(cbtInserter.insert(3));
+    System.out.println(cbtInserter.insert(4));
+    System.out.println(cbtInserter.insert(5));
+    System.out.println(cbtInserter.insert(6));
     System.out.println(cbtInserter.get_root().val);
   }
 }
