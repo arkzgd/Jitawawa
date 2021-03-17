@@ -30,17 +30,17 @@ public class AllNodesDistanceKInBinaryTree_863 {
           return;
         } else {
           if (!path.isEmpty()) {
+            l++;
             TreeNode p = path.peek();
-            if (n == p.left) collectK(p.right, l + 1, K - l - 1, result);
-            if (n == p.right) collectK(p.left, l + 1, K - l - 1, result);
+            if (n == p.left) collectK(p.right, 0, K - l - 1, result);
+            if (n == p.right) collectK(p.left, 0, K - l - 1, result);
           }
         }
-        l++;
       }
     }
 
     private void collectK(TreeNode root, int length, int K, List<Integer> result) {
-      if (root != null) {
+      if (root != null && K >= 0) {
         if (length == K) result.add(root.val);
         collectK(root.left, length + 1, K, result);
         collectK(root.right, length + 1, K, result);
@@ -68,5 +68,9 @@ public class AllNodesDistanceKInBinaryTree_863 {
         new TreeNode(5, new TreeNode(6), new TreeNode(2, new TreeNode(7), new TreeNode(4)));
     TreeNode tree = new TreeNode(3, subTree, new TreeNode(1, new TreeNode(0), new TreeNode(8)));
     System.out.println(solution.distanceK(tree, subTree, 2));
+
+    subTree = new TreeNode(3);
+    tree = new TreeNode(0, new TreeNode(2), new TreeNode(1, subTree, null));
+    System.out.println(solution.distanceK(tree, subTree, 3));
   }
 }
