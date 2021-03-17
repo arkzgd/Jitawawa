@@ -2,41 +2,58 @@ package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class AllNodesDistanceKInBinaryTree_863 {
   class Solution {
-    private int distance(TreeNode root, TreeNode target, int current) {
+    private boolean pathToTarget(TreeNode root, TreeNode target, Stack<TreeNode> path) {
       if (root != null) {
-        if (root.val == target.val) return current;
-        else {
-          int ld = distance(root.left, target, current + 1);
-          if (ld == Integer.MAX_VALUE) return distance(root.right, target, current + 1);
+        path.push(root);
+        if (root == target) {
+          return true;
+        } else {
+          if (pathToTarget(root.left, target, path)) return true;
+          else if (pathToTarget(root.right, target, path)) return true;
+          else path.pop();
         }
       }
 
-      return Integer.MAX_VALUE;
+      return false;
     }
 
-    private void countAtDistance(TreeNode root, int current, int target, List<Integer> result) {
-      if (root != null) {
-        if (current == target) result.add(root.val);
-        else if (current < target) {
-          countAtDistance(root.left, current + 1, target, result);
-          countAtDistance(root.right, current + 1, target, result);
+    private void collectKSiblins(Stack<TreeNode> path, int K, List<Integer> result) {
+      int l = 0;
+      while (!path.isEmpty()) {
+        TreeNode n = path.pop();
+        if (l == K) {
+          result.add(n.val);
+          return;
+        } else {
+          if (!path.isEmpty()) {
+            TreeNode p = path.peek();
+            if (n == p.left) collectK(p.right, l + 1, K - l - 1, result);
+            if (n == p.right) collectK(p.left, l + 1, K - l - 1, result);
+          }
         }
+        l++;
+      }
+    }
+
+    private void collectK(TreeNode root, int length, int K, List<Integer> result) {
+      if (root != null) {
+        if (length == K) result.add(root.val);
+        collectK(root.left, length + 1, K, result);
+        collectK(root.right, length + 1, K, result);
       }
     }
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
       List<Integer> result = new ArrayList<>();
-      int d = distance(root.left, target, 1);
-      if (d < Integer.MAX_VALUE) {
-        countAtDistance(root.right, d, K - d, result);
-      } else {
-        d = distance(root.right, target, 1);
-        countAtDistance(root.left, d, K - d, result);
-      }
-      countAtDistance(target, 0, K, result);
+      collectK(target, 0, K, result);
+
+      Stack<TreeNode> path = new Stack<>();
+      pathToTarget(root, target, path);
+      collectKSiblins(path, K, result);
 
       return result;
     }
