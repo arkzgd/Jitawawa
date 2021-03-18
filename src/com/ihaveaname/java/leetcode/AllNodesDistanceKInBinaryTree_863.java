@@ -2,58 +2,51 @@ package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class AllNodesDistanceKInBinaryTree_863 {
   class Solution {
-    private boolean pathToTarget(TreeNode root, TreeNode target, Stack<TreeNode> path) {
+    private int levelOfTarget = -1;
+    private List<Integer> result = new ArrayList<>();
+
+    private boolean pathToTarget(TreeNode root, TreeNode target, int level, int K) {
       if (root != null) {
-        path.push(root);
-        if (root == target) {
-          return true;
+        boolean lr = pathToTarget(root.left, target, level + 1, K);
+        boolean rr = pathToTarget(root.right, target, level + 1, K);
+        if (!lr && !rr) {
+          if (root == target) {
+            levelOfTarget = level;
+            if (K == 0) result.add(root.val);
+            else collectK(root, 0, K);
+            return true;
+          }
         } else {
-          if (pathToTarget(root.left, target, path)) return true;
-          else if (pathToTarget(root.right, target, path)) return true;
-          else path.pop();
+          int lengthSoFar = levelOfTarget - level;
+          if (levelOfTarget != -1 && lengthSoFar == K) result.add(root.val);
+          else if (lengthSoFar < K) {
+            if (lr) collectK(root.right, lengthSoFar + 1, K);
+            else collectK(root.left, lengthSoFar + 1, K);
+          }
         }
+
+        return lr || rr;
       }
 
       return false;
     }
 
-    private void collectKSiblins(Stack<TreeNode> path, int K, List<Integer> result) {
-      int l = 0;
-      while (!path.isEmpty()) {
-        TreeNode n = path.pop();
-        if (l == K) {
-          result.add(n.val);
-          return;
-        } else {
-          if (!path.isEmpty()) {
-            l++;
-            TreeNode p = path.peek();
-            if (n == p.left) collectK(p.right, 0, K - l - 1, result);
-            if (n == p.right) collectK(p.left, 0, K - l - 1, result);
-          }
-        }
-      }
-    }
-
-    private void collectK(TreeNode root, int length, int K, List<Integer> result) {
-      if (root != null && K >= 0) {
+    private void collectK(TreeNode root, int length, int K) {
+      if (root != null && K > 0) {
         if (length == K) result.add(root.val);
-        collectK(root.left, length + 1, K, result);
-        collectK(root.right, length + 1, K, result);
+        collectK(root.left, length + 1, K);
+        collectK(root.right, length + 1, K);
       }
     }
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-      List<Integer> result = new ArrayList<>();
-      collectK(target, 0, K, result);
+      levelOfTarget = -1;
+      result = new ArrayList<>();
 
-      Stack<TreeNode> path = new Stack<>();
-      pathToTarget(root, target, path);
-      collectKSiblins(path, K, result);
+      pathToTarget(root, target, 0, K);
 
       return result;
     }
@@ -72,5 +65,13 @@ public class AllNodesDistanceKInBinaryTree_863 {
     subTree = new TreeNode(3);
     tree = new TreeNode(0, new TreeNode(2), new TreeNode(1, subTree, null));
     System.out.println(solution.distanceK(tree, subTree, 3));
+
+    subTree = new TreeNode(3, null, new TreeNode(4));
+    tree = new TreeNode(0, new TreeNode(1, null, new TreeNode(2, null, subTree)), null);
+    System.out.println(solution.distanceK(tree, subTree, 0));
+
+    subTree = new TreeNode(2);
+    tree = new TreeNode(0, subTree, new TreeNode(1, new TreeNode(3, new TreeNode(4), null), null));
+    System.out.println(solution.distanceK(tree, subTree, 0));
   }
 }
