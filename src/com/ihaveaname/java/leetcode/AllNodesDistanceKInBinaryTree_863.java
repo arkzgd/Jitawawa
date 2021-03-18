@@ -9,7 +9,7 @@ public class AllNodesDistanceKInBinaryTree_863 {
     private List<Integer> result = new ArrayList<>();
 
     private boolean pathToTarget(TreeNode root, TreeNode target, int level, int K) {
-      if (root != null) {
+      if (root != null && levelOfTarget == -1) {
         boolean lr = pathToTarget(root.left, target, level + 1, K);
         boolean rr = pathToTarget(root.right, target, level + 1, K);
         if (!lr && !rr) {
