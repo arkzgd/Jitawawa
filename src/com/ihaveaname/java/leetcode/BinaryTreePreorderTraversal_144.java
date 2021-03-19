@@ -2,9 +2,11 @@ package com.ihaveaname.java.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BinaryTreePreorderTraversal_144 {
   class Solution {
+    // Recursive version for reference
     private void helper(TreeNode root, List<Integer> result) {
       if (root != null) {
         result.add(root.val);
@@ -15,8 +17,25 @@ public class BinaryTreePreorderTraversal_144 {
 
     public List<Integer> preorderTraversal(TreeNode root) {
       List<Integer> result = new ArrayList<>();
+      Stack<TreeNode> stack = new Stack<>();
 
-      helper(root, result);
+      while (root != null) {
+        result.add(root.val);
+        stack.push(root);
+        root = root.left;
+      }
+
+      while (!stack.isEmpty()) {
+        TreeNode n = stack.pop();
+        if (n.right != null) {
+          n = n.right;
+          while (n != null) {
+            result.add(n.val);
+            stack.push(n);
+            n = n.left;
+          }
+        }
+      }
 
       return result;
     }
