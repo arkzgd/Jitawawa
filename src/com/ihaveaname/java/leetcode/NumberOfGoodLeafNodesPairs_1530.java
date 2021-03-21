@@ -69,7 +69,7 @@ public class NumberOfGoodLeafNodesPairs_1530 {
       result = 0;
       dfs(root, distance);
 
-      return result;
+      return result / 2;
     }
   }
 
