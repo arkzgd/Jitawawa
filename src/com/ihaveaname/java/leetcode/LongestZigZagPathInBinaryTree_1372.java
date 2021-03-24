@@ -6,20 +6,21 @@ public class LongestZigZagPathInBinaryTree_1372 {
 
     private int dfs(TreeNode root, TreeNode parent) {
       if (root != null) {
-        int ll;
+        int ll = dfs(root.left, root);
+        int rl = dfs(root.right, root);
+
         if (root == parent.right && root.left != null) {
-          ll = dfs(root.left, root) + 1;
+          ll++;
           max = Math.max(ll, max);
         } else {
-          ll = 0;
+          ll = 1;
         }
 
-        int rl;
         if (root == parent.left && root.right != null) {
-          rl = dfs(root.right, root) + 1;
+          rl++;
           max = Math.max(rl, max);
         } else {
-          rl = 0;
+          rl = 1;
         }
 
         if (root == parent.right) {
@@ -34,7 +35,9 @@ public class LongestZigZagPathInBinaryTree_1372 {
 
     public int longestZigZag(TreeNode root) {
       max = Integer.MIN_VALUE;
-      max = Math.max(max, Math.max(dfs(root.left, root), dfs(root.right, root)));
+      int ll = dfs(root.left, root);
+      int rl = dfs(root.right, root);
+      max = Math.max(max, Math.max(ll, rl));
       return max;
     }
   }
@@ -57,16 +60,15 @@ public class LongestZigZagPathInBinaryTree_1372 {
                     new TreeNode(6))));
     System.out.println(solution.longestZigZag(tree));
 
-    //    tree =
-    //        new TreeNode(
-    //            1,
-    //            new TreeNode(
-    //                2, null, new TreeNode(4, new TreeNode(5, null, new TreeNode(7)), new
-    // TreeNode(6))),
-    //            new TreeNode(3));
-    //    System.out.println(solution.longestZigZag(tree));
-    //
-    //    tree = new TreeNode(1);
-    //    System.out.println(solution.longestZigZag(tree));
+    tree =
+        new TreeNode(
+            1,
+            new TreeNode(
+                2, null, new TreeNode(4, new TreeNode(5, null, new TreeNode(7)), new TreeNode(6))),
+            new TreeNode(3));
+    System.out.println(solution.longestZigZag(tree));
+
+    tree = new TreeNode(1);
+    System.out.println(solution.longestZigZag(tree));
   }
 }
