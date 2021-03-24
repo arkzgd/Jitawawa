@@ -9,18 +9,24 @@ public class LongestZigZagPathInBinaryTree_1372 {
         int ll;
         if (root == parent.right && root.left != null) {
           ll = dfs(root.left, root) + 1;
-        } else ll = 0;
+          max = Math.max(ll, max);
+        } else {
+          ll = 0;
+        }
 
         int rl;
         if (root == parent.left && root.right != null) {
           rl = dfs(root.right, root) + 1;
-        } else rl = 0;
-
-        if (Math.max(ll, rl) > max) {
-          max = Math.max(ll, rl);
+          max = Math.max(rl, max);
+        } else {
+          rl = 0;
         }
 
-        return Math.max(ll, rl);
+        if (root == parent.right) {
+          return ll;
+        } else if (root == parent.left) {
+          return rl;
+        }
       }
 
       return 0;
@@ -51,15 +57,16 @@ public class LongestZigZagPathInBinaryTree_1372 {
                     new TreeNode(6))));
     System.out.println(solution.longestZigZag(tree));
 
-    tree =
-        new TreeNode(
-            1,
-            new TreeNode(
-                2, null, new TreeNode(4, new TreeNode(5, null, new TreeNode(7)), new TreeNode(6))),
-            new TreeNode(3));
-    System.out.println(solution.longestZigZag(tree));
-
-    tree = new TreeNode(1);
-    System.out.println(solution.longestZigZag(tree));
+    //    tree =
+    //        new TreeNode(
+    //            1,
+    //            new TreeNode(
+    //                2, null, new TreeNode(4, new TreeNode(5, null, new TreeNode(7)), new
+    // TreeNode(6))),
+    //            new TreeNode(3));
+    //    System.out.println(solution.longestZigZag(tree));
+    //
+    //    tree = new TreeNode(1);
+    //    System.out.println(solution.longestZigZag(tree));
   }
 }
