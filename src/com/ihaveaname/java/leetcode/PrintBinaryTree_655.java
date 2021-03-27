@@ -5,51 +5,38 @@ import java.util.List;
 
 public class PrintBinaryTree_655 {
   class Solution {
-    private List<String> dfs(TreeNode root) {
-      if (root != null) {
-        if (root.left == null && root.right == null) {
-          List<String> l = new ArrayList<>();
-          l.add(Integer.toString(root.val));
-          return l;
-        } else {
-          List<String> ll = dfs(root.left);
-          List<String> rl = dfs(root.right);
-          return merge(ll, root.val, rl);
-        }
-      }
+    private List<List<String>> result = new ArrayList<>();
 
-      List<String> l = new ArrayList<>();
-      l.add("");
-      return l;
+    private int height(TreeNode root) {
+      if (root != null) return Math.max(height(root.left), height(root.right)) + 1;
+
+      return 0;
     }
 
-    private List<String> merge(List<String> ll, int val, List<String> rl) {
-      if (ll.size() < rl.size()) {
-        int count = (rl.size() - ll.size()) / 2;
-        List<String> nll = new ArrayList<>();
-        for (int i = 0; i < count; i++) nll.add("");
-        nll.addAll(ll);
-        for (int i = 0; i < count; i++) nll.add("");
-        ll = nll;
-      } else if (ll.size() > rl.size()) {
-        int count = (ll.size() - rl.size()) / 2;
-        List<String> nrl = new ArrayList<>();
-        for (int i = 0; i < count; i++) nrl.add("");
-        nrl.addAll(rl);
-        for (int i = 0; i < count; i++) nrl.add("");
-        rl = nrl;
+    private void dfs(TreeNode root, int level, int start, int end) {
+      if (root != null) {
+        int mid = (start + end) / 2;
+        dfs(root.left, level + 1, start, mid - 1);
+        dfs(root.right, level + 1, mid + 1, end);
+
+        result.get(level).set(mid, Integer.toString(root.val));
       }
-
-      ll.add(Integer.toString(val));
-      ll.addAll(rl);
-
-      return ll;
     }
 
     public List<List<String>> printTree(TreeNode root) {
-      List<List<String>> result = new ArrayList<>();
+      result.clear();
+      int h = height(root);
+      int length = (2 << h - 1) - 1;
+      result.clear();
+      for (int row = 0; row < h; row++) {
+        List<String> l = new ArrayList<>();
+        for (int col = 0; col < length; col++) {
+          l.add("");
+        }
+        result.add(l);
+      }
 
-      System.out.println(dfs(root));
+      dfs(root, 0, 0, length - 1);
 
       return result;
     }
@@ -60,14 +47,17 @@ public class PrintBinaryTree_655 {
     Solution solution = printBinaryTree_655.new Solution();
 
     TreeNode tree = new TreeNode(1, new TreeNode(2), null);
-    System.out.println(solution.printTree(tree));
+    List<List<String>> printed = solution.printTree(tree);
+    for (List<String> l : printed) System.out.println(l);
 
     tree = new TreeNode(1, new TreeNode(2, null, new TreeNode(4)), new TreeNode(3));
-    System.out.println(solution.printTree(tree));
+    printed = solution.printTree(tree);
+    for (List<String> l : printed) System.out.println(l);
 
     tree =
         new TreeNode(
             1, new TreeNode(2, new TreeNode(3, new TreeNode(4), null), null), new TreeNode(5));
-    System.out.println(solution.printTree(tree));
+    printed = solution.printTree(tree);
+    for (List<String> l : printed) System.out.println(l);
   }
 }
