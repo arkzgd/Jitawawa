@@ -1,42 +1,47 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MinTimeToCollectAllApplesInATree_1443 {
   class Solution {
     private int count;
+    private Set<Integer> visited;
 
     private ArrayList<List<Integer>> buildGraph(int n, int[][] edges) {
       ArrayList<List<Integer>> result = new ArrayList<>();
       for (int i = 0; i < n; i++) result.add(new ArrayList<>());
       for (int[] e : edges) {
         result.get(e[0]).add(e[1]);
+        result.get(e[1]).add(e[0]);
       }
 
       return result;
     }
 
     private boolean bfs(int s, ArrayList<List<Integer>> graph, List<Boolean> hasApple) {
-      List<Integer> l = graph.get(s);
-      boolean shouldCome = false;
+      if (!visited.contains(s)) {
+        List<Integer> l = graph.get(s);
+        visited.add(s);
+        boolean shouldCome = false;
 
-      for (int e : l) {
-        if (bfs(e, graph, hasApple)) {
-          shouldCome = true;
-          count += 2;
+        for (int e : l) {
+          if (bfs(e, graph, hasApple)) {
+            shouldCome = true;
+            count += 2;
+          }
         }
-      }
 
-      if (hasApple.get(s)) shouldCome = true;
+        if (hasApple.get(s)) shouldCome = true;
 
-      return shouldCome;
+        return shouldCome;
+      } else return false;
     }
 
     public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
       ArrayList<List<Integer>> graph = buildGraph(n, edges);
+      visited = new HashSet<>();
       count = 0;
+
       bfs(0, graph, hasApple);
 
       return count;
@@ -62,6 +67,10 @@ public class MinTimeToCollectAllApplesInATree_1443 {
 
     edges = new int[][] {{0, 1}, {1, 2}, {0, 3}};
     hasApple = Arrays.asList(true, true, true, true);
+    System.out.println(solution.minTime(4, edges, hasApple));
+
+    edges = new int[][] {{0, 2}, {0, 3}, {1, 2}};
+    hasApple = Arrays.asList(false, true, false, false);
     System.out.println(solution.minTime(4, edges, hasApple));
   }
 }
