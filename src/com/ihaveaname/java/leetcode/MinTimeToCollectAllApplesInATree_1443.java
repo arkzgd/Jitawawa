@@ -5,7 +5,7 @@ import java.util.*;
 public class MinTimeToCollectAllApplesInATree_1443 {
   class Solution {
     private int count;
-    private Set<Integer> visited;
+    private boolean[] visited;
 
     private ArrayList<List<Integer>> buildGraph(int n, int[][] edges) {
       ArrayList<List<Integer>> result = new ArrayList<>();
@@ -19,9 +19,9 @@ public class MinTimeToCollectAllApplesInATree_1443 {
     }
 
     private boolean bfs(int s, ArrayList<List<Integer>> graph, List<Boolean> hasApple) {
-      if (!visited.contains(s)) {
+      if (!visited[s]) {
         List<Integer> l = graph.get(s);
-        visited.add(s);
+        visited[s] = true;
         boolean shouldCome = false;
 
         for (int e : l) {
@@ -39,7 +39,7 @@ public class MinTimeToCollectAllApplesInATree_1443 {
 
     public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
       ArrayList<List<Integer>> graph = buildGraph(n, edges);
-      visited = new HashSet<>();
+      visited = new boolean[n];
       count = 0;
 
       bfs(0, graph, hasApple);
