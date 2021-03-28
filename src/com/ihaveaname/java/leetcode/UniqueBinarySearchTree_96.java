@@ -2,14 +2,21 @@ package com.ihaveaname.java.leetcode;
 
 public class UniqueBinarySearchTree_96 {
   class Solution {
-    public int numTrees(int n) {
-      if (n == 0) return 1;
-      if (n == 1) return 1;
-      if (n == 2) return 2;
-      int count = 0;
-      for (int i = 0; i < n; i++) count += (numTrees(i) * numTrees(n - 1 - i));
+    private int[] dp = new int[20];
 
-      return count;
+    private int calc(int n) {
+      if (dp[n] == 0) {
+        for (int i = 0; i < n; i++) dp[n] += (calc(i) * calc(n - 1 - i));
+      }
+
+      return dp[n];
+    }
+
+    public int numTrees(int n) {
+      dp[0] = 1;
+      dp[1] = 1;
+
+      return calc(n);
     }
   }
 
