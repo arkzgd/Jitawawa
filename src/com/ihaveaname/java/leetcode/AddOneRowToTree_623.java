@@ -3,14 +3,17 @@ package com.ihaveaname.java.leetcode;
 public class AddOneRowToTree_623 {
   class Solution {
     private TreeNode helper(TreeNode root, TreeNode parent, int val, int depth) {
-      if (root != null) {
+      if (root != null || (root == null && depth == 1)) {
         if (depth == 1) {
           TreeNode n = new TreeNode(val);
-          if (parent == null) n.left = root;
-          else {
-            if (root == parent.left) n.left = root;
-            else if (root == parent.right) n.right = root;
+          if (root != null) {
+            if (parent == null) n.left = root;
+            else {
+              if (root == parent.left) n.left = root;
+              else if (root == parent.right) n.right = root;
+            }
           }
+
           return n;
         } else {
           root.left = helper(root.left, root, val, depth - 1);
@@ -39,5 +42,8 @@ public class AddOneRowToTree_623 {
             new TreeNode(2, new TreeNode(3), new TreeNode(1)),
             new TreeNode(6, new TreeNode(5), null));
     System.out.println(printer.printTree(solution.addOneRow(tree, 1, 2)));
+
+    tree = new TreeNode(1, new TreeNode(2, new TreeNode(4), null), new TreeNode(3));
+    System.out.println(printer.printTree(solution.addOneRow(tree, 5, 4)));
   }
 }
