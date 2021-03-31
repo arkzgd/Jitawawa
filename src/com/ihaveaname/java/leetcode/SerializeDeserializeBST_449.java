@@ -26,21 +26,28 @@ public class SerializeDeserializeBST_449 {
       }
     }
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
+    private StringBuffer stringBuffer;
+
+    private void helper(TreeNode root) {
       if (root != null) {
-        String r = Integer.toString(root.val);
+        stringBuffer.append(root.val);
         if (root.left != null) {
-          r = r + "," + serialize(root.left);
+          stringBuffer.append(",");
+          helper(root.left);
         }
         if (root.right != null) {
-          r = r + "," + serialize(root.right);
+          stringBuffer.append(",");
+          helper(root.right);
         }
-
-        return r;
       }
+    }
 
-      return "";
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+      stringBuffer = new StringBuffer();
+      helper(root);
+
+      return stringBuffer.toString();
     }
 
     private int[] stringToIntArray(String data) {
