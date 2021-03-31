@@ -1,7 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 public class ConstructStringFromBinaryTree {
-
   public String tree2str(TreeNode t) {
     if (t != null) {
       if (t.left == null) {
