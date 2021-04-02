@@ -1,52 +1,40 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class FindDuplicatedSubtrees_652 {
   class Solution {
-    private Set<TreeNode> subtrees;
-    private List<TreeNode> result;
+    private Set<String> subtrees;
+    private Map<String, TreeNode> result;
 
-    private void helper(TreeNode root) {
+    private String helper(TreeNode root) {
       if (root != null) {
-        helper(root.left);
-        helper(root.right);
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(root.val);
+        stringBuffer.append(",");
+        stringBuffer.append(helper(root.left));
+        stringBuffer.append(",");
+        stringBuffer.append(helper(root.right));
 
-        boolean skip = false;
-        for (TreeNode t : subtrees) {
-          if (sameTree(t, root)) {
-            skip = true;
-          }
-        }
+        String s = stringBuffer.toString();
+        if (subtrees.contains(s)) {
+          if (!result.containsKey(s)) result.put(s, root);
+        } else subtrees.add(s);
 
-        if (!skip) {
-          subtrees.add(root);
-        }
-      }
-    }
-
-    private boolean sameTree(TreeNode root1, TreeNode root2) {
-      if (root1 == null && root2 == null) return true;
-      if (root1 != null && root2 != null) {
-        return (root1.val == root2.val
-            && sameTree(root1.left, root2.left)
-            && sameTree(root1.right, root2.right));
+        return s;
       }
 
-      return false;
+      return "*";
     }
 
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
       subtrees = new HashSet<>();
+      result = new HashMap<>();
       helper(root);
 
-      result = new ArrayList<>();
-      for (TreeNode s : subtrees) result.add(s);
-
-      return result;
+      List<TreeNode> l = new ArrayList<>();
+      l.addAll(result.values());
+      return l;
     }
   }
 
@@ -59,6 +47,24 @@ public class FindDuplicatedSubtrees_652 {
             1,
             new TreeNode(2, new TreeNode(4), null),
             new TreeNode(3, new TreeNode(2, new TreeNode(4), null), new TreeNode(4)));
+    System.out.println(solution.findDuplicateSubtrees(tree));
+
+    tree =
+        new TreeNode(
+            0,
+            new TreeNode(0, new TreeNode(0), null),
+            new TreeNode(0, null, new TreeNode(0, null, new TreeNode(0))));
+    System.out.println(solution.findDuplicateSubtrees(tree));
+
+    tree = new TreeNode(0, new TreeNode(0), new TreeNode(0));
+    System.out.println(solution.findDuplicateSubtrees(tree));
+
+    tree = new TreeNode(2, new TreeNode(1), new TreeNode(1));
+    System.out.println(solution.findDuplicateSubtrees(tree));
+
+    tree =
+        new TreeNode(
+            2, new TreeNode(2, new TreeNode(3), null), new TreeNode(2, new TreeNode(3), null));
     System.out.println(solution.findDuplicateSubtrees(tree));
   }
 }
