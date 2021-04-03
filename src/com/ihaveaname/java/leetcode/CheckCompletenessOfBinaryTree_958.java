@@ -1,56 +1,45 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CheckCompletenessOfBinaryTree_958 {
   class Solution {
-    private Map<TreeNode, Integer> heights;
+    private boolean checkResult(List<List<TreeNode>> result) {
+      boolean seenNull = false;
+      for (int level = 0; level < result.size() - 1; level++) {
+        if (level < result.size() - 2
+            && result.get(level).size() < (1 << level)
+            && !result.get(level + 1).isEmpty()) return false;
 
-    private int height(TreeNode root) {
-      if (root != null) {
-        if (heights.containsKey(root)) return heights.get(root);
-        else {
-          heights.put(root, Math.max(height(root.left), height(root.right)) + 1);
-          return heights.get(root);
+        for (int l = 0; l < result.get(level).size(); l++) {
+          if (result.get(level).get(l) == null) seenNull = true;
+          else if (seenNull) return false;
         }
-      }
-
-      return 0;
-    }
-
-    private boolean isFullTree(TreeNode root) {
-      if (root != null) {
-        boolean lr = isFullTree(root.left);
-        if (!lr) return false;
-        boolean rr = isFullTree(root.right);
-        if (!rr) return false;
-        return height(root.left) == height(root.right);
-      }
-
-      return true;
-    }
-
-    private boolean helper(TreeNode root) {
-      if (root != null) {
-        boolean lr = helper(root.left);
-        if (!lr) return false;
-        boolean rr = helper(root.right);
-        if (!rr) return false;
-
-        int lh = height(root.left);
-        int rh = height(root.right);
-        if (lh == rh) return isFullTree(root.left) && isCompleteTree(root.right);
-        else if (lh == rh + 1) return isCompleteTree(root.left) && isFullTree(root.right);
-        else return false;
       }
 
       return true;
     }
 
     public boolean isCompleteTree(TreeNode root) {
-      heights = new HashMap<>();
-      return helper(root);
+      Queue<TreeNode> queue = new LinkedList<>();
+      List<List<TreeNode>> result = new ArrayList<>();
+      if (root != null) queue.offer(root);
+
+      while (!queue.isEmpty()) {
+        int size = queue.size();
+        List<TreeNode> l = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+          TreeNode n = queue.poll();
+          l.add(n);
+          if (n != null) {
+            queue.offer(n.left);
+            queue.offer(n.right);
+          }
+        }
+        result.add(l);
+      }
+
+      return checkResult(result);
     }
   }
 
