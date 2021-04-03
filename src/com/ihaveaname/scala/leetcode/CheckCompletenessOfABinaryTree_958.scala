@@ -4,19 +4,7 @@ import com.ihaveaname.java.leetcode.TreeNode
 
 object CheckCompletenessOfABinaryTree_958 extends App {
   object Solution {
-    def height(root: TreeNode): Int =
-      if (root != null) Math.max(height(root.left), height((root.right))) + 1
-      else 0
-
-    def isCompleteTree(root: TreeNode): Boolean =
-      if (root != null) {
-        val cr = isCompleteTree(root.left) && isCompleteTree(root.right)
-        if (cr) {
-          val diff = height(root.left) - height(root.right)
-          if (diff == 0 || diff == 1) true
-          else false
-        } else false
-      } else true
+    def isCompleteTree(root: TreeNode): Boolean = ???
   }
 
   val tree1 =
@@ -34,4 +22,20 @@ object CheckCompletenessOfABinaryTree_958 extends App {
       new TreeNode(3, null, new TreeNode(6))
     )
   println(s"${Solution.isCompleteTree(tree2)}")
+
+  val tree3 =
+    new TreeNode(
+      1,
+      new TreeNode(2, new TreeNode(5), null),
+      new TreeNode(3, new TreeNode(7), new TreeNode(8))
+    )
+  println(s"${Solution.isCompleteTree(tree3)}")
+
+  val tree4 =
+    new TreeNode(
+      1,
+      new TreeNode(2, new TreeNode(5), null),
+      new TreeNode(3)
+    )
+  println(s"${Solution.isCompleteTree(tree4)}")
 }
