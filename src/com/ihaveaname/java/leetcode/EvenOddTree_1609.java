@@ -11,8 +11,8 @@ public class EvenOddTree_1609 {
         }
 
         int val = ledger.get(level);
-        if (level % 2 == 0) {
-          if (root.val % 2 == 0) {
+        if ((level & 1) == 0) {
+          if ((root.val & 1) == 0) {
             return false;
           }
 
@@ -20,7 +20,7 @@ public class EvenOddTree_1609 {
             return false;
           }
         } else {
-          if (root.val % 2 == 1) {
+          if ((root.val & 1) == 1) {
             return false;
           }
 
