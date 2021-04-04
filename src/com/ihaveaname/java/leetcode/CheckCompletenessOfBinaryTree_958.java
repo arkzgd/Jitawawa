@@ -1,45 +1,30 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CheckCompletenessOfBinaryTree_958 {
   class Solution {
-    private boolean checkResult(List<List<TreeNode>> result) {
-      boolean seenNull = false;
-      for (int level = 0; level < result.size() - 1; level++) {
-        if (level < result.size() - 2
-            && result.get(level).size() < (1 << level)
-            && !result.get(level + 1).isEmpty()) return false;
+    public boolean isCompleteTree(TreeNode root) {
+      Queue<TreeNode> queue = new LinkedList<>();
+      if (root != null) queue.offer(root);
 
-        for (int l = 0; l < result.get(level).size(); l++) {
-          if (result.get(level).get(l) == null) seenNull = true;
-          else if (seenNull) return false;
+      boolean firstLeaf = false;
+      while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+          TreeNode n = queue.poll();
+
+          if ((n.left != null || n.right != null) && firstLeaf) return false;
+          if (n.left == null || n.right == null) firstLeaf = true;
+          if (n.left == null && n.right != null) return false;
+
+          if (n.left != null) queue.offer(n.left);
+          if (n.right != null) queue.offer(n.right);
         }
       }
 
       return true;
-    }
-
-    public boolean isCompleteTree(TreeNode root) {
-      Queue<TreeNode> queue = new LinkedList<>();
-      List<List<TreeNode>> result = new ArrayList<>();
-      if (root != null) queue.offer(root);
-
-      while (!queue.isEmpty()) {
-        int size = queue.size();
-        List<TreeNode> l = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-          TreeNode n = queue.poll();
-          l.add(n);
-          if (n != null) {
-            queue.offer(n.left);
-            queue.offer(n.right);
-          }
-        }
-        result.add(l);
-      }
-
-      return checkResult(result);
     }
   }
 
