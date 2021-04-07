@@ -2,26 +2,24 @@ package com.ihaveaname.java.leetcode;
 
 public class FlattenBinaryTreeToLinkedList_114 {
   class Solution {
-    private TreeNode prev;
-    private void helper(TreeNode root) {
+    private void helper(TreeNode root, TreeNode prev) {
       if (root != null) {
-        if (prev != null) System.out.println("prev: " + prev.val);
-        else System.out.println("prev: nil");
-        System.out.println("root: " + root.val);
-
-        prev = root;
-        if (root.left != null) {
-          helper(root.left);
-        }
         if (root.right != null) {
-          helper(root.right);
-          prev = root.right;
+          helper(root.right, prev);
         }
+
+        if (root.left != null) {
+          helper(root.left, root.right != null ? root.right : prev);
+        }
+
+        prev = (root.left != null ? root.left : (root.right != null ? root.right : prev));
+        root.left = null;
+        root.right = prev;
       }
     }
 
     public void flatten(TreeNode root) {
-      helper(root);
+      helper(root, null);
     }
   }
 
@@ -37,10 +35,10 @@ public class FlattenBinaryTreeToLinkedList_114 {
             new TreeNode(5, null, new TreeNode(6)));
     solution.flatten(tree);
 
-    /*tree = null;
+    tree = null;
     solution.flatten(tree);
 
     tree = new TreeNode(0);
-    solution.flatten(tree);*/
+    solution.flatten(tree);
   }
 }
