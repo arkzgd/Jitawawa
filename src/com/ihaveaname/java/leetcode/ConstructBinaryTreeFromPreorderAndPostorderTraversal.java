@@ -3,7 +3,7 @@ package com.ihaveaname.java.leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructFromPrePost {
+public class ConstructBinaryTreeFromPreorderAndPostorderTraversal {
   private void preOrder(TreeNode root, List<Integer> result) {
     if (root == null) return;
     result.add(root.val);
@@ -53,12 +53,15 @@ public class ConstructFromPrePost {
   }
 
   public static void main(String[] args) {
-    ConstructFromPrePost cfpp = new ConstructFromPrePost();
+    PrintBinaryTree_655 printBinaryTree_655 = new PrintBinaryTree_655();
+    PrintBinaryTree_655.Solution printer = printBinaryTree_655.new Solution();
+
+    ConstructBinaryTreeFromPreorderAndPostorderTraversal cfpp = new ConstructBinaryTreeFromPreorderAndPostorderTraversal();
     int[] pre = new int[] {1, 2, 4, 5, 3, 6, 7};
     int[] post = new int[] {4, 5, 2, 6, 7, 3, 1};
 
     TreeNode root = cfpp.constructFromPrePost(pre, post);
-    System.out.println(root);
+    System.out.println(printer.printTree(root));
 
     List<Integer> result = new ArrayList<>();
     cfpp.preOrder(root, result);
