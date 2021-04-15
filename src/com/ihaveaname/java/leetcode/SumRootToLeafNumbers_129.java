@@ -1,57 +1,36 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 public class SumRootToLeafNumbers_129 {
   class Solution {
-    private Deque<Integer> addUpNumber(TreeNode root) {
-      if (root != null) {
-        if (root.left == null && root.right == null) {
-          Deque<Integer> t = new LinkedList<>();
-          t.offer(root.val);
-          return t;
-        } else {
-          Deque<Integer> l = addUpNumber(root.left);
-          l.offerFirst(root.val);
-          Deque<Integer> r = addUpNumber(root.right);
-          r.offerFirst(root.val);
+    int result;
 
-          Deque<Integer> merged = new LinkedList<>();
-          int c = 0;
-          while (!l.isEmpty() && !r.isEmpty()) {
-            int li = l.pollLast();
-            int ri = r.pollLast();
-            c = (li + ri + c) / 10;
-            merged.offerFirst((li + ri + c) % 10);
-          }
-          while (!l.isEmpty()) {
-            int li = l.pollLast();
-            c = (li + c) / 10;
-            merged.offerFirst((li + c) % 10);
-          }
-          while (!r.isEmpty()) {
-            int ri = r.pollLast();
-            c = (ri + c) / 10;
-            merged.offerFirst((ri + c) % 10);
-          }
-          merged.offerFirst(c);
-
-          return merged;
-        }
+    private int sum(int[] soFar, int level) {
+      int sum = 0;
+      for (int i = level; i >= 0; i--) {
+        sum += soFar[i] * Math.pow(10, level - i);
       }
 
-      return new LinkedList<>();
+      return sum;
+    }
+
+    private void helper(TreeNode root, int level, int[] soFar) {
+      if (root != null) {
+        if (root.left == null && root.right == null) {
+          soFar[level] = root.val;
+          result += sum(soFar, level);
+        } else {
+          soFar[level] = root.val;
+          helper(root.left, level + 1, soFar);
+          helper(root.right, level + 1, soFar);
+        }
+      }
     }
 
     public int sumNumbers(TreeNode root) {
-      Deque<Integer> q = addUpNumber(root);
-      int index = 0;
-      int result = 0;
-      while (!q.isEmpty()) {
-        result += Math.pow(10, index) * q.pollLast();
-        index++;
-      }
+      result = 0;
+      int[] soFar = new int[10];
+
+      helper(root, 0, soFar);
 
       return result;
     }

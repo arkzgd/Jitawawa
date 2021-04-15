@@ -1,25 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 public class TrimBranch {
-  static class TreeNode {
-    int val;
-    TreeNode right;
-
-    TreeNode() {}
-
-    TreeNode(int val) {
-      this.val = val;
-    }
-
-    TreeNode left;
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-      this.val = val;
-      this.left = left;
-      this.right = right;
-    }
-  }
-
   private static TreeNode trimBranch(TreeNode root) {
     if (root != null) {
       root.left = trimBranch(root.left);
