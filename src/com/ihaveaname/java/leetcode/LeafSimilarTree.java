@@ -1,7 +1,5 @@
 package com.ihaveaname.java.leetcode;
 
-import scala.Int;
-
 import java.util.LinkedList;
 import java.util.Queue;
 

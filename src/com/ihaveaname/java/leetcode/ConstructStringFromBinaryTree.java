@@ -5,11 +5,11 @@ public class ConstructStringFromBinaryTree {
     if (t != null) {
       if (t.left == null) {
         String r = tree2str(t.right);
-        return t.val + (r.isBlank() ? r : "()(" + r + ")");
+        return t.val + (r.isEmpty() ? r : "()(" + r + ")");
       } else {
         String l = tree2str(t.left);
         String r = tree2str(t.right);
-        return t.val + "(" + l + ")" + (r.isBlank() ? r : "(" + r + ")");
+        return t.val + "(" + l + ")" + (r.isEmpty() ? r : "(" + r + ")");
       }
     }
 
