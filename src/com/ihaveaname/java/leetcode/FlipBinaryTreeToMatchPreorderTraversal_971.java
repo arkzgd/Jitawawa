@@ -11,49 +11,61 @@ public class FlipBinaryTreeToMatchPreorderTraversal_971 {
     boolean unresolvable;
     Map<Integer, Integer> where;
 
-    private void validate(TreeNode root) {
+    private boolean validate(TreeNode root, int b, boolean flag) {
+      if (root != null) {
+        if (flag && where.get(root.val) > b) {
+          return false;
+        } else if (!flag && where.get(root.val) < b) {
+          return false;
+        } else {
+          return validate(root.left, b, flag) && validate(root.right, b, flag);
+        }
+      }
+
+      return true;
+    }
+
+    private void dfs(TreeNode root) {
       if (root != null && !unresolvable) {
         if (root.left != null && root.right != null) {
           int li = where.get(root.left.val);
           int rooti = where.get(root.val);
           int ri = where.get(root.right.val);
-          if (li < rooti && ri > rooti || ri < rooti && li > rooti || li < rooti && ri < rooti) {
+          if (li > ri) {
+            result.add(root.val);
+            TreeNode t = root.left;
+            root.left = root.right;
+            root.right = t;
+          }
+          if (!(rooti < li && rooti < ri)
+              || !validate(root.left, where.get(root.right.val), true)
+              || !validate(root.right, where.get(root.left.val), false)) {
             unresolvable = true;
             result.clear();
             result.add(-1);
-          } else {
-            if (li > ri) {
-              result.add(root.val);
-              TreeNode t = root.left;
-              root.left = root.right;
-              root.right = t;
-            }
           }
-
-          validate(root.left);
-          validate(root.right);
         } else {
-          if (root.left == null && root.right != null) {
+          if (root.left != null) {
+            int li = where.get(root.left.val);
+            int rooti = where.get(root.val);
+            if (!(rooti < li)) {
+              unresolvable = true;
+              result.clear();
+              result.add(-1);
+            }
+          } else if (root.right != null) {
             int rooti = where.get(root.val);
             int ri = where.get(root.right.val);
-            if (ri < rooti) {
-              unresolvable = true;
-              result.clear();
-              result.add(-1);
-            }
-          } else if (root.left != null && root.right == null) {
-            int rooti = where.get(root.val);
-            int li = where.get(root.left.val);
-            if (li < rooti) {
+            if (!(rooti < ri)) {
               unresolvable = true;
               result.clear();
               result.add(-1);
             }
           }
-
-          validate(root.left);
-          validate(root.right);
         }
+
+        dfs(root.left);
+        dfs(root.right);
       }
     }
 
@@ -62,7 +74,7 @@ public class FlipBinaryTreeToMatchPreorderTraversal_971 {
       where = new HashMap<>();
       unresolvable = false;
       for (int i = 0; i < voyage.length; i++) where.put(voyage[i], i);
-      validate(root);
+      dfs(root);
 
       return result;
     }
