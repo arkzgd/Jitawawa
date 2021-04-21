@@ -1,25 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 public class CountNodes {
-  static class TreeNode {
-    int val;
-    TreeNode right;
-
-    TreeNode() {}
-
-    TreeNode(int val) {
-      this.val = val;
-    }
-
-    TreeNode left;
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-      this.val = val;
-      this.left = left;
-      this.right = right;
-    }
-  }
-
   private static int height(TreeNode root) {
     if (root == null) return 0;
     return 1 + Math.max(height(root.left), height(root.right));

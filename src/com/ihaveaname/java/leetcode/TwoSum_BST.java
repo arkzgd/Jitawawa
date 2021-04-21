@@ -2,29 +2,8 @@ package com.ihaveaname.java.leetcode;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class TwoSum_BST {
-
-  static class TreeNode {
-    int val;
-    TreeNode right;
-
-    TreeNode() {}
-
-    TreeNode(int val) {
-      this.val = val;
-    }
-
-    TreeNode left;
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-      this.val = val;
-      this.left = left;
-      this.right = right;
-    }
-  }
-
   public boolean findTarget(TreeNode root, int k) {
     return search(root, k);
   }

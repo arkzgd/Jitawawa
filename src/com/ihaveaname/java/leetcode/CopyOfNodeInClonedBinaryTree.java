@@ -1,18 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 public class CopyOfNodeInClonedBinaryTree {
-  static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x, TreeNode left, TreeNode right) {
-      val = x;
-      this.left = left;
-      this.right = right;
-    }
-  }
-
   private TreeNode copyTree(TreeNode root) {
     if (root == null) return null;
     TreeNode cloned = new TreeNode(root.val, root.left, root.right);
