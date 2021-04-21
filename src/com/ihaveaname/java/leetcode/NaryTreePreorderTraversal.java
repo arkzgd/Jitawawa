@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NaryTreePreorderTraversal {
-  private void helper(Node node, List<Integer> result) {
-    if (node != null) {
-      result.add(node.val);
-      for (Node c : node.children) helper(c, result);
+  private void helper(NaryNode naryNode, List<Integer> result) {
+    if (naryNode != null) {
+      result.add(naryNode.val);
+      for (NaryNode c : naryNode.children) helper(c, result);
     }
   }
 
-  public List<Integer> preorder(Node root) {
+  public List<Integer> preorder(NaryNode root) {
     List<Integer> result = new ArrayList<>();
     helper(root, result);
     return result;
