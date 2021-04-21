@@ -1,24 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
 public class BinaryTreeMinDepth {
-  public static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {}
-
-    TreeNode(int val) {
-      this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-      this.val = val;
-      this.left = left;
-      this.right = right;
-    }
-  }
-
   private int getMinDepth(TreeNode node) {
     if (node == null) return 0;
 
