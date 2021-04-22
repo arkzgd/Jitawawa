@@ -1,16 +1,16 @@
 package com.ihaveaname.java.leetcode;
 
-class ListNode {
-  int val;
-  ListNode next;
-
-  ListNode(int x, ListNode n) {
-    val = x;
-    next = n;
-  }
-}
-
 public class LinkedListCycle {
+  static class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int x, ListNode n) {
+      val = x;
+      next = n;
+    }
+  }
+
   public boolean hasCycle(ListNode head) {
     ListNode slow = head;
     ListNode fast = head;
