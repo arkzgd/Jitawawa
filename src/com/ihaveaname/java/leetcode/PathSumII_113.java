@@ -1,16 +1,15 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PathSumII_113 {
   class Solution {
-    private List<List<Integer>> helper(TreeNode root, int targetSum) {
-      List<List<Integer>> result = new ArrayList<>();
+    private List<LinkedList<Integer>> helper(TreeNode root, int targetSum) {
+      List<LinkedList<Integer>> result = new LinkedList<>();
       if (root != null) {
-        List<List<Integer>> ll = helper(root.left, targetSum - root.val);
-        List<List<Integer>> rl = helper(root.right, targetSum - root.val);
+        List<LinkedList<Integer>> ll = helper(root.left, targetSum - root.val);
+        List<LinkedList<Integer>> rl = helper(root.right, targetSum - root.val);
 
         if (targetSum - root.val == 0 && root.left == null && root.right == null) {
           LinkedList<Integer> l = new LinkedList<>();
@@ -18,25 +17,15 @@ public class PathSumII_113 {
           result.add(l);
         } else {
           if (root.left != null) {
-            List<List<Integer>> newll = new ArrayList<>();
-            for (List l : ll) {
-              List<Integer> newl = new ArrayList<>();
-              newl.add(root.val);
-              newl.addAll(l);
-              newll.add(newl);
+            for (LinkedList l : ll) {
+              l.addFirst(root.val);
             }
-            ll = newll;
           }
 
           if (root.right != null) {
-            List<List<Integer>> newrl = new ArrayList<>();
-            for (List l : rl) {
-              List<Integer> newl = new ArrayList<>();
-              newl.add(root.val);
-              newl.addAll(l);
-              newrl.add(newl);
+            for (LinkedList l : rl) {
+              l.addFirst(root.val);
             }
-            rl = newrl;
           }
 
           result.addAll(ll);
@@ -48,7 +37,10 @@ public class PathSumII_113 {
     }
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-      return helper(root, targetSum);
+      List<List<Integer>> result = new LinkedList<>();
+      result.addAll(helper(root, targetSum));
+
+      return result;
     }
   }
 
