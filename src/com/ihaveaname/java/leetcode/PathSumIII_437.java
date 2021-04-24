@@ -1,24 +1,40 @@
 package com.ihaveaname.java.leetcode;
 
+import java.util.*;
+
 public class PathSumIII_437 {
   class Solution {
-    int count = 0;
+    private int count;
+    private Map<TreeNode, List<Integer>> dp;
 
     public void helper(TreeNode root, int targetSum) {
       if (root != null) {
-        if (root.val == targetSum) count++;
-        helper(root.left, targetSum - root.val);
-        helper(root.right, targetSum - root.val);
+        helper(root.left, targetSum);
+        helper(root.right, targetSum);
+
+        if (!dp.containsKey(root)) {
+          dp.put(root, new LinkedList<>());
+        }
+
+        dp.get(root).add(root.val);
+
+        if (root.left != null) {
+          for (Integer i : dp.get(root.left)) dp.get(root).add(i + root.val);
+        }
+        if (root.right != null) {
+          for (Integer i : dp.get(root.right)) dp.get(root).add(i + root.val);
+        }
+
+        for (Integer i : dp.get(root)) {
+          if (i == targetSum) count++;
+        }
       }
     }
 
     public int pathSum(TreeNode root, int targetSum) {
-      if (root != null) {
-        helper(root, targetSum);
-        pathSum(root.left, targetSum);
-        pathSum(root.right, targetSum);
-      }
-
+      count = 0;
+      dp = new HashMap<>();
+      helper(root, targetSum);
       return count;
     }
   }
@@ -37,7 +53,6 @@ public class PathSumIII_437 {
             new TreeNode(-3, null, new TreeNode(11)));
     System.out.println(solution.pathSum(tree, 8));
 
-    solution.count = 0;
     tree =
         new TreeNode(
             5,
@@ -45,7 +60,6 @@ public class PathSumIII_437 {
             new TreeNode(8, new TreeNode(13), new TreeNode(4, new TreeNode(5), new TreeNode(1))));
     System.out.println(solution.pathSum(tree, 22));
 
-    solution.count = 0;
     tree =
         new TreeNode(
             1,
