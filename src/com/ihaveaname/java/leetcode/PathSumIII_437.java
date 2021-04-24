@@ -2,28 +2,24 @@ package com.ihaveaname.java.leetcode;
 
 public class PathSumIII_437 {
   class Solution {
-    public int helper(TreeNode root, int targetSum) {
-      if (root != null) {
-        if (root.val == targetSum) {
-          return 1;
-        } else if (root.left == null && root.right == null) {
-          return 0;
-        } else {
-          return helper(root.left, targetSum - root.val) + helper(root.right, targetSum - root.val);
-        }
-      }
+    int count = 0;
 
-      return 0;
+    public void helper(TreeNode root, int targetSum) {
+      if (root != null) {
+        if (root.val == targetSum) count++;
+        helper(root.left, targetSum - root.val);
+        helper(root.right, targetSum - root.val);
+      }
     }
 
     public int pathSum(TreeNode root, int targetSum) {
-      int result = 0;
       if (root != null) {
-        result += helper(root, targetSum);
-        result += pathSum(root.left, targetSum) + pathSum(root.right, targetSum);
+        helper(root, targetSum);
+        pathSum(root.left, targetSum);
+        pathSum(root.right, targetSum);
       }
 
-      return result;
+      return count;
     }
   }
 
@@ -41,6 +37,7 @@ public class PathSumIII_437 {
             new TreeNode(-3, null, new TreeNode(11)));
     System.out.println(solution.pathSum(tree, 8));
 
+    solution.count = 0;
     tree =
         new TreeNode(
             5,
@@ -48,6 +45,7 @@ public class PathSumIII_437 {
             new TreeNode(8, new TreeNode(13), new TreeNode(4, new TreeNode(5), new TreeNode(1))));
     System.out.println(solution.pathSum(tree, 22));
 
+    solution.count = 0;
     tree =
         new TreeNode(
             1,
