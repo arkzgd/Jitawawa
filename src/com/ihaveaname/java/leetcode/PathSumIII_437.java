@@ -5,39 +5,25 @@ import java.util.*;
 public class PathSumIII_437 {
   class Solution {
     private int count;
-    private Map<TreeNode, List<Integer>> dp;
+    private Map<Integer, Integer> dp;
 
-    public void helper(TreeNode root, int targetSum) {
+    public void helper(TreeNode root, int curSum, int targetSum) {
       if (root != null) {
-        helper(root.left, targetSum);
-        helper(root.right, targetSum);
-
-        if (!dp.containsKey(root)) {
-          dp.put(root, new LinkedList<>());
-        }
-
-        dp.get(root).add(root.val);
-        if (root.val == targetSum) count++;
-
-        if (root.left != null) {
-          for (Integer i : dp.get(root.left)) {
-            dp.get(root).add(i + root.val);
-            if (i + root.val == targetSum) count++;
-          }
-        }
-        if (root.right != null) {
-          for (Integer i : dp.get(root.right)) {
-            dp.get(root).add(i + root.val);
-            if (i + root.val == targetSum) count++;
-          }
-        }
+        curSum += root.val;
+        int target = curSum - targetSum; // Why it is not targetSum - curSum?
+        count += dp.getOrDefault(target, 0);
+        dp.put(curSum, dp.getOrDefault(curSum, 0) + 1);
+        helper(root.left, curSum, targetSum);
+        helper(root.right, curSum, targetSum);
+        dp.put(curSum, dp.get(curSum) - 1);
       }
     }
 
     public int pathSum(TreeNode root, int targetSum) {
       count = 0;
       dp = new HashMap<>();
-      helper(root, targetSum);
+      dp.put(0, 1);
+      helper(root, 0, targetSum);
       return count;
     }
   }
