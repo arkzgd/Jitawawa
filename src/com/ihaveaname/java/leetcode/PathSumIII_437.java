@@ -17,16 +17,19 @@ public class PathSumIII_437 {
         }
 
         dp.get(root).add(root.val);
+        if (root.val == targetSum) count++;
 
         if (root.left != null) {
-          for (Integer i : dp.get(root.left)) dp.get(root).add(i + root.val);
+          for (Integer i : dp.get(root.left)) {
+            dp.get(root).add(i + root.val);
+            if (i + root.val == targetSum) count++;
+          }
         }
         if (root.right != null) {
-          for (Integer i : dp.get(root.right)) dp.get(root).add(i + root.val);
-        }
-
-        for (Integer i : dp.get(root)) {
-          if (i == targetSum) count++;
+          for (Integer i : dp.get(root.right)) {
+            dp.get(root).add(i + root.val);
+            if (i + root.val == targetSum) count++;
+          }
         }
       }
     }
