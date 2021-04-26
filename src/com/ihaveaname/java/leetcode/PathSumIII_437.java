@@ -10,7 +10,10 @@ public class PathSumIII_437 {
     public void helper(TreeNode root, int curSum, int targetSum) {
       if (root != null) {
         curSum += root.val;
-        int target = curSum - targetSum; // Why it is not targetSum - curSum?
+        int target =
+            curSum
+                - targetSum; // Why it is not targetSum - curSum? Because curSum is the sum of
+                             // elements seen so far
         count += dp.getOrDefault(target, 0);
         dp.put(curSum, dp.getOrDefault(curSum, 0) + 1);
         helper(root.left, curSum, targetSum);
