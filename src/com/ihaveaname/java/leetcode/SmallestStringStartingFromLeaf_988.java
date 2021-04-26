@@ -4,13 +4,16 @@ public class SmallestStringStartingFromLeaf_988 {
   class Solution {
     public String smallestFromLeaf(TreeNode root) {
       if (root != null) {
-        String lr = smallestFromLeaf(root.left) + (char) ('a' + root.val);
-        String rr = smallestFromLeaf(root.right) + (char) ('a' + root.val);
+        StringBuilder lrsb = new StringBuilder();
+        String lr =
+            lrsb.append(smallestFromLeaf(root.left)).append((char) ('a' + root.val)).toString();
+        StringBuilder rrsb = new StringBuilder();
+        String rr =
+            rrsb.append(smallestFromLeaf(root.right)).append((char) ('a' + root.val)).toString();
         if (java.lang.CharSequence.compare(lr, rr) >= 0) {
           if (rr.length() > 1) return rr;
           else return lr;
-        }
-        else {
+        } else {
           if (lr.length() > 1) return lr;
           else return rr;
         }
