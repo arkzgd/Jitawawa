@@ -7,20 +7,16 @@ public class LinkedListInBinaryTree_1367 {
         if (root.val == curr.val) {
           if (isSubPath(head, curr.next, root.left)) return true;
           if (isSubPath(head, curr.next, root.right)) return true;
-        }
-
-        if (isSubPath(head, head, root.left)) return true;
-        if (isSubPath(head, head, root.right)) return true;
-        return false;
-      } else if (root == null && curr != null) {
-        return false;
+        } else return false;
       }
 
-      return true;
+      if (curr == null) return true;
+      else return false;
     }
 
     public boolean isSubPath(ListNode head, TreeNode root) {
-      return isSubPath(head, head, root);
+      if (isSubPath(head, head, root)) return true;
+      else return root != null && (isSubPath(head, root.left) || isSubPath(head, root.right));
     }
   }
 
