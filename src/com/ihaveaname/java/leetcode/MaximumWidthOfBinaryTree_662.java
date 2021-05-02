@@ -1,39 +1,34 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaximumWidthOfBinaryTree_662 {
   class Solution {
-    public int widthOfBinaryTree(TreeNode root) {
-      int max = Integer.MIN_VALUE;
-      var queue = new LinkedList<TreeNode>();
-      queue.offer(root);
-      while (!queue.isEmpty()) {
-        boolean meetNotNull = false;
-        int count = 0;
-        int nullCount = 0;
-        int length = queue.size();
-        for (int i = 0; i < length; i++) {
-          TreeNode n = queue.poll();
-          if (n == null && meetNotNull) {
-            queue.offer(null);
-            queue.offer(null);
-            nullCount++;
-          } else if (n != null) {
-            queue.offer(n.left);
-            queue.offer(n.right);
-            count++;
-            if (!meetNotNull) meetNotNull = true;
-            else {
-              count += nullCount;
-              nullCount = 0;
-            }
-          }
+    private List<int[]> list;
+
+    private void helper(TreeNode root, int level, int index) {
+      if (root != null) {
+        if (level == list.size()) {
+          int[] pair = new int[] {Integer.MAX_VALUE, Integer.MIN_VALUE};
+          list.add(pair);
         }
 
-        if (!meetNotNull) break;
+        int[] pair = list.get(level);
+        if (index < pair[0]) pair[0] = index;
+        if (index > pair[1]) pair[1] = index;
+        helper(root.left, level + 1, 2 * index + 1);
+        helper(root.right, level + 1, 2 * index + 2);
+      }
+    }
 
-        if (count > max) max = count;
+    public int widthOfBinaryTree(TreeNode root) {
+      list = new ArrayList<>();
+      helper(root, 0, 0);
+      int max = Integer.MIN_VALUE;
+      for (int[] pair : list) {
+        int len = pair[1] - pair[0] + 1;
+        if (len > max) max = len;
       }
       return max;
     }
