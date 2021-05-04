@@ -25,7 +25,7 @@ public class MaximumProductOfSplittedBinaryTree_1339 {
         if (root != treeRoot) {
           long sum1 = dp(treeRoot);
           long sum2 = dp(root);
-          if ((sum1 - sum2) * sum2 > max) max = (sum1 - sum2) * sum2;
+          max = Math.max((sum1 - sum2) * sum2, max);
         }
         helper(root.left);
         helper(root.right);
@@ -34,10 +34,10 @@ public class MaximumProductOfSplittedBinaryTree_1339 {
 
     public int maxProduct(TreeNode root) {
       treeRoot = root;
-      map = new HashMap<>();
+      map = new HashMap<>(50000, 0.75f);
       max = 0;
       helper(root);
-      return (int) (max % (Math.pow(10, 9) + 7));
+      return (int) (max % (1e9 + 7));
     }
   }
 
