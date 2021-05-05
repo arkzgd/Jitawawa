@@ -18,20 +18,26 @@ public class LongestUnivaluePath_687 {
           if (root.right.val == root.val) rc++;
           else rc = 0;
         }
-        if (root.left != null && root.right != null && root.left.val == root.val && root.right.val == root.val) {
+        if (root.left != null
+            && root.right != null
+            && root.left.val == root.val
+            && root.right.val == root.val) {
           int sum = lc + rc;
           max = Math.max(max, sum);
-          return sum;
         } else {
-          if (root.left == null && root.right != null && root.right.val == root.val) {
+          if ((root.left == null || root.left.val != root.val)
+              && root.right != null
+              && root.right.val == root.val) {
             max = Math.max(max, rc);
           }
-          if (root.left != null && root.right == null && root.left.val == root.val) {
+          if (root.left != null
+              && (root.right == null || root.right.val != root.val)
+              && root.left.val == root.val) {
             max = Math.max(max, lc);
           }
-
-          return Math.max(lc, rc);
         }
+
+        return Math.max(lc, rc);
       }
 
       return 0;
@@ -61,6 +67,16 @@ public class LongestUnivaluePath_687 {
             1,
             new TreeNode(4, new TreeNode(4), new TreeNode(4)),
             new TreeNode(5, null, new TreeNode(5)));
+    System.out.println(solution.longestUnivaluePath(tree));
+
+    tree =
+        new TreeNode(
+            1,
+            null,
+            new TreeNode(
+                1,
+                new TreeNode(1, new TreeNode(1), new TreeNode(1)),
+                new TreeNode(1, new TreeNode(1), null)));
     System.out.println(solution.longestUnivaluePath(tree));
   }
 }
