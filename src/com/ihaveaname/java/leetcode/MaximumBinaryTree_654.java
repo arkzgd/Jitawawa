@@ -1,6 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
-public class MaximumBinaryTree {
+public class MaximumBinaryTree_654 {
   private int findMax(int[] nums, int low, int high) {
     int max = Integer.MIN_VALUE;
     int maxIndex = low;
@@ -29,12 +29,12 @@ public class MaximumBinaryTree {
   }
 
   public static void main(String[] args) {
-    MaximumBinaryTree maximumBinaryTree = new MaximumBinaryTree();
+    MaximumBinaryTree_654 maximumBinaryTree654 = new MaximumBinaryTree_654();
 
     int[] nums = new int[] {3, 2, 1};
-    System.out.println(maximumBinaryTree.constructMaximumBinaryTree(nums));
+    System.out.println(maximumBinaryTree654.constructMaximumBinaryTree(nums));
 
     nums = new int[] {3, 2, 1, 6, 0, 5};
-    System.out.println(maximumBinaryTree.constructMaximumBinaryTree(nums));
+    System.out.println(maximumBinaryTree654.constructMaximumBinaryTree(nums));
   }
 }
