@@ -43,7 +43,33 @@ public class SerializeAndDeserializeBTree_297 {
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-      return null;
+      TreeNode result = null;
+      if (!data.isEmpty()) {
+        var elements = data.split(",");
+        var queue = new LinkedList<TreeNode>();
+        int i = 0;
+        while (i < elements.length - 1) {
+          if (!queue.isEmpty()) {
+            TreeNode n = queue.poll();
+            if ("null".equals(elements[i])) n.left = null;
+            else n.left = new TreeNode(Integer.parseInt(elements[i]));
+            if ("null".equals(elements[i + 1])) n.right = null;
+            else n.right = new TreeNode(Integer.parseInt(elements[i + 1]));
+            if (n.left != null) queue.offer(n.left);
+            if (n.right != null) queue.offer(n.right);
+            i += 2;
+          } else {
+            if (!"null".equals(elements[i])) {
+              TreeNode n = new TreeNode(Integer.parseInt(elements[i]));
+              result = n;
+              queue.offer(n);
+            }
+            i++;
+          }
+        }
+      }
+
+      return result;
     }
   }
 
