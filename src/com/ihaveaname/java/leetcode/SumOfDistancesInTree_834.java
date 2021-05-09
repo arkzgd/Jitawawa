@@ -9,7 +9,7 @@ public class SumOfDistancesInTree_834 {
       visited.add(i);
       for (int adj : graph[i]) {
         if (!visited.contains(adj)) {
-            result += (helper(adj, graph, visited, soFar + 1) + 1);
+            result += helper(adj, graph, visited, soFar + 1);
         }
       }
 
