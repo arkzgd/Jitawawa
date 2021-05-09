@@ -4,11 +4,11 @@ import java.util.*;
 
 public class SumOfDistancesInTree_834 {
   class Solution {
-    private int helper(int i, List<Integer>[] graph, Set<Integer> visited, int soFar) {
+    private int helper(int i, List<Integer>[] graph, boolean[] visited, int soFar) {
       int result = 0;
-      visited.add(i);
+      visited[i] = true;
       for (int adj : graph[i]) {
-        if (!visited.contains(adj)) {
+        if (!visited[adj]) {
             result += helper(adj, graph, visited, soFar + 1);
         }
       }
@@ -25,7 +25,9 @@ public class SumOfDistancesInTree_834 {
         graph[edge[1]].add(edge[0]);
       }
 
-      for (int i = 0; i < N; i++) result[i] = helper(i, graph, new HashSet<>(), 0);
+      for (int i = 0; i < N; i++) {
+        result[i] = helper(i, graph, new boolean[N], 0);
+      }
 
       return result;
     }
