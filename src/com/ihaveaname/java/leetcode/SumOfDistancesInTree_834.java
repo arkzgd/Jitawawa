@@ -4,12 +4,16 @@ import java.util.*;
 
 public class SumOfDistancesInTree_834 {
   class Solution {
+    int[] dp;
+
     private int helper(int i, List<Integer>[] graph, boolean[] visited, int soFar) {
       int result = 0;
       visited[i] = true;
       for (int adj : graph[i]) {
         if (!visited[adj]) {
-            result += helper(adj, graph, visited, soFar + 1);
+          dp[adj] = helper(adj, graph, visited, soFar + 1);
+          System.out.println(Arrays.toString(dp));
+          result += dp[adj];
         }
       }
 
@@ -17,6 +21,8 @@ public class SumOfDistancesInTree_834 {
     }
 
     public int[] sumOfDistancesInTree(int N, int[][] edges) {
+      dp = new int[N];
+      Arrays.fill(dp, -1);
       int[] result = new int[N];
       List<Integer>[] graph = new List[N];
       for (int i = 0; i < N; i++) graph[i] = new ArrayList<>();
@@ -26,7 +32,10 @@ public class SumOfDistancesInTree_834 {
       }
 
       for (int i = 0; i < N; i++) {
+        Arrays.fill(dp, -1);
         result[i] = helper(i, graph, new boolean[N], 0);
+        System.out.println(Arrays.toString(dp));
+        System.out.println();
       }
 
       return result;
