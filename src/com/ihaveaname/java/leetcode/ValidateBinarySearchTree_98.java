@@ -29,13 +29,16 @@ public class ValidateBinarySearchTree_98 {
     ValidateBinarySearchTree_98 validateBinarySearchTree_98 = new ValidateBinarySearchTree_98();
     Solution solution = validateBinarySearchTree_98.new Solution();
 
+    SerializeAndDeserializeBTree_297 serializeAndDeserializeBTree_297 = new SerializeAndDeserializeBTree_297();
+    SerializeAndDeserializeBTree_297.Codec decoder = serializeAndDeserializeBTree_297.new Codec();
+
     TreeNode tree = new TreeNode(2, new TreeNode(1), new TreeNode(3));
     System.out.println(solution.isValidBST(tree));
 
     tree = new TreeNode(5, new TreeNode(1), new TreeNode(4, new TreeNode(3), new TreeNode(6)));
     System.out.println(solution.isValidBST(tree));
 
-    tree = new TreeNode(5, new TreeNode(4), new TreeNode(6, new TreeNode(3), new TreeNode(7)));
+    tree = decoder.deserialize("5,4,6,null,null,3,7");
     System.out.println(solution.isValidBST(tree));
   }
 }
