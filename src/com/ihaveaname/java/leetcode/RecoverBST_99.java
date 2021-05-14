@@ -5,9 +5,9 @@ public class RecoverBST_99 {
     TreeNode prev;
     boolean goodStanding;
 
-    private boolean helper(TreeNode root) {
+    private void helper(TreeNode root) {
       if (root != null && goodStanding) {
-        boolean lr = helper(root.left);
+        helper(root.left);
         boolean cr;
         if (prev != null) {
           cr = prev.val < root.val;
@@ -16,23 +16,20 @@ public class RecoverBST_99 {
             prev.val = root.val;
             root.val = t;
             goodStanding = false;
-            return false;
+            return;
           }
         }
         prev = root;
-        boolean rr = helper(root.right);
-
-        return lr && rr;
+        helper(root.right);
       }
-
-      return true;
     }
 
     public void recoverTree(TreeNode root) {
       do {
         prev = null;
         goodStanding = true;
-      } while (!helper(root));
+        helper(root);
+      } while (!goodStanding);
     }
   }
 
