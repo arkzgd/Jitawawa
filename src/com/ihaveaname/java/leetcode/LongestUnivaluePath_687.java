@@ -55,28 +55,17 @@ public class LongestUnivaluePath_687 {
     LongestUnivaluePath_687 longestUnivaluePath_687 = new LongestUnivaluePath_687();
     Solution solution = longestUnivaluePath_687.new Solution();
 
-    TreeNode tree =
-        new TreeNode(
-            5,
-            new TreeNode(4, new TreeNode(1), new TreeNode(1)),
-            new TreeNode(5, null, new TreeNode(5)));
+    SerializeAndDeserializeBTree_297 serializeAndDeserializeBTree_297 =
+        new SerializeAndDeserializeBTree_297();
+    SerializeAndDeserializeBTree_297.Codec decoder = serializeAndDeserializeBTree_297.new Codec();
+
+    TreeNode tree = decoder.deserialize("5,4,5,1,1,5");
     System.out.println(solution.longestUnivaluePath(tree));
 
-    tree =
-        new TreeNode(
-            1,
-            new TreeNode(4, new TreeNode(4), new TreeNode(4)),
-            new TreeNode(5, null, new TreeNode(5)));
+    tree = decoder.deserialize("1,4,5,4,4,5");
     System.out.println(solution.longestUnivaluePath(tree));
 
-    tree =
-        new TreeNode(
-            1,
-            null,
-            new TreeNode(
-                1,
-                new TreeNode(1, new TreeNode(1), new TreeNode(1)),
-                new TreeNode(1, new TreeNode(1), null)));
+    tree = decoder.deserialize("1,null,1,1,1,1,1,1");
     System.out.println(solution.longestUnivaluePath(tree));
   }
 }
