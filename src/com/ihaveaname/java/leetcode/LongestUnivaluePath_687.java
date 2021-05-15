@@ -18,24 +18,7 @@ public class LongestUnivaluePath_687 {
           if (root.right.val == root.val) rc++;
           else rc = 0;
         }
-        if (root.left != null
-            && root.right != null
-            && root.left.val == root.val
-            && root.right.val == root.val) {
-          int sum = lc + rc;
-          max = Math.max(max, sum);
-        } else {
-          if ((root.left == null || root.left.val != root.val)
-              && root.right != null
-              && root.right.val == root.val) {
-            max = Math.max(max, rc);
-          }
-          if (root.left != null
-              && (root.right == null || root.right.val != root.val)
-              && root.left.val == root.val) {
-            max = Math.max(max, lc);
-          }
-        }
+        max = Math.max(max, lc + rc);
 
         return Math.max(lc, rc);
       }
