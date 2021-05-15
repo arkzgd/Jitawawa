@@ -4,31 +4,40 @@ import java.util.*;
 
 public class VerticalOrderTraversalOfBTree_987 {
   class Solution {
-    private Map<Integer, List<Integer>> map;
+    private List<Map<Integer, List<Integer>>> map;
 
     private void helper(TreeNode root, int row, int col) {
       if (root != null) {
-        if (!map.containsKey(col)) map.put(col, new LinkedList<>());
-        map.get(col).add(root.val);
+        if (row == map.size()) map.add(new HashMap<>());
+        if (!map.get(row).containsKey(col)) map.get(row).put(col, new LinkedList<>());
+        map.get(row).get(col).add(root.val);
         helper(root.left, row + 1, col - 1);
         helper(root.right, row + 1, col + 1);
       }
     }
 
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-      map = new HashMap<>();
-      List<List<Integer>> result = new ArrayList<>();
+      map = new ArrayList<>();
       helper(root, 0, 0);
+
       int min = Integer.MAX_VALUE;
       int max = Integer.MIN_VALUE;
-      for (Map.Entry<Integer, List<Integer>> e : map.entrySet()) {
-        Collections.sort(e.getValue());
-        if (e.getKey() < min) min = e.getKey();
-        if (e.getKey() > max) max = e.getKey();
+      for (int row = 0; row < map.size(); row++) {
+        Map<Integer, List<Integer>> m = map.get(row);
+        for (Map.Entry<Integer, List<Integer>> e : m.entrySet()) {
+          Collections.sort(e.getValue());
+          if (e.getKey() < min) min = e.getKey();
+          if (e.getKey() > max) max = e.getKey();
+        }
       }
 
-      for (int i = min; i <= max; i++) {
-        result.add(map.get(i));
+      List<List<Integer>> result = new ArrayList<>(max - min + 1);
+      for (int col = min; col <= max; col++) result.add(new ArrayList<>());
+
+      for (int col = min; col <= max; col++) {
+        for (Map<Integer, List<Integer>> e : map) {
+          if (e.containsKey(col)) result.get(col - min).addAll(e.get(col));
+        }
       }
 
       return result;
