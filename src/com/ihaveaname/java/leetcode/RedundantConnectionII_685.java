@@ -1,8 +1,6 @@
 package com.ihaveaname.java.leetcode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class RedundantConnectionII_685 {
   class Solution {
@@ -24,7 +22,13 @@ public class RedundantConnectionII_685 {
           vp = graph[vp];
         }
         if (up == vp) return edge;
-        graph[v] = u;
+        else {
+          if (graph[v] == -1) graph[v] = u;
+          else {
+            while (graph[v] != -1) v = graph[v];
+            graph[v] = u;
+          }
+        }
       }
 
       return null;
