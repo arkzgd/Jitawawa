@@ -22,15 +22,10 @@ public class RedundantConnectionII_685 {
           vp = graph[vp];
         }
         if (up == vp) {
-          System.out.println("Meet at " + up);
           return edge;
-        }
-        else {
-          if (graph[v] == -1) graph[v] = u;
-          else {
-            while (graph[v] != -1) v = graph[v];
-            graph[v] = u;
-          }
+        } else {
+          while (graph[v] != -1) v = graph[v];
+          graph[v] = u;
         }
       }
 
