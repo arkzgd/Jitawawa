@@ -4,29 +4,52 @@ import java.util.Arrays;
 
 public class RedundantConnectionII_685 {
   class Solution {
-    // Return the edge occurs last in edges, which makes the graph cyclic
-    public int[] findRedundantDirectedConnection(int[][] edges) {
+    // Return the edge occurs last in edges,
+    // which change the graph from a rooted tree to a cyclic graph
+
+    private boolean isRootedTree(int[][] edges, int excludedEdgeIndex) {
       int N = edges.length;
       int[] graph = new int[N + 1];
-      for (int i = 0; i < N + 1; i++) graph[i] = -1;
+      boolean[] accessed = new boolean[N + 1];
 
-      for (int[] edge : edges) {
+      for (int i = 0; i < N + 1; i++) {
+        graph[i] = -1;
+        accessed[i] = false;
+      }
+
+      for (int i = 0; i < edges.length; i++) {
+        if (i == excludedEdgeIndex) continue;
+        int[] edge = edges[i];
         int u = edge[0];
         int up = u;
         while (up != -1 && graph[up] != -1) {
           up = graph[up];
         }
         int v = edge[1];
+        accessed[v] = true;
+
         int vp = v;
         while (vp != -1 && graph[vp] != -1) {
           vp = graph[vp];
         }
         if (up == vp) {
-          return edge;
+          System.out.println("Meet @ " + up);
+          return false;
         } else {
           while (graph[v] != -1) v = graph[v];
           graph[v] = u;
         }
+      }
+
+      int accessedCounts = 0;
+      for (int i = 1; i < N + 1; i++) if (!accessed[i]) accessedCounts++;
+      System.out.println("accessedCounts: " + accessedCounts);
+      return accessedCounts == 1;
+    }
+
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+      for (int i = edges.length - 1; i >= 0; i--) {
+        if (isRootedTree(edges, i)) return edges[i];
       }
 
       return null;
