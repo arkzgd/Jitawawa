@@ -33,7 +33,6 @@ public class RedundantConnectionII_685 {
           vp = graph[vp];
         }
         if (up == vp) {
-          System.out.println("Meet @ " + up);
           return false;
         } else {
           while (graph[v] != -1) v = graph[v];
@@ -43,7 +42,6 @@ public class RedundantConnectionII_685 {
 
       int accessedCounts = 0;
       for (int i = 1; i < N + 1; i++) if (!accessed[i]) accessedCounts++;
-      System.out.println("accessedCounts: " + accessedCounts);
       return accessedCounts == 1;
     }
 
