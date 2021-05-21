@@ -3,15 +3,15 @@ package com.ihaveaname.java.leetcode.graph;
 public class FindTheTownJudge_997 {
   class Solution {
     public int findJudge(int n, int[][] trust) {
-      int[][] degrees = new int[n + 1][2];
+      int[] degrees = new int[n + 1];
       for (int[] edge : trust) {
-        degrees[edge[0]][0]++;
-        degrees[edge[1]][1]++;
+        degrees[edge[0]]--;
+        degrees[edge[1]]++;
       }
 
       int judge = -1;
       for (int i = 1; i < degrees.length; i++) {
-        if (degrees[i][1] == n - 1 && degrees[i][0] == 0) {
+        if (degrees[i] == n - 1) {
           judge = i;
         }
       }
