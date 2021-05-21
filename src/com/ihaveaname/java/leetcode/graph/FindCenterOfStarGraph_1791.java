@@ -1,21 +1,20 @@
 package com.ihaveaname.java.leetcode.graph;
 
-public class FindCenterOfStartGraph_1791 {
+public class FindCenterOfStarGraph_1791 {
   class Solution {
     public int findCenter(int[][] edges) {
       int n = edges.length + 1;
       int[] involved = new int[n + 1];
+      int center = 0;
 
       for (int[] edge : edges) {
         int u = edge[0];
         int v = edge[1];
         involved[u]++;
         involved[v]++;
-      }
 
-      int center = 0;
-      for (int i = 0; i < n + 1; i++) {
-        if (involved[i] == n - 1) center = i;
+        if (involved[u] == n - 1) { center = u; break;}
+        if (involved[v] == n - 1) { center = v; break;}
       }
 
       return center;
@@ -23,8 +22,8 @@ public class FindCenterOfStartGraph_1791 {
   }
 
   public static void main(String[] args) {
-    FindCenterOfStartGraph_1791 findCenterOfStartGraph_1791 = new FindCenterOfStartGraph_1791();
-    Solution solution = findCenterOfStartGraph_1791.new Solution();
+    FindCenterOfStarGraph_1791 findCenterOfStarGraph_1791 = new FindCenterOfStarGraph_1791();
+    Solution solution = findCenterOfStarGraph_1791.new Solution();
 
     int[][] edges = new int[][] {{1, 2}, {2, 3}, {4, 2}};
     System.out.println(solution.findCenter(edges));
