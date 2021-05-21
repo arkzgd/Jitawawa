@@ -12,30 +12,26 @@ public class RedundantConnectionII_685 {
       int[] graph = new int[N + 1];
       boolean[] accessed = new boolean[N + 1];
 
-      for (int i = 0; i < N + 1; i++) {
-        graph[i] = -1;
-        accessed[i] = false;
-      }
-
       for (int i = 0; i < edges.length; i++) {
         if (i == excludedEdgeIndex) continue;
         int[] edge = edges[i];
         int u = edge[0];
         int up = u;
-        while (up != -1 && graph[up] != -1) {
+        while (graph[up] != 0) {
           up = graph[up];
         }
+
         int v = edge[1];
         accessed[v] = true;
-
         int vp = v;
-        while (vp != -1 && graph[vp] != -1) {
+        while (graph[vp] != 0) {
           vp = graph[vp];
         }
+
         if (up == vp) {
           return false;
         } else {
-          while (graph[v] != -1) v = graph[v];
+          while (graph[v] != 0) v = graph[v];
           graph[v] = u;
         }
       }
