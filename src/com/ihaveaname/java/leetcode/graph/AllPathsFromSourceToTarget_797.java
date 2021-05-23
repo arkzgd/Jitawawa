@@ -1,30 +1,30 @@
 package com.ihaveaname.java.leetcode.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AllPathsFromSourceToTarget_797 {
   class Solution {
     private List<List<Integer>> result;
 
-    private void helper(int[][] graph, int current, int target, List<Integer> soFar) {
+    private void helper(int[][] graph, int current, int target, LinkedList<Integer> soFar) {
       if (current != target) {
         soFar.add(current);
         for (int i : graph[current]) {
           helper(graph, i, target, soFar);
         }
-        soFar.remove(soFar.size() - 1);
+        soFar.removeLast();
       } else {
-        List<Integer> l = new ArrayList<>();
-        for (int i : soFar) l.add(i);
-        l.add(current);
-        result.add(l);
+        soFar.add(current);
+        result.add(new ArrayList<>(soFar));
+        soFar.removeLast();
       }
     }
 
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
       result = new ArrayList<>();
-      helper(graph, 0, graph.length - 1, new ArrayList<>());
+      helper(graph, 0, graph.length - 1, new LinkedList<>());
       return result;
     }
   }
