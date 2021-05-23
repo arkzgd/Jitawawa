@@ -1,4 +1,6 @@
-package com.ihaveaname.java.leetcode;
+package com.ihaveaname.java.leetcode.tree;
+
+import com.ihaveaname.java.leetcode.TreeNode;
 
 import java.util.ArrayList;
 

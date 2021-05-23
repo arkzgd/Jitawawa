@@ -1,4 +1,4 @@
-package com.ihaveaname.java.leetcode;
+package com.ihaveaname.java.leetcode.graph;
 
 public class NumberOfWaysToReconstructATree_1719 {
   class Solution {
