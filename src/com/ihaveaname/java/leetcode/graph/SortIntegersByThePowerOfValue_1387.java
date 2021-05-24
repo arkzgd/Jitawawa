@@ -7,20 +7,25 @@ import java.util.Map;
 
 public class SortIntegersByThePowerOfValue_1387 {
   class Solution {
-    private Map<Integer, Integer> dp = new HashMap<>();
+    private static int[] dp;
+
+    static {
+      dp = new int[(int) 1e6];
+      Arrays.fill(dp, -1);
+    }
 
     private int power(int v) {
       int result = 0;
-      if (dp.containsKey(v)) result = dp.get(v);
+      if (dp[v] != -1) result = dp[v];
       else {
         int p = 0;
         if (v > 1) {
           if (v % 2 == 0) p = power(v / 2) + 1;
           else p = power(3 * v + 1) + 1;
-          dp.put(v, p);
+          dp[v] = p;
           result = p;
         } else {
-          dp.put(1, 0);
+          dp[1] = 0;
         }
       }
 
@@ -35,8 +40,10 @@ public class SortIntegersByThePowerOfValue_1387 {
           new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-              if (power(o1) > power(o2)) return 1;
-              else if (power(o1) == power(o2)) return o1 - o2;
+              int o1p = power(o1);
+              int o2p = power(o2);
+              if (o1p > o2p) return 1;
+              else if (o1p == o2p) return o1 - o2;
               else return -1;
             }
           });
