@@ -42,14 +42,18 @@ public class RegionsCutBySlashes_959 {
       if (row1 < 0 || col1 < 0 || row2 < 0 || col2 < 0) return;
       if (row1 == row2 && col1 + 1 == col2) {
         // Union grid[row2][col2] to its left cube
-        int index = graphToIndex(n, row2, col2, 1);
-        while (graph[index] != index) index = graph[index];
-        graph[index] = graphToIndex(n, row1, col1, 3);
+        int index_1 = graphToIndex(n, row2, col2, 1);
+        while (graph[index_1] != index_1) index_1 = graph[index_1];
+        int index_3 = graphToIndex(n, row1, col1, 3);
+        while (graph[index_3] != index_3) index_3 = graph[index_3];
+        graph[index_1] = index_3;
       } else if (row1 + 1 == row2 && col1 == col2) {
         // Unior grid[row2][col2] to its upper cube
-        int index = graphToIndex(n, row2, col2, 0);
-        while (graph[index] != index) index = graph[index];
-        graph[index] = graphToIndex(n, row1, col1, 2);
+        int index_0 = graphToIndex(n, row2, col2, 0);
+        while (graph[index_0] != index_0) index_0 = graph[index_0];
+        int index_2 = graphToIndex(n, row1, col1, 2);
+        while (graph[index_2] != index_2) index_2 = graph[index_2];
+        graph[index_0] = index_2;
       }
     }
 
