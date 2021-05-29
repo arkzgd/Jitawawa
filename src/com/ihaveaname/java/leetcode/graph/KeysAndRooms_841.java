@@ -8,26 +8,12 @@ public class KeysAndRooms_841 {
     private boolean[] visited;
     private int nonVisitedCount;
 
-    private void dfs(int[][] rooms, int room) {
+    private void dfs(List<List<Integer>> rooms, int room) {
       if (!visited[room]) {
         nonVisitedCount--;
         visited[room] = true;
       }
-      for (int key : rooms[room]) if (!visited[key]) dfs(rooms, key);
-    }
-
-    private int[][] listToArray(List<List<Integer>> list) {
-      int[][] result = new int[list.size()][];
-      int ri = 0;
-      for (List<Integer> l : list) {
-        int len = l.size();
-        int[] a = new int[len];
-        int idx = 0;
-        for (int i : l) a[idx++] = i;
-        result[ri++] = a;
-      }
-
-      return result;
+      for (int key : rooms.get(room)) if (!visited[key]) dfs(rooms, key);
     }
 
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
@@ -35,7 +21,7 @@ public class KeysAndRooms_841 {
       visited = new boolean[len];
       nonVisitedCount = len;
 
-      dfs(listToArray(rooms), 0);
+      dfs(rooms, 0);
 
       return nonVisitedCount == 0;
     }
