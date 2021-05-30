@@ -28,7 +28,7 @@ public class CountServersThatCommunicate_1267 {
     public int countServers(int[][] grid) {
       counter = 0;
       for (int i = 0; i < grid.length; i++) {
-        for (int j = 0; j < grid[i].length; j++) count(grid, i, j);
+        for (int j = 0; j < grid[i].length; j++) if (grid[i][j] == 1) count(grid, i, j);
       }
       return counter;
     }
