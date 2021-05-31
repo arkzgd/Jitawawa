@@ -12,28 +12,28 @@ public class MapOfHighestPeak_1765 {
     }
 
     private void setNeighbor(int[][] isWater, int[][] result, int row, int col) {
-      if (rangeCheck(isWater, row - 1, col)) {
+      if (rangeCheck(isWater, row - 1, col) && isWater[row - 1][col] != 1) {
         result[row - 1][col] =
             result[row - 1][col] == 0
                 ? result[row][col] + 1
                 : Math.min(result[row - 1][col], result[row][col] + 1);
       }
 
-      if (rangeCheck(isWater, row + 1, col)) {
+      if (rangeCheck(isWater, row + 1, col) && isWater[row + 1][col] != 1) {
         result[row + 1][col] =
             result[row + 1][col] == 0
                 ? result[row][col] + 1
                 : Math.min(result[row + 1][col], result[row][col] + 1);
       }
 
-      if (rangeCheck(isWater, row, col - 1)) {
+      if (rangeCheck(isWater, row, col - 1) && isWater[row][col - 1] != 1) {
         result[row][col - 1] =
             result[row][col - 1] == 0
                 ? result[row][col] + 1
                 : Math.min(result[row][col - 1], result[row][col] + 1);
       }
 
-      if (rangeCheck(isWater, row, col + 1)) {
+      if (rangeCheck(isWater, row, col + 1) && isWater[row][col + 1] != 1) {
         result[row][col + 1] =
             result[row][col + 1] == 0
                 ? result[row][col] + 1
@@ -46,12 +46,10 @@ public class MapOfHighestPeak_1765 {
       else if (!visited[row][col]) {
         if (isWater[row][col] == 1) {
           result[row][col] = 0;
-          setNeighbor(isWater, result, row, col);
-          visited[row][col] = true;
-        } else {
-          setNeighbor(isWater, result, row, col);
-          visited[row][col] = true;
         }
+
+        setNeighbor(isWater, result, row, col);
+        visited[row][col] = true;
 
         bfs(isWater, row - 1, col);
         bfs(isWater, row + 1, col);
@@ -64,10 +62,12 @@ public class MapOfHighestPeak_1765 {
       int rows = isWater.length;
       int cols = isWater[0].length;
       result = new int[rows][cols];
-      visited = new boolean[rows][cols];
       for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
-          if (isWater[row][col] == 1) bfs(isWater, row, col);
+          if (isWater[row][col] == 1) {
+            visited = new boolean[rows][cols];
+            bfs(isWater, row, col);
+          }
         }
       }
 
