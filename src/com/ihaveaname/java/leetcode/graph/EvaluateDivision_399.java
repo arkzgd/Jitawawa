@@ -1,9 +1,6 @@
 package com.ihaveaname.java.leetcode.graph;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EvaluateDivision_399 {
   class Solution {
@@ -30,10 +27,33 @@ public class EvaluateDivision_399 {
       return result;
     }
 
+    private Set<String> visited;
+    private double dfs(String source, String target, Map<String, Map<String, Double>> graph) {
+      if (graph.containsKey(source)) {
+        for (Map.Entry<String, Double> entry : graph.get(source).entrySet()) {
+          if (entry.getKey() == target) return entry.getValue();
+          else {
+            if (!visited.contains(entry.getKey())) {
+              visited.add(entry.getKey());
+              return entry.getValue() * dfs(entry.getKey(), target, graph);
+            }
+          }
+        }
+      }
+      return -1;
+    }
+
     public double[] calcEquation(
         List<List<String>> equations, double[] values, List<List<String>> queries) {
+      double[] result = new double[queries.size()];
       var graph = toGraph(equations, values);
-      return null;
+      int count = 0;
+      for (List<String> query : queries) {
+        visited = new HashSet<>();
+        result[count++] = dfs(query.get(0), query.get(1), graph);
+      }
+
+      return result;
     }
   }
 
