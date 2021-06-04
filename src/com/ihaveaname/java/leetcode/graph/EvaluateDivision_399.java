@@ -18,7 +18,7 @@ public class EvaluateDivision_399 {
         result.get(pair.get(0)).put(pair.get(1), v);
 
         if (!result.containsKey(pair.get(1))) {
-          Map<String, Double> map = new HashMap<String, Double>();
+          Map<String, Double> map = new HashMap<>();
           result.put(pair.get(1), map);
         }
         result.get(pair.get(1)).put(pair.get(0), 1 / v);
@@ -28,13 +28,14 @@ public class EvaluateDivision_399 {
     }
 
     private Set<String> visited;
+
     private double dfs(String source, String target, Map<String, Map<String, Double>> graph) {
       if (graph.containsKey(source)) {
+        visited.add(source);
         for (Map.Entry<String, Double> entry : graph.get(source).entrySet()) {
           if (entry.getKey() == target) return entry.getValue();
           else {
             if (!visited.contains(entry.getKey())) {
-              visited.add(entry.getKey());
               return entry.getValue() * dfs(entry.getKey(), target, graph);
             }
           }
@@ -70,6 +71,17 @@ public class EvaluateDivision_399 {
             List.of("a", "e"),
             List.of("a", "a"),
             List.of("x", "x"));
+    System.out.println(Arrays.toString(solution.calcEquation(equations, values, queries)));
+
+    equations = List.of(List.of("a", "b"), List.of("b", "c"), List.of("bc", "cd"));
+    values = new double[] {1.5, 2.5, 5.0};
+    queries =
+        List.of(List.of("a", "c"), List.of("c", "b"), List.of("bc", "cd"), List.of("cd", "bc"));
+    System.out.println(Arrays.toString(solution.calcEquation(equations, values, queries)));
+
+    equations = List.of(List.of("a", "b"));
+    values = new double[] {0.5};
+    queries = List.of(List.of("a", "b"), List.of("b", "a"), List.of("a", "c"), List.of("x", "y"));
     System.out.println(Arrays.toString(solution.calcEquation(equations, values, queries)));
   }
 }
