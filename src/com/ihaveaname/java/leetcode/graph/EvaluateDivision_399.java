@@ -36,7 +36,12 @@ public class EvaluateDivision_399 {
           if (entry.getKey() == target) return entry.getValue();
           else {
             if (!visited.contains(entry.getKey())) {
-              return entry.getValue() * dfs(entry.getKey(), target, graph);
+              double maybeTarget = dfs(entry.getKey(), target, graph);
+              if (maybeTarget == -1) {
+                return -1;
+              } else {
+                return entry.getValue() * dfs(entry.getKey(), target, graph);
+              }
             }
           }
         }
