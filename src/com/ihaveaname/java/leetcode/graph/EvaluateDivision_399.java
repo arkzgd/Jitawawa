@@ -37,9 +37,7 @@ public class EvaluateDivision_399 {
           else {
             if (!visited.contains(entry.getKey())) {
               double maybeTarget = dfs(entry.getKey(), target, graph);
-              if (maybeTarget == -1) {
-                return -1;
-              } else {
+              if (maybeTarget != -1) {
                 return entry.getValue() * maybeTarget;
               }
             }
@@ -87,6 +85,19 @@ public class EvaluateDivision_399 {
     equations = List.of(List.of("a", "b"));
     values = new double[] {0.5};
     queries = List.of(List.of("a", "b"), List.of("b", "a"), List.of("a", "c"), List.of("x", "y"));
+    System.out.println(Arrays.toString(solution.calcEquation(equations, values, queries)));
+
+    equations =
+        List.of(List.of("x1", "x2"), List.of("x2", "x3"), List.of("x3", "x4"), List.of("x4", "x5"));
+    values = new double[] {3.0, 4.0, 5.0, 6.0};
+    queries =
+        List.of(
+            List.of("x1", "x5"),
+            List.of("x5", "x2"),
+            List.of("x2", "x4"),
+            List.of("x2", "x2"),
+            List.of("x2", "x9"),
+            List.of("x9", "x9"));
     System.out.println(Arrays.toString(solution.calcEquation(equations, values, queries)));
   }
 }
