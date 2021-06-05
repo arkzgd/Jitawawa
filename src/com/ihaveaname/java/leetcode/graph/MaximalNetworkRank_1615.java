@@ -1,15 +1,12 @@
 package com.ihaveaname.java.leetcode.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MaximalNetworkRank_1615 {
   class Solution {
-    private Map<Integer, Set<Integer>> toGraph(int n, int[][] roads) {
-      Map<Integer, Set<Integer>> result = new HashMap<>();
-      for (int i = 0; i < n; i++) result.put(i, new HashSet<>());
+    private List<Set<Integer>> toGraph(int n, int[][] roads) {
+      List<Set<Integer>> result = new ArrayList<>(n);
+      for (int i = 0; i < n; i++) result.add(new HashSet<>());
       for (int[] pair : roads) {
         int u = pair[0];
         int v = pair[1];
@@ -22,7 +19,7 @@ public class MaximalNetworkRank_1615 {
 
     public int maximalNetworkRank(int n, int[][] roads) {
       int count = 0;
-      Map<Integer, Set<Integer>> graph = toGraph(n, roads);
+      List<Set<Integer>> graph = toGraph(n, roads);
       for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
           if (i != j) {
