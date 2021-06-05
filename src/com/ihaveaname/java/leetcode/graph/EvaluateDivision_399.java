@@ -33,14 +33,14 @@ public class EvaluateDivision_399 {
       if (graph.containsKey(source)) {
         visited.add(source);
         for (Map.Entry<String, Double> entry : graph.get(source).entrySet()) {
-          if (entry.getKey() == target) return entry.getValue();
+          if (entry.getKey().equals(target)) return entry.getValue();
           else {
             if (!visited.contains(entry.getKey())) {
               double maybeTarget = dfs(entry.getKey(), target, graph);
               if (maybeTarget == -1) {
                 return -1;
               } else {
-                return entry.getValue() * dfs(entry.getKey(), target, graph);
+                return entry.getValue() * maybeTarget;
               }
             }
           }
@@ -52,7 +52,7 @@ public class EvaluateDivision_399 {
     public double[] calcEquation(
         List<List<String>> equations, double[] values, List<List<String>> queries) {
       double[] result = new double[queries.size()];
-      var graph = toGraph(equations, values);
+      Map<String, Map<String, Double>> graph = toGraph(equations, values);
       int count = 0;
       for (List<String> query : queries) {
         visited = new HashSet<>();
