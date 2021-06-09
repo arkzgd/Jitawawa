@@ -9,8 +9,13 @@ public class FindEventualSafeStates_802 {
       if (visited[node]) return false;
       visited[node] = true;
       for (int neighbor : graph[node]) {
-        if (!dfs(neighbor, graph, visited)) return false;
+        if (!dfs(neighbor, graph, visited)) {
+          return false;
+        }
       }
+
+      for (int neighbor : graph[node]) visited[neighbor] = false;
+      visited[node] = false;
 
       return true;
     }
@@ -38,6 +43,9 @@ public class FindEventualSafeStates_802 {
     System.out.println(solution.eventualSafeNodes(graph));
 
     graph = new int[][] {{}, {0, 2, 3, 4}, {3}, {4}, {}};
+    System.out.println(solution.eventualSafeNodes(graph));
+
+    graph = new int[][] {{1, 3, 4, 5}, {}, {}, {}, {}, {2, 4}};
     System.out.println(solution.eventualSafeNodes(graph));
   }
 }
