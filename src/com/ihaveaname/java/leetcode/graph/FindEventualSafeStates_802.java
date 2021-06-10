@@ -14,6 +14,8 @@ public class FindEventualSafeStates_802 {
         }
       }
 
+      // The slowness comes from here
+      // after each step, the flag for current node and all its neighbors has to be reset
       for (int neighbor : graph[node]) visited[neighbor] = false;
       visited[node] = false;
 
