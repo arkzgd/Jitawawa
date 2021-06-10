@@ -5,20 +5,17 @@ import java.util.List;
 
 public class FindEventualSafeStates_802 {
   class Solution {
-    private boolean dfs(int node, int[][] graph, boolean[] visited) {
-      if (visited[node]) return false;
-      visited[node] = true;
+    private boolean dfs(int node, int[][] graph, int[] visited) {
+      if (visited[node] > 0) return visited[node] == 2;
+
+      visited[node] = 1;
       for (int neighbor : graph[node]) {
-        if (!dfs(neighbor, graph, visited)) {
+        if (visited[neighbor] == 1 || !dfs(neighbor, graph, visited)) {
           return false;
         }
       }
 
-      // The slowness comes from here
-      // after each step, the flag for current node and all its neighbors has to be reset
-      for (int neighbor : graph[node]) visited[neighbor] = false;
-      visited[node] = false;
-
+      visited[node] = 2;
       return true;
     }
 
@@ -26,7 +23,7 @@ public class FindEventualSafeStates_802 {
       int n = graph.length;
       List<Integer> result = new ArrayList<>();
       for (int i = 0; i < n; i++) {
-        boolean[] visited = new boolean[graph.length];
+        int[] visited = new int[graph.length];
         if (dfs(i, graph, visited)) result.add(i);
       }
 
