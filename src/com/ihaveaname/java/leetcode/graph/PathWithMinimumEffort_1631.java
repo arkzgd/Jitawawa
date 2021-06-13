@@ -7,21 +7,18 @@ public class PathWithMinimumEffort_1631 {
 
     private void dfs(
         int i, int j, int[][] heights, int rows, int cols, int soFar, int[][] visited) {
-      visited[i][j] = 1;
       if (i == rows - 1 && j == cols - 1) {
         min = Math.min(soFar, min);
         return;
       }
+      visited[i][j]++;
       int row, col;
       for (int[] move : where) {
         row = i + move[0];
         col = j + move[1];
-        if (row < 0 || row >= rows || col < 0 || col >= cols) continue;
-        if (visited[row][col] == 0) {
-          int d = Math.abs(heights[i][j] - heights[row][col]);
-          dfs(row, col, heights, rows, cols, Math.max(soFar, d), visited);
-          visited[row][col] = 0;
-        }
+        if (row < 0 || row >= rows || col < 0 || col >= cols || visited[row][col] > 5) continue;
+        int d = Math.abs(heights[i][j] - heights[row][col]);
+        dfs(row, col, heights, rows, cols, Math.max(soFar, d), visited);
       }
     }
 
