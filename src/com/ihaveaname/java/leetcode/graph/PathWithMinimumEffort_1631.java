@@ -2,34 +2,41 @@ package com.ihaveaname.java.leetcode.graph;
 
 public class PathWithMinimumEffort_1631 {
   class Solution {
-    private int min;
     private final int[][] where = new int[][] {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 
-    private void dfs(
-        int i, int j, int[][] heights, int rows, int cols, int soFar, int[][] visited) {
-      if (i == rows - 1 && j == cols - 1) {
-        min = Math.min(soFar, min);
-        return;
+    private boolean dfs(
+        int i, int j, int[][] heights, int rows, int cols, int maxCost, boolean[][] visited) {
+      if (i < 0 || i >= rows || j < 0 || j >= cols) return false;
+      if (i == rows - 1 && j == cols - 1) return true;
+      else {
+        visited[i][j] = true;
+        for (int[] move : where) {
+          int row = i + move[0];
+          int col = j + move[1];
+          if (row < 0 || row >= rows || col < 0 || col >= cols || visited[row][col]) continue;
+          int d = Math.abs(heights[i][j] - heights[row][col]);
+          if (d <= maxCost && dfs(row, col, heights, rows, cols, maxCost, visited)) return true;
+        }
       }
-      visited[i][j]++;
-      int row, col;
-      for (int[] move : where) {
-        row = i + move[0];
-        col = j + move[1];
-        if (row < 0 || row >= rows || col < 0 || col >= cols || visited[row][col] > 5) continue;
-        int d = Math.abs(heights[i][j] - heights[row][col]);
-        dfs(row, col, heights, rows, cols, Math.max(soFar, d), visited);
-      }
+
+      return false;
     }
 
     public int minimumEffortPath(int[][] heights) {
-      min = Integer.MAX_VALUE;
       int rows = heights.length;
       int cols = heights[0].length;
-      int[][] visited = new int[rows][cols];
-      dfs(0, 0, heights, rows, cols, 0, visited);
+      int low = 0;
+      int high = 1000000;
+      int mid = (low + high) / 2;
+      for (; low < high; ) {
+        boolean[][] visited = new boolean[rows][cols];
+        boolean r = dfs(0, 0, heights, rows, cols, mid, visited);
+        if (r) high = mid;
+        else low = mid + 1;
+        mid = (low + high) / 2;
+      }
 
-      return min;
+      return mid;
     }
   }
 
