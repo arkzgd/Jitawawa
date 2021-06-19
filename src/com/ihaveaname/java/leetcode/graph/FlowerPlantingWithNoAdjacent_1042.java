@@ -28,12 +28,12 @@ public class FlowerPlantingWithNoAdjacent_1042 {
       return j;
     }
 
-    private void bfs(List<Integer>[] graph, int i, int flower, int[] soFar, int[] visited) {
+    private void dfs(List<Integer>[] graph, int i, int flower, int[] soFar, int[] visited) {
       if (visited[i - 1] > 0) return;
       visited[i - 1] = flower;
       soFar[i - 1] = flower;
       for (int n : graph[i]) {
-        bfs(graph, n, getFlower(graph, n, flower, visited), soFar, visited);
+        dfs(graph, n, getFlower(graph, n, flower, visited), soFar, visited);
       }
     }
 
@@ -41,7 +41,7 @@ public class FlowerPlantingWithNoAdjacent_1042 {
       List<Integer>[] graph = toGraph(n, paths);
       int[] result = new int[n];
       int[] visited = new int[n];
-      for (int i = 1; i <= n; i++) bfs(graph, i, 1, result, visited);
+      for (int i = 1; i <= n; i++) dfs(graph, i, 1, result, visited);
       return result;
     }
   }

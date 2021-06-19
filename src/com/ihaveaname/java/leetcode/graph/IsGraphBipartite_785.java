@@ -1,8 +1,22 @@
 package com.ihaveaname.java.leetcode.graph;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class IsGraphBipartite_785 {
   class Solution {
     public boolean isBipartite(int[][] graph) {
+      int n = graph.length;
+      int[] colors = new int[n];
+      int color = -1;
+      Queue<Integer> queue = new LinkedList<>();
+      for (int i = 0; i < n; i++) {
+        if (colors[i] == 0) {
+          colors[i] = color;
+          color = -color;
+
+        }
+      }
       return false;
     }
   }
