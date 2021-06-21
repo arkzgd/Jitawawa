@@ -8,11 +8,11 @@ public class IsGraphBipartite_785 {
     public boolean isBipartite(int[][] graph) {
       int n = graph.length;
       int[] colors = new int[n];
-      int color = -1;
+      int color = 1;
       Queue<Integer> queue = new LinkedList<>();
       colors[0] = color;
       queue.offer(0);
-      color = -color;
+      color++;
       while (!queue.isEmpty()) {
         int i = queue.poll();
         for (int j : graph[i]) {
@@ -21,7 +21,7 @@ public class IsGraphBipartite_785 {
             queue.offer(j);
           }
         }
-        color = -color;
+        color++;
       }
 
       return false;
