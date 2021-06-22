@@ -5,6 +5,20 @@ import java.util.Queue;
 
 public class IsGraphBipartite_785 {
   class Solution {
+    private boolean dfs(int i, int[][] graph, boolean[] visited, int[] colors, int targetColor) {
+      if (!visited[i]) {
+        visited[i] = true;
+        if (colors[i] == targetColor) return true;
+        else {
+          for (int n : graph[i]) {
+            if (dfs(n, graph, visited, colors, targetColor)) return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
     public boolean isBipartite(int[][] graph) {
       int n = graph.length;
       int[] colors = new int[n];
@@ -19,6 +33,9 @@ public class IsGraphBipartite_785 {
           if (colors[j] == 0) {
             colors[j] = color;
             queue.offer(j);
+          }
+          else {
+
           }
         }
         color++;
