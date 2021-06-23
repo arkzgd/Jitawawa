@@ -5,18 +5,20 @@ import java.util.Queue;
 
 public class IsGraphBipartite_785 {
   class Solution {
-    private boolean dfs(int i, int[][] graph, boolean[] visited, int[] colors, int targetColor) {
+    private boolean dfs(
+        int i, int[][] graph, boolean[] visited, int[] colors, final int targetColor) {
       if (!visited[i]) {
         visited[i] = true;
-        if (colors[i] == targetColor) return true;
-        else {
-          for (int n : graph[i]) {
-            if (dfs(n, graph, visited, colors, targetColor)) return true;
-          }
+        if (colors[i] == targetColor) {
+          return true;
         }
+        for (int neighbor : graph[i]) {
+          if (dfs(neighbor, graph, visited, colors, targetColor)) return true;
+        }
+        return false;
       }
 
-      return false;
+      return colors[i] == targetColor;
     }
 
     public boolean isBipartite(int[][] graph) {
@@ -26,22 +28,28 @@ public class IsGraphBipartite_785 {
       Queue<Integer> queue = new LinkedList<>();
       colors[0] = color;
       queue.offer(0);
-      color++;
+      color = -color;
       while (!queue.isEmpty()) {
-        int i = queue.poll();
-        for (int j : graph[i]) {
-          if (colors[j] == 0) {
-            colors[j] = color;
-            queue.offer(j);
-          }
-          else {
-
+        int len = queue.size();
+        for (int c = 0; c < len; c++) {
+          int i = queue.poll();
+          for (int neighbor : graph[i]) {
+            if (colors[neighbor] == 0) {
+              colors[neighbor] = color;
+              queue.offer(neighbor);
+            }
           }
         }
-        color++;
+        color = -color;
       }
 
-      return false;
+      for (int v = 0; v < n; v++) {
+        for (int neighbor : graph[v]) {
+          if (dfs(neighbor, graph, new boolean[n], colors, colors[v])) return false;
+        }
+      }
+
+      return true;
     }
   }
 
