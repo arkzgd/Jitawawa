@@ -1,55 +1,55 @@
 package com.ihaveaname.java.leetcode.graph;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class IsGraphBipartite_785 {
+  // Refer to https://courses.cs.washington.edu/courses/cse417/17wi/slides/Graphs2.pdf
+  // for a better understanding of Bipartite
   class Solution {
-    private boolean dfs(
-        int i, int[][] graph, boolean[] visited, int[] colors, final int targetColor) {
-      if (!visited[i]) {
-        visited[i] = true;
-        if (colors[i] == targetColor) {
-          return true;
-        }
-        for (int neighbor : graph[i]) {
-          if (dfs(neighbor, graph, visited, colors, targetColor)) return true;
-        }
-        return false;
-      }
-
-      return colors[i] == targetColor;
-    }
-
-    public boolean isBipartite(int[][] graph) {
+    private List<Set<Integer>> toLayers(int[][] graph) {
       int n = graph.length;
-      int[] colors = new int[n];
-      int color = 1;
+      boolean[] visited = new boolean[n];
+      List<Set<Integer>> layers = new ArrayList<>();
+      int layer = 0;
       Queue<Integer> queue = new LinkedList<>();
-      colors[0] = color;
       queue.offer(0);
-      color = -color;
+      visited[0] = true;
       while (!queue.isEmpty()) {
         int len = queue.size();
-        for (int c = 0; c < len; c++) {
-          int i = queue.poll();
-          for (int neighbor : graph[i]) {
-            if (colors[neighbor] == 0) {
-              colors[neighbor] = color;
+        Set<Integer> set = new HashSet<>();
+        layers.add(set);
+        for (int i = 0; i < len; i++) {
+          int v = queue.poll();
+          layers.get(layer).add(v);
+          for (int neighbor : graph[v]) {
+            if (!visited[neighbor]) {
+              visited[neighbor] = true;
               queue.offer(neighbor);
             }
           }
         }
-        color = -color;
+        layer++;
       }
 
-      for (int v = 0; v < n; v++) {
-        for (int neighbor : graph[v]) {
-          if (dfs(neighbor, graph, new boolean[n], colors, colors[v])) return false;
+      return layers;
+    }
+
+    private boolean validate(List<Set<Integer>> layers, int[][] graph) {
+      for (int i = 0; i < graph.length; i++) {
+        for (Set<Integer> l : layers) {
+          if (l.contains(i)) {
+            for (int n : graph[i]) {
+              if (l.contains(n)) return false;
+            }
+          }
         }
       }
 
       return true;
+    }
+
+    public boolean isBipartite(int[][] graph) {
+      return validate(toLayers(graph), graph);
     }
   }
 
@@ -61,6 +61,21 @@ public class IsGraphBipartite_785 {
     System.out.println(solution.isBipartite(graph));
 
     graph = new int[][] {{1, 3}, {0, 2}, {1, 3}, {0, 2}};
+    System.out.println(solution.isBipartite(graph));
+
+    graph =
+        new int[][] {
+          {},
+          {2, 4, 6},
+          {1, 4, 8, 9},
+          {7, 8},
+          {1, 2, 8, 9},
+          {6, 9},
+          {1, 5, 7, 8, 9},
+          {3, 6, 9},
+          {2, 3, 4, 6, 9},
+          {2, 4, 5, 6, 7, 8}
+        };
     System.out.println(solution.isBipartite(graph));
   }
 }
