@@ -6,14 +6,13 @@ public class IsGraphBipartite_785 {
   // Refer to https://courses.cs.washington.edu/courses/cse417/17wi/slides/Graphs2.pdf
   // for a better understanding of Bipartite
   class Solution {
-    private List<Set<Integer>> toLayers(int[][] graph) {
+    private List<Set<Integer>> toLayers(int[][] graph, int s, boolean[] visited) {
       int n = graph.length;
-      boolean[] visited = new boolean[n];
       List<Set<Integer>> layers = new ArrayList<>();
       int layer = 0;
       Queue<Integer> queue = new LinkedList<>();
-      queue.offer(0);
-      visited[0] = true;
+      queue.offer(s);
+      visited[s] = true;
       while (!queue.isEmpty()) {
         int len = queue.size();
         Set<Integer> set = new HashSet<>();
@@ -49,7 +48,16 @@ public class IsGraphBipartite_785 {
     }
 
     public boolean isBipartite(int[][] graph) {
-      return validate(toLayers(graph), graph);
+      int n = graph.length;
+      boolean[] visited = new boolean[n];
+
+      for (int i = 0; i < n; i++) {
+        if (!visited[i] && !validate(toLayers(graph, i, visited), graph)) {
+          return false;
+        }
+      }
+
+      return true;
     }
   }
 
