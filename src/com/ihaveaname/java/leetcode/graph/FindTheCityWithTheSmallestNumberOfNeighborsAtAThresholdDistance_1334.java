@@ -1,8 +1,6 @@
 package com.ihaveaname.java.leetcode.graph;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_1334 {
   class Solution {
@@ -21,21 +19,18 @@ public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_133
       return result;
     }
 
-    private void dfs(
-        int s,
-        ArrayList<ArrayList<Integer[]>> graph,
-        int threshold,
-        boolean[] visited,
-        Set<Integer> soFar) {
-      if (!visited[s]) {
-        visited[s] = true;
-        soFar.add(s);
+    private int dfs(
+        int s, ArrayList<ArrayList<Integer[]>> graph, int soFar, final int distanceThreshold) {
+      if (soFar <= distanceThreshold) {
+        int min = Integer.MAX_VALUE;
         for (Integer[] neighbor : graph.get(s)) {
-          if (neighbor[1] <= threshold) {
-            dfs(neighbor[0], graph, threshold - neighbor[1], visited, soFar);
-          }
+          min = Math.min(dfs(neighbor[0], graph, soFar + neighbor[1], distanceThreshold), min);
         }
+        if (min == Integer.MAX_VALUE) return min;
+        else return min + 1;
       }
+
+      return 0;
     }
 
     public int findTheCity(int n, int[][] edges, int distanceThreshold) {
@@ -43,13 +38,11 @@ public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_133
       ans = -1;
       shortest = Integer.MAX_VALUE;
       for (int i = 0; i < n; i++) {
-        Set<Integer> soFar = new HashSet<>();
-        dfs(i, graph, distanceThreshold, new boolean[n], soFar);
-        soFar.remove(i);
-        System.out.println(" Of: " + i + " Get: " + soFar);
-        if (soFar.size() <= shortest) {
-          shortest = soFar.size();
+        int r = dfs(i, graph, 0, distanceThreshold);
+        System.out.println("i: " + i + " r: " + r);
+        if (r <= shortest) {
           ans = i;
+          shortest = r;
         }
       }
 
