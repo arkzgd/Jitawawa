@@ -1,6 +1,8 @@
 package com.ihaveaname.java.leetcode.graph;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_1334 {
   class Solution {
@@ -20,14 +22,20 @@ public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_133
     }
 
     private int dfs(
-        int s, ArrayList<ArrayList<Integer[]>> graph, int soFar, final int distanceThreshold) {
+        int s,
+        ArrayList<ArrayList<Integer[]>> graph,
+        int soFar,
+        Set<Integer> saved,
+        final int distanceThreshold) {
       if (soFar <= distanceThreshold) {
-        int min = Integer.MAX_VALUE;
+        Set<Integer> save = new HashSet<>();
+        save.add(s);
         for (Integer[] neighbor : graph.get(s)) {
-          min = Math.min(dfs(neighbor[0], graph, soFar + neighbor[1], distanceThreshold), min);
+          dfs(neighbor[0], graph, soFar + neighbor[1], save, distanceThreshold);
         }
-        if (min == Integer.MAX_VALUE) return min;
-        else return min + 1;
+        saved.addAll(save);
+
+        return save.size() - 1;
       }
 
       return 0;
@@ -38,7 +46,7 @@ public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_133
       ans = -1;
       shortest = Integer.MAX_VALUE;
       for (int i = 0; i < n; i++) {
-        int r = dfs(i, graph, 0, distanceThreshold);
+        int r = dfs(i, graph, 0, new HashSet<>(), distanceThreshold);
         System.out.println("i: " + i + " r: " + r);
         if (r <= shortest) {
           ans = i;
@@ -70,6 +78,11 @@ public class FindTheCityWithTheSmallestNumberOfNeighborsAtAThresholdDistance_133
     n = 6;
     edges = new int[][] {{0, 1, 10}, {0, 2, 1}, {2, 3, 1}, {1, 3, 1}, {1, 4, 1}, {4, 5, 10}};
     distanceThreshold = 20;
+    System.out.println(solution.findTheCity(n, edges, distanceThreshold));
+
+    n = 6;
+    edges = new int[][] {{0,3,7},{2,4,1},{0,1,5},{2,3,10},{1,3,6},{1,2,1}};
+    distanceThreshold = 417;
     System.out.println(solution.findTheCity(n, edges, distanceThreshold));
   }
 }
