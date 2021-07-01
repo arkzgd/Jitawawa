@@ -3,6 +3,7 @@ package com.ihaveaname.java.leetcode.graph;
 public class MostStoneRemovedWithSameRowOrColumn_947 {
   class Solution {
     public int removeStones(int[][] stones) {
+      int n = stones.length;
       return 0;
     }
   }
