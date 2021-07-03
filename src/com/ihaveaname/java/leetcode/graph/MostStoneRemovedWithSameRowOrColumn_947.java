@@ -29,7 +29,13 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
         Node stone = new Node(s[0], s[1]);
         for (Node n : incorporated) {
           if (n.connected(stone)) {
-            stone.parent = n;
+            if (n.j == stone.j) {
+              if (n.i < stone.i) n.parent = stone;
+              else stone.parent = n;
+            } else if (n.i == stone.i) {
+              if (n.j < stone.j) n.parent = stone;
+              else stone.parent = n;
+            }
           }
         }
         incorporated.add(stone);
@@ -52,6 +58,12 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
     System.out.println(solution.removeStones(stones));
 
     stones = new int[][] {{0, 0}, {0, 2}, {1, 1}, {2, 0}, {2, 2}};
+    System.out.println(solution.removeStones(stones));
+
+    stones = new int[][] {{0, 1}, {1, 0}, {1, 1}};
+    System.out.println(solution.removeStones(stones));
+
+    stones = new int[][] {{0, 1}, {1, 2}, {1, 3}, {3, 3}, {2, 3}, {0, 2}};
     System.out.println(solution.removeStones(stones));
   }
 }
