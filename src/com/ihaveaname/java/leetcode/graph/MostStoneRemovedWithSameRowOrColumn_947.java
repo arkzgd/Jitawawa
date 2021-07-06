@@ -21,11 +21,13 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
       }
     }
 
-    private void findParent(Node v, final Node newParent) {
-      if (v.parent != null && v.parent != newParent) {
-        findParent(v.parent, newParent);
-      }
-      v.parent = newParent;
+    private Node findParent(Node v) {
+      if (v == null || v.parent == null) return v;
+
+      Node p = findParent(v.parent);
+      v.parent = p;
+
+      return p;
     }
 
     public int removeStones(int[][] stones) {
@@ -36,7 +38,8 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
         Node stone = new Node(s[0], s[1]);
         for (Node n : incorporated) {
           if (n.connected(stone)) {
-            findParent(n, stone);
+            Node p = findParent(n);
+            if (p != stone) p.parent = stone;
           }
         }
         incorporated.add(stone);
