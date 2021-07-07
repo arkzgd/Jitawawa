@@ -1,7 +1,6 @@
 package com.ihaveaname.java.leetcode.graph;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class MostStoneRemovedWithSameRowOrColumn_947 {
   class Solution {
@@ -13,7 +12,20 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
       Node(int i, int j) {
         this.i = i;
         this.j = j;
-        this.parent = null;
+        this.parent = this;
+      }
+
+      @Override
+      public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return i == node.i && j == node.j;
+      }
+
+      @Override
+      public int hashCode() {
+        return Objects.hash(i, j);
       }
 
       boolean connected(Node another) {
@@ -22,35 +34,52 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
     }
 
     private Node findParent(Node v) {
-      if (v == null || v.parent == null) return v;
+      if (v.parent != v) {
+        v.parent = findParent(v.parent);
+      }
 
-      Node p = findParent(v.parent);
-      v.parent = p;
-
-      return p;
+      return v.parent;
     }
 
     public int removeStones(int[][] stones) {
-      int N = stones.length;
-      Set<Node> incorporated = new HashSet<>();
+      int count = stones.length;
+      ArrayList<Node> graph = new ArrayList<>();
+      Map<Node, Integer> ranks = new HashMap<>();
+      for (int[] stone : stones) {
+        Node n = new Node(stone[0], stone[1]);
+        graph.add(n);
+        ranks.put(n, 1);
+      }
 
-      for (int[] s : stones) {
-        Node stone = new Node(s[0], s[1]);
-        for (Node n : incorporated) {
-          if (n.connected(stone)) {
-            Node p = findParent(n);
-            if (p != stone) p.parent = stone;
+      for (Node s : graph) {
+        for (Node t : graph) {
+          if (s.connected(t)) {
+            count = union(graph, ranks, s, t, count);
           }
         }
-        incorporated.add(stone);
       }
 
-      int count = 0;
-      for (Node n : incorporated) {
-        if (n.parent == null) count++;
+      return stones.length - count;
+    }
+
+    private int union(
+        ArrayList<Node> graph, Map<Node, Integer> ranks, Node stone1, Node stone2, int count) {
+      Node root1 = findParent(stone1);
+      Node root2 = findParent(stone2);
+
+      if (root1 == root2) return count;
+      else {
+        if (ranks.get(root1) > ranks.get(root2)) {
+          root2.parent = root1;
+          ranks.put(root1, ranks.get(root1) + ranks.get(root2));
+        } else {
+          root1.parent = root2;
+          ranks.put(root2, ranks.get(root1) + ranks.get(root2));
+        }
+        count--;
       }
 
-      return N - count;
+      return count;
     }
   }
 
