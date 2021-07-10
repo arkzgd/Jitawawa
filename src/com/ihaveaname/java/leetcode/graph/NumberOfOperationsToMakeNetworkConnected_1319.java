@@ -4,22 +4,43 @@ import java.util.Arrays;
 
 public class NumberOfOperationsToMakeNetworkConnected_1319 {
   class Solution {
+    private int findParent(int[] parent, int i) {
+      if (parent[i] == -1) return i;
+      parent[i] = findParent(parent, parent[i]);
+      return parent[i];
+    }
+
+    private int union(int[] parent, int[] ranks, int i, int j, int count) {
+      int ip = findParent(parent, i);
+      int jp = findParent(parent, j);
+
+      if (ip == jp) return count;
+      else {
+        if (ranks[ip] > ranks[jp]) {
+          parent[jp] = ip;
+          ranks[ip] += ranks[jp];
+        } else {
+          parent[ip] = jp;
+          ranks[jp] += ranks[ip];
+        }
+        count--;
+      }
+
+      return count;
+    }
+
     public int makeConnected(int n, int[][] connections) {
       int[] parent = new int[n];
       Arrays.fill(parent, -1);
+      int[] ranks = new int[n];
+      Arrays.fill(ranks, 1);
+      int count = n;
       if (connections.length >= n - 1) {
         for (int[] connection : connections) {
           int i = connection[0];
           int j = connection[1];
-          int p = i;
-          while (parent[p] != -1) p = parent[p];
-          if (p != i) {
-            parent[i] = p;
-            parent[j] = p;
-          } else parent[j] = i;
+          count = union(parent, ranks, i, j, count);
         }
-        int count = 0;
-        for (int p : parent) if (p == -1) count++;
         return count - 1;
       } else return -1;
     }

@@ -54,7 +54,7 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
       for (Node s : graph) {
         for (Node t : graph) {
           if (s.connected(t)) {
-            count = union(graph, ranks, s, t, count);
+            count = union(ranks, s, t, count);
           }
         }
       }
@@ -62,8 +62,7 @@ public class MostStoneRemovedWithSameRowOrColumn_947 {
       return stones.length - count;
     }
 
-    private int union(
-        ArrayList<Node> graph, Map<Node, Integer> ranks, Node stone1, Node stone2, int count) {
+    private int union(Map<Node, Integer> ranks, Node stone1, Node stone2, int count) {
       Node root1 = findParent(stone1);
       Node root2 = findParent(stone2);
 
