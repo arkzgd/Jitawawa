@@ -4,7 +4,6 @@ import java.util.*;
 
 public class LoudAndRich_851 {
   class Solution {
-    // Topological Sort
     class Node {
       boolean sorted = false;
       Set<Integer> from = new HashSet<>();
@@ -14,10 +13,27 @@ public class LoudAndRich_851 {
     public int[] loudAndRich(int[][] richer, int[] quiet) {
       int n = quiet.length;
       Node[] graph = toGraph(n, richer);
-      int[] topoSorted = new int[n];
-      topoSort(graph, topoSorted);
+      int[] min = new int[n];
+      Arrays.fill(min, -1);
+      for (int i = 0; i < n; i++) {
+        dfs(graph, quiet, i, min);
+      }
 
-      return topoSorted;
+      return min;
+    }
+
+    private int dfs(Node[] graph, int[] quiet, int i, int[] min) {
+      if (min[i] == -1) {
+        min[i] = i;
+        for (int to : graph[i].to) {
+          int cand = dfs(graph, quiet, to, min);
+          if (quiet[cand] < quiet[min[i]]) {
+            min[i] = cand;
+          }
+        }
+      }
+
+      return min[i];
     }
 
     private Node[] toGraph(int n, int[][] richer) {
@@ -26,8 +42,8 @@ public class LoudAndRich_851 {
       for (int[] r : richer) {
         int x = r[0];
         int y = r[1];
-        result[x].to.add(y);
-        result[y].from.add(x);
+        result[y].to.add(x);
+        result[x].from.add(y);
       }
       return result;
     }
