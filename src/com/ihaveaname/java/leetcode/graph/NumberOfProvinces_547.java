@@ -2,7 +2,7 @@ package com.ihaveaname.java.leetcode.graph;
 
 import java.util.ArrayList;
 
-public class NumberOfPrivinces_547 {
+public class NumberOfProvinces_547 {
   class Solution {
     private ArrayList<ArrayList<Integer>> toGraph(int[][] isConnnected, int n) {
       ArrayList<ArrayList<Integer>> result = new ArrayList<>(n);
@@ -44,8 +44,8 @@ public class NumberOfPrivinces_547 {
   }
 
   public static void main(String[] args) {
-    NumberOfPrivinces_547 numberOfPrivinces_547 = new NumberOfPrivinces_547();
-    Solution solution = numberOfPrivinces_547.new Solution();
+    NumberOfProvinces_547 numberOfProvinces_547 = new NumberOfProvinces_547();
+    Solution solution = numberOfProvinces_547.new Solution();
 
     int[][] isConnected = new int[][] {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
     System.out.println(solution.findCircleNum(isConnected));
